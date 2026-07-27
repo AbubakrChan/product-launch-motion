@@ -5,10 +5,10 @@ product, and it directs and renders a launch film: script, voiceover, word-synce
 real camera moves, film grade, broadcast-loudness master — as HTML, CSS and GSAP, rendered
 frame by frame to MP4.
 
-[![Watch the film — 45 seconds, made entirely from code](examples/still-1.jpg)](https://github.com/AbubakrChan/product-launch-motion/releases/download/v1.0.0/product-launch-motion-example-film.mp4)
+[![Four beats from the film: a query typing itself, a filtered creator list with a rack-focused stat, a 3D-turned inbox with a cursor clicking Accept, and the end card](examples/film-preview.webp)](https://github.com/AbubakrChan/product-launch-motion/releases/download/v1.0.0/product-launch-motion-example-film.mp4)
 
-**[▶ Watch the film (45s)](https://github.com/AbubakrChan/product-launch-motion/releases/download/v1.0.0/product-launch-motion-example-film.mp4)** — eleven shots, entirely
-code. No After Effects, no stock footage, no GPU renderer, no diffusion model. The render
+Four beats from it, above. **[▶ Watch all 45 seconds](https://github.com/AbubakrChan/product-launch-motion/releases/download/v1.0.0/product-launch-motion-example-film.mp4)** — eleven
+shots, no After Effects, no stock footage, no GPU renderer, no diffusion model. The render
 is deterministic, so the same commit produces the same file.
 
 ```bash
