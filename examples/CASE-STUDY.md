@@ -32,6 +32,8 @@ to a specific director's note** — and the notes are the part you cannot get fr
 Frames 1–3 and 10–11 sit on the dark argument register; 4–9 on the light product register.
 Every flip is a story turn and carries a transition.
 
+![The thesis, held still on the argument register](still-1.jpg)
+
 ## The revisions
 
 ### v1 → v2 · "You have not put attention to detail in it"
@@ -73,6 +75,12 @@ beats) and sub-bass under the two hero reveals. Both had complications worth rec
   removed.
 
 → `references/06-look-and-grade.md`, traps 1, 24 in `references/10-traps.md`
+
+![The hero stat, counting on the word that names it](still-5.jpg)
+
+The same pass moved the proof frame's count-up to start on the word "contacted" rather than
+1.3 seconds later — the shot had been opening on an almost empty frame, which is a pacing
+bug that only shows up when you watch the film instead of the frame.
 
 ### v3 → v4 · runtimes, and a bake-off
 
