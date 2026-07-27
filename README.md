@@ -1,16 +1,23 @@
-# Product Launch Motion
+# Product Launch Motion Design — a Claude Code Skill
 
-**A Claude Code skill that directs and renders product launch videos from code — not slideshows with a voiceover on top.**
+**Make product launch videos from code.** Install this skill, point Claude Code at your
+product, and it directs and renders a launch film: script, voiceover, word-synced reveals,
+real camera moves, film grade, broadcast-loudness master — as HTML, CSS and GSAP, rendered
+frame by frame to MP4.
 
-Point it at a product. It writes the script, renders the voiceover, syncs every reveal to
-the *word* that describes it, builds each shot as an HTML composition with real camera
-moves, grades it like film, masters it to broadcast loudness, and then reviews its own
-output and fixes what it finds.
+<!-- ▶ THE FILM GOES HERE. Replace this block and the poster below with the video embed.
+     For an inline player, drag the .mp4 into any GitHub issue comment box (do not submit
+     it) and paste the https://github.com/user-attachments/assets/… URL GitHub generates. -->
 
-![A camera dolly pushing in on a UI control while a cursor clicks it](examples/camera-move.gif)
+![Hire the agent — the opening title card of the reference film](examples/still-1.jpg)
 
-*Real output: a 3D-turned product surface, a camera dolly onto the control, a cursor with
-a proper click, and a list that updates when the reply lands. All HTML, CSS and GSAP.*
+*45 seconds, eleven shots, entirely code. No After Effects, no stock footage, no GPU
+renderer, no diffusion model — and the render is deterministic, so the same commit
+produces the same file.*
+
+```bash
+npx skills add AbubakrChan/product-launch-motion
+```
 
 ---
 
@@ -27,39 +34,10 @@ mathematically inaudible?
 
 This skill is that craft, written down — ten laws, a fourteen-step pipeline, fourteen shot
 constructions, and thirty-four traps, each recorded with **the measurement that proves it**
-rather than the vibe that suggested it.
-
-It was extracted from the launch film for [Cheerful](https://www.cheerful.ai) — 44.2
-seconds, eleven shots, six rounds of director's notes — and written to work for **any** product:
-SaaS, mobile apps, hardware, e-commerce, dev tools, marketplaces, services. The full
-revision history, note by note, is in [`examples/CASE-STUDY.md`](examples/CASE-STUDY.md).
-
-## It is a director, not a template
-
-**Two products should never get the same film.** That is the whole design constraint, and
-it is why the first thing the skill does is refuse to start building.
-
-The laws are fixed — truth, word-locked sync, determinism, sound arithmetic, mastering
-targets, verification. **The look is not.** Palette, ground, depth, camera personality,
-typography, texture, pacing, structure, whether there is a cursor, whether there is a
-voice at all: all of it is derived per product from the claim, the brand, the audience and
-the category. Before a single frame is built, the skill writes **three genuinely different
-visual directions, judges them, and kills two.**
-
-It also insists on a **signature move** — one thing this film does that no other film does,
-expressing that product's specific claim. A dev tool might play out as one continuously
-scrolling terminal buffer. A skincare brand might match-cut every transition on the same
-circular form. A fintech dashboard might be a single horizontal pan across one enormous
-ledger. Same discipline, unrecognisably different films.
-
-And it ships anti-sameness checks that name its own defaults so you can refuse them:
-
-> Are you using the reference film's gradient? Then you took its accent instead of deriving
-> one. Does your film have glass borders *and* a gradient-mesh ground *and* specular
-> sweeps? That is the default kit applied wholesale. **Could a competitor use this
-> direction unchanged? Then kill it — it is a category template, not a direction.**
-
-See `references/11-creative-direction.md`. Read it before anything else.
+rather than the vibe that suggested it. It also refuses to hand you a house style: the
+laws are fixed, the look is not, and the skill writes three competing visual directions
+and kills two before it builds anything
+(`references/11-creative-direction.md`).
 
 ## What you get
 
@@ -89,7 +67,8 @@ See `references/11-creative-direction.md`. Read it before anything else.
 npx skills add AbubakrChan/product-launch-motion
 ```
 
-That installs it **into the current project** (`./.agents/skills/`), so it travels with
+Works in Claude Code, and in 16 other agent tools via
+[`.agents/skills`](https://github.com/obra/skills). That installs it **into the current project** (`./.agents/skills/`), so it travels with
 the repo. For every project on the machine, clone it into your user skills directory
 instead:
 
@@ -165,25 +144,6 @@ npx hyperframes render -o renders/video-v1-raw.mp4
 ./scripts/verify-cue.sh renders/video-v1.mp4 10.72 0.76    # prove the cue is audible
 ```
 
-## One film it produced
-
-These frames are **one direction**, executed — not the house look. A dev tool, a skincare
-brand and a fintech dashboard built with this skill should share none of this film's
-palette, ground, camera behaviour or typography. What they share is the discipline
-underneath.
-
-![Product surface with glass borders, filtered results and a rack-focused stat](examples/still-2.jpg)
-
-![A 3D-turned inbox with a camera push onto the control being clicked](examples/still-3.jpg)
-
-![A fulfilment card with a real product line item beside detected posts](examples/still-4.jpg)
-
-![A testimonial attributed to a real customer's photograph](examples/still-6.jpg)
-
-Every pixel above is HTML and CSS. No After Effects, no stock footage, no motion-graphics
-license, no GPU renderer — and the render is deterministic, so the same commit produces
-the same file every time.
-
 ## The craft it encodes
 
 Timing and easing — custom-bezier ease-out, spring and settle, staggered entrances,
@@ -204,7 +164,7 @@ Each one is documented as *when to use it and what breaks*, not just as a name.
 
 ## Stack — and what we tried before settling
 
-The film this came from was a bake-off: five motion tools, one beat each, built and
+Before settling on this stack, five motion tools were raced — one beat each, built and
 rendered for real rather than compared on paper. The verdicts are baked into the skill so
 you don't repeat the experiment:
 
@@ -242,11 +202,10 @@ These are the ones that cost hours. All 34 are in `references/10-traps.md`.
 ## FAQ
 
 **Will every video made with this look the same?**
-No, and the skill is built to prevent it. The look is derived per product, the pipeline
-forces three competing directions before any building, and there is a checklist that names
-the skill's own defaults so an agent can catch itself reaching for them. What repeats is
-the discipline — sync, determinism, sound arithmetic, mastering — not the aesthetic. See
-`references/11-creative-direction.md`.
+No. The pipeline forces three competing directions before any building, and a checklist
+names the skill's own defaults so an agent can catch itself reaching for them. What
+repeats is the discipline — sync, determinism, sound arithmetic, mastering — not the
+aesthetic. `references/11-creative-direction.md`.
 
 **Does this work for physical products, not just software?**
 Yes. The shot catalog covers hardware heroes, unboxing and exploded views, e-commerce
@@ -304,7 +263,6 @@ and the before/after. That standard is the whole reason this file is useful.
 
 MIT — see [`LICENSE`](LICENSE). The craft is meant to travel.
 
-**The pictures do not.** The stills and GIF under `examples/` are frames from a real client
-film: they contain third-party brand marks, product photography and photographs of real
-people, and MIT grants you nothing in respect of any of it. See [`NOTICE`](NOTICE) before
-you reuse anything visual from this repo.
+**The film does not.** The reference film and the frame reproduced under `examples/`
+belong to the client it was made for. See [`NOTICE`](NOTICE) — it also covers GSAP, which
+these docs tell you to vendor into your own project.

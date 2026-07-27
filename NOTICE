@@ -8,20 +8,18 @@ examples/CASE-STUDY.md.
 It does NOT and cannot cover the third-party material referenced or depicted here. Nothing
 in LICENSE grants you any right to the following, and you should assume you have none:
 
-Images under examples/
-----------------------
-The stills and the animated GIF are frames from a launch film made for Cheerful
-(https://www.cheerful.ai). They are included to show construction and craft, and are
-published here with Cheerful's permission for that purpose only. They depict, variously:
+The reference film and examples/still-1.jpg
+-------------------------------------------
+The film referenced throughout this repository was made for Cheerful
+(https://www.cheerful.ai) and is theirs. examples/still-1.jpg is one title card from it,
+reproduced with permission to illustrate a point about type and stillness.
 
-  - product photography and the AG1(R) wordmark, property of AG1;
-  - the spacegoods(R) wordmark and a photograph of a named Spacegoods employee, property
-    of Spacegoods and the individual;
-  - the Shopify and Instagram names and marks, property of their owners;
-  - photographs of real people appearing as creator avatars.
+Frames containing third-party brand marks, product photography or photographs of real
+people are deliberately NOT reproduced here. The documentation describes how those shots
+were constructed; it does not ship the pixels.
 
-You may not reuse, redistribute, modify or incorporate these images into your own work.
-Fork the repository and you take the code and the documentation, not the pictures.
+You may not reuse, redistribute or modify the film or the still. Fork the repository and
+you take the code and the documentation, not the picture.
 
 Tools and dependencies these scripts assume
 -------------------------------------------

@@ -19,8 +19,6 @@ this product's claim and this brand's palette. Yours should look nothing like it
   took days — which is the honest ratio: the machine time is nothing, the deciding is
   everything.
 
-![The search surface with glass borders and a rack-focused stat](still-2.jpg)
-
 ## The arc
 
 | # | Frame | Beat |
@@ -41,6 +39,10 @@ Frames 1–3 and 10–11 sit on the dark argument register; 4–9 on the light p
 Every flip is a story turn and carries a transition.
 
 ![The thesis, held still on the argument register](still-1.jpg)
+
+*The one frame reproduced here. The rest of the film is linked from the README rather
+than cut into stills: its shots carry a client's brand marks, product photography and
+photographs of real people, none of which this repository's MIT licence covers.*
 
 ## The revisions
 
@@ -83,8 +85,6 @@ beats) and sub-bass under the two hero reveals. Both had complications worth rec
   removed.
 
 → `references/06-look-and-grade.md`, traps 1, 24 in `references/10-traps.md`
-
-![The hero stat, counting on the word that names it](still-5.jpg)
 
 The same pass moved the proof frame's count-up to start on the word "contacted" rather than
 1.3 seconds later — the shot had been opening on an almost empty frame, which is a pacing
@@ -132,8 +132,6 @@ rendering at the canvas origin. Invisible in code review, obvious in a still.
 
 The final note was six notes, and they are the reason half this repo exists.
 
-![The inbox shot with a 3D turn, a camera push and a visible cursor](still-3.jpg)
-
 **"Add a typing sound."** There already was one. It was mathematically inaudible: the source
 was a distant room recording at −37.4 dB mean, against a narration stem at −21.3 dB
 (the mastered *window* read −16.7 dB — flattering, and the wrong thing to measure). Raising the
@@ -162,8 +160,6 @@ three unrelated demo shots into one continuous story.
 **"Show Dan's picture."** The testimonial was attributed to a logo. His real photograph
 from the customer's own case study was already sitting in the marketing repo. A quote
 attributed to a face reads as a person; the same quote attributed to a logo reads as copy.
-
-![The testimonial with the customer's real photograph](still-6.jpg)
 
 Two mastering bugs surfaced in this pass and are now permanent parts of `scripts/master.sh`:
 the louder keystrokes pushed the master to **+1.1 dBFS** (clipped), and the limiter added to
