@@ -5,15 +5,11 @@ product, and it directs and renders a launch film: script, voiceover, word-synce
 real camera moves, film grade, broadcast-loudness master — as HTML, CSS and GSAP, rendered
 frame by frame to MP4.
 
-<!-- ▶ THE FILM GOES HERE. Replace this block and the poster below with the video embed.
-     For an inline player, drag the .mp4 into any GitHub issue comment box (do not submit
-     it) and paste the https://github.com/user-attachments/assets/… URL GitHub generates. -->
+[![Watch the film — 45 seconds, made entirely from code](examples/still-1.jpg)](https://github.com/AbubakrChan/product-launch-motion/releases/download/v1.0.0/product-launch-motion-example-film.mp4)
 
-![Hire the agent — the opening title card of the reference film](examples/still-1.jpg)
-
-*45 seconds, eleven shots, entirely code. No After Effects, no stock footage, no GPU
-renderer, no diffusion model — and the render is deterministic, so the same commit
-produces the same file.*
+**[▶ Watch the film (45s)](https://github.com/AbubakrChan/product-launch-motion/releases/download/v1.0.0/product-launch-motion-example-film.mp4)** — eleven shots, entirely
+code. No After Effects, no stock footage, no GPU renderer, no diffusion model. The render
+is deterministic, so the same commit produces the same file.
 
 ```bash
 npx skills add AbubakrChan/product-launch-motion
