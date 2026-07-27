@@ -156,6 +156,35 @@ If you speed up or re-render the VO, **every cue in the film is now wrong.** Two
 
 Changing voice, speaker or model is never a uniform change. Re-transcribe.
 
+## When there is no voiceover
+
+A silent film is a legitimate and often correct choice — feed placements autoplay muted, and
+a narrated skincare film is the category default you may want to break. But Law 2 as written
+assumes words to lock to, and "cue to a beat grid instead" is exactly what it forbids. So
+the law generalises rather than lapses:
+
+> **Every reveal is cued to the thing that motivates it.** With narration, that is the word.
+> Without narration, it is a physical event or the moment a viewer has finished reading.
+
+Three sources of truth replace the transcript:
+
+1. **Sound-design events.** If the film is sound-led, the cue grid is the SFX transients, and
+   you build it the other way round: place the sound events first, measure their onsets
+   exactly as you would words (`volumedetect` in 100ms slices, or read them off the asset),
+   and cue the visuals to those. The discipline is identical — measured onsets, never
+   estimates.
+2. **Reading time.** A title card cannot be cued; it must be *held*. Budget a minimum of
+   ~0.35s per word plus 0.3s of settle, never less than 1.2s for any card, and longer for a
+   card carrying a number. Read it aloud at a natural pace and time yourself — if you can
+   finish comfortably, a viewer can.
+3. **The action itself.** In a demonstration, the motivating event is on screen: the lid
+   lifts, the row resolves, the value lands. Cue everything else to that.
+
+Two things do not change. Durations still come from measured content rather than estimates —
+you are measuring reading time and sound onsets instead of speech. And nothing is arbitrary:
+if you cannot say what a reveal is cued *to*, it is cued to nothing, which is the definition
+of a slideshow.
+
 ## Choosing a voice
 
 | Option | Cost | Trade-off |

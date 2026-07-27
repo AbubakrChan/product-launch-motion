@@ -114,6 +114,22 @@ Transients are what you are protecting. Mean level tells you whether a bed is pr
 peak level tells you whether a keystroke or a click will be *heard*. For percussive cues,
 peak is the number that matters.
 
+**Cut from the first transient, not from zero.** Field recordings open with room tone. If
+you trim from `-ss 0` you have levelled the silence too: the asset is loud, every
+measurement passes, and the cue still lands late because its first hit is 400ms in. That
+shipped in a real film and covered only the back 44% of the animation it was punctuating
+(trap 21). `level-sfx.mjs` detects the onset and starts there by default.
+
+**Measure the bed on the isolated narration stem, not on the mastered film.** Cue volumes
+are applied *before* mastering, so comparing an asset against a post-master window compares
+the wrong things — in the reference film the stem measured −21.3 dB where the mastered
+window measured −16.7 dB, a 4.6 dB error in exactly the direction that flatters the cue.
+
+**Watch the truncation seam.** If a cue's `data-duration` is shorter than the asset, the
+clip hard-cuts wherever the timeline says, not where the audio ends — and your `afade` is
+positioned relative to the *asset*, so it never plays. Either match the fade to the
+shortest cue that uses the asset, or listen at the cut for a click.
+
 ## Sub-bass and silence
 
 Two techniques carry most of the emotional weight in a launch film, and both are cheap.

@@ -69,6 +69,53 @@ Two rules make this generative rather than decorative:
    *very* fast has a point of view. A film in the middle of every dial is the default look,
    which is what everyone else's tool produces.
 
+## Sameness hides in structure, not in surface
+
+The dials above are necessary and **not sufficient**, and this is the most important
+paragraph in the file.
+
+When this was tested — two very different products, directed with no shared brief — the
+surfaces came out genuinely unalike: one flat ledger-paper white with no camera and a
+mechanical 120bpm foley grid, the other high-chroma riso silkscreen with continuous drift
+and an analogue synth swell. By the dial test, a clear pass. Then the same director audited
+its own pair and found **twelve structural convergences**:
+
+- The same three-act skeleton, with the turn at the same proportional point
+- **The same ending, beat for beat** — drain to the lightest value, shrink to a wordmark,
+  land one short line, in the final five seconds
+- The same central rhetorical device (many collapsing into one)
+- The same climax mechanic (one hero element swallowing the frame at the peak)
+- The same copy placement (one quantified mid-film overlay, one end-card line)
+- The same sound dramaturgy (sparse events over near-silence, then a sustained tone
+  arriving late to signal resolution)
+- Both refusing a camera, both flat 2D, both with no human presence
+- Both reaching into printed-matter history for their reference
+- **Both rejecting their category's cliché in the same direction** — away from soft and
+  atmospheric, toward bold graphic flatness
+
+That last one is the trap inside the trap: *deliberately breaking the category expectation
+twice, the same way, is itself a house style.*
+
+Two films can look nothing alike and still be the same film. So run the dials, then run
+these — the structural axes, which is where the real defaults live:
+
+| Structural axis | Vary it |
+|---|---|
+| **Rhetorical device** | many→one · before/after · a day in the life · testimony · pure demonstration · contradiction · absence (show the work that no longer happens) · a single object examined |
+| **Arc** | problem→solve is one option. Others: start at the payoff and work back; a single unbroken demonstration with no argument; question held open until the last frame; chronological day |
+| **Where the turn lands** | 40% is the default. Try 15% (cold open on the answer) or 75% (a long, patient problem) |
+| **The ending** | Draining to a quiet lockup is the default *and everyone's default*. End loud. End mid-motion. End on the product still in use. End on the problem, absent |
+| **The climax mechanic** | One hero element swallowing the frame is one option, not the option |
+| **Opening state** | Empty ground that populates is the default. Start full and subtract. Start mid-action |
+| **Copy placement** | If every film has one mid-film stat overlay and one end line, that is a template |
+| **Human presence** | Most code-built films have none. A hand, a face, a voice, a real photograph is a bigger differentiator than any grade |
+| **Sound dramaturgy** | Sparse-then-sustained-tone is the default resolution signal. Try: continuous bed that *stops*; no resolution at all; a single sound that recurs |
+
+**The two-film test.** Before building, write your structure beside your last film's
+structure. If the arc, the device, the climax and the ending match, you have made a variant
+with a new palette — which is exactly what a viewer who has seen both will feel, even
+though they could not name a single shared colour.
+
 ## Deriving a direction from the product
 
 Four inputs. Work them in order; the fourth is the one that usually decides it.
@@ -210,10 +257,30 @@ film grade. Narrated throughout.
 continuous story.
 **Wrong for:** a product with no UI to show, or an audience that will watch it muted.
 
+## Do not inherit from the five above
+
+The worked directions are there to show the **distance** between valid answers. They are
+not a menu, and this is the failure mode they most invite: when a brief lands on top of one
+of them — a skincare product, a fintech dashboard, a CLI tool — the honest first instinct
+is to write that entry back out with new hex values. It will pass most checks, because it
+is specific enough to feel like a choice.
+
+So make the rule mechanical:
+
+> **If your brief matches one of the five worked directions, that direction is
+> automatically one of your three — and it is automatically one of the two you kill.**
+
+Write it out, name what it inherited, and then build something that is *not* it. Its value
+was showing you the obvious answer so you could recognise it and move past it. This applies
+just as much to the reference film in `examples/CASE-STUDY.md`: a B2B SaaS brief should
+treat that film as the answer to beat, not the answer to reuse.
+
 ## Anti-sameness checks
 
 Run these before you build. Each one has a right answer that is not "no".
 
+- **Did you inherit from a worked direction in this file, or from the case study?** Name
+  the entry. Then kill it and write a third.
 - **Are you using purple-to-orange?** Then you took the reference film's accent instead of
   deriving one from the brand.
 - **Does your film have glass borders *and* a gradient-mesh ground *and* specular sweeps?**

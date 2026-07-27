@@ -324,6 +324,12 @@ Where a shot cites an example, that example is the reference film in `../example
 
 ## Composing a film from these
 
+*Scope: this whole section assumes a cut-based film.* A single-take film — one unbroken move
+for the full runtime, beats separated by occlusion, rack focus or a lighting change — breaks
+every rule below and can still be right. If that is your direction, the equivalent
+discipline is that no two consecutive beats resolve the same way. Everything else here
+applies to films built from cuts.
+
 **Never put the same camera move on two adjacent shots.** A push into a results surface followed by a push into a workspace reads as one long shot with a bad cut in the middle, and the second push stops meaning anything. Alternate: locked → turn → locked → dolly → locked. The move should be a surprise each time. This is also the practical reason shot 3 is locked while 5 and 6 are not — it sits between them.
 
 **Alternate busy and still.** A crowding shot, a results surface and a workspace back-to-back exhaust the audience by the twenty-second mark; they stop reading and start waiting. Put a title card, a stat or a quote between two dense shots. The still frames are where the argument is absorbed — the dense ones only demonstrate that it is true. A rough budget for a 45s film: three dense product shots, four still or near-still ones, and the two type frames at the ends.

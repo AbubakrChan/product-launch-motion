@@ -258,7 +258,36 @@ hundredths of a decibel.
 Levelling the asset +22 dB through a limiter (mean −37.4 → −24.2, peak −8.1 → −1.1) and
 cueing at 0.55 took the delivered window's peak from **−4.6 dB to −1.4 dB**.
 
-### 21 · A TTS `--speed` flag is silently ignored
+### 21 · A levelled asset with a silent head makes the cue land late
+
+**Symptom.** The sound effect is audible now, but it feels detached from the animation — or
+only the second half of the action has sound.
+
+**Cause.** Field-recorded SFX usually open with room tone before the first hit. If you cut
+the asset from `-ss 0`, you levelled the silence too: the cue starts on time and its first
+transient does not.
+
+**Fix.** Cut from the first transient (`scripts/level-sfx.mjs` does this by default and
+reports what it trimmed). Verify the output's first 100ms is within ~12 dB of its own peak.
+
+**Proof.** A shipped film's typing cue started 0.40s into a 0.71s typing animation, so 56%
+of the action was silent. The window peak was a healthy −1.4 dB, which is why it passed
+review — the peak was real, it was just in the wrong half of the window. The 100ms envelope
+across the cue told the truth immediately:
+
+```
+t=10.72  -4.6 dB   ← narration only; the animation has already started
+t=10.82  -6.3 dB
+t=10.92  -6.0 dB
+t=11.02  -4.7 dB
+t=11.12  -1.6 dB   ← the first keystroke finally lands
+t=11.22  -1.4 dB
+```
+
+**The general lesson:** a window measurement proves a cue is loud *somewhere*. Only an
+envelope proves it is loud *when it should be*. `scripts/verify-cue.sh` prints both.
+
+### 22 · A TTS `--speed` flag is silently ignored
 
 **Symptom.** Regenerated narration is byte-for-byte the same length as before, even after
 clearing the cache.
@@ -270,7 +299,7 @@ clearing the cache.
 
 ## Mastering
 
-### 22 · `loudnorm`'s `linear=true` does not prevent clipping
+### 23 · `loudnorm`'s `linear=true` does not prevent clipping
 
 **Symptom.** The mastered file measures above 0 dBFS.
 
@@ -281,9 +310,9 @@ after measuring — or a different cut — can exceed the target.
 
 **Proof.** A master measured **+1.1 dBFS** after one SFX asset was made louder.
 
-### 23 · `alimiter` applies makeup gain unless told not to
+### 24 · `alimiter` applies makeup gain unless told not to
 
-**Symptom.** Adding a limiter to fix trap 22 makes the file *louder* than the target.
+**Symptom.** Adding a limiter to fix trap 23 makes the file *louder* than the target.
 
 **Cause.** Output is scaled by `level_out / limit`.
 
@@ -291,7 +320,7 @@ after measuring — or a different cut — can exceed the target.
 
 **Proof.** Without `level=disabled`, a −14 LUFS target came out at **−13.0 LUFS / −0.0 dBFS**.
 
-### 24 · Grain destroys compression
+### 25 · Grain destroys compression
 
 **Symptom.** A render balloons and the grain reads as electronic sizzle rather than film.
 
@@ -303,7 +332,7 @@ after measuring — or a different cut — can exceed the target.
 **Proof.** 9 MB → 85 MB with per-frame grain; 68 MB → 38 MB with the 12 Hz seed and the
 re-encode.
 
-### 25 · Shell quoting mangles the filter chain
+### 26 · Shell quoting mangles the filter chain
 
 **Symptom.** `Unable to parse "measured_I"` or a filter option that silently does nothing.
 
@@ -315,14 +344,14 @@ chain (`scripts/master.sh`) removes the problem permanently.
 
 ## Other runtimes
 
-### 26 · A Lottie layer with an animated multi-dimensional transform renders blank
+### 27 · A Lottie layer with an animated multi-dimensional transform renders blank
 
 **Symptom.** The animation plays in preview and the layer is empty in the render.
 
 **Fix.** Keep the Lottie layer transform static and drive motion from GSAP on the mount
 container.
 
-### 27 · Rive cannot be authored programmatically
+### 28 · Rive cannot be authored programmatically
 
 **Symptom.** Generated `.riv` files render blank or crash the WASM runtime.
 
@@ -332,19 +361,19 @@ container.
 seek-deterministic (150 frames rendered twice produced identical hashes), so a
 human-authored file is fine to mount — but an agent cannot make one. Do not re-probe this.
 
-### 28 · Bloom over near-white UI blows out
+### 29 · Bloom over near-white UI blows out
 
 **Symptom.** A Three.js hero shot turns into a white cloud and the UI texture is unreadable.
 
 **Fix.** Tone-map before applying bloom, and keep the effect off any near-white surface.
 
-### 29 · A scale on a flex item breaks centring (Remotion)
+### 30 · A scale on a flex item breaks centring (Remotion)
 
 **Symptom.** A centred word renders pinned to the top-left corner.
 
 **Fix.** Move the transform to an inner wrapper so the flex item itself is untransformed.
 
-### 30 · Crossfading two overlaid words dims the shared stem
+### 31 · Crossfading two overlaid words dims the shared stem
 
 **Symptom.** A text morph has a visible dip in the middle.
 
@@ -354,7 +383,7 @@ human-authored file is fine to mount — but an agent cannot make one. Do not re
 
 ## Process
 
-### 31 · Judging scale from contact sheets
+### 32 · Judging scale from contact sheets
 
 **Symptom.** You brief a rebuild for "the card is too small", then measure and find it
 already fills 60–77% of the frame.
@@ -362,14 +391,14 @@ already fills 60–77% of the frame.
 **Fix.** Judge composition from full-resolution stills. Contact sheets are for spotting
 missing content, not for judging weight.
 
-### 32 · Trusting the source instead of the delivered file
+### 33 · Trusting the source instead of the delivered file
 
 **Symptom.** A change is provably present in the composition and absent from the film.
 
 **Fix.** Sample the delivered MP4 at every changed beat, and measure any audio change in
-the delivered file. This is Law 9 and it is how traps 20 and 22 were both found.
+the delivered file. This is Law 9 and it is how traps 20 and 23 were both found.
 
-### 33 · Overwriting renders
+### 34 · Overwriting renders
 
 **Symptom.** You cannot prove a fix worked, or a director asks for the previous ending back
 and it no longer exists.

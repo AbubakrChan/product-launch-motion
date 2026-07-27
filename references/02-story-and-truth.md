@@ -185,6 +185,31 @@ reference film reconstructs its composer in HTML, labels it in `STORYBOARD.md` a
 reconstruction", and anchors it on the real captured console behind it. Drawing a UI the product does not have
 is fabrication, whatever you call it.
 
+### 4.2b When the product has not shipped yet
+
+"Launch film" often means the product is not in anyone's hands, so §4.2's sources — PDP photography, press
+kits, case studies, live captures — do not exist yet. This is the normal case, not the edge case, and the
+answer is never to invent the missing material.
+
+What is legitimately available before launch:
+
+| Source | Use it for |
+|---|---|
+| Design files and prototypes | Real UI, exported at render scale rather than screenshotted |
+| A staging or seeded environment | Live capture with realistic but plainly non-customer data |
+| First-batch or pre-production units | Product photography you shoot yourself |
+| Renders from the actual CAD / industrial design | Hardware with no unit yet — accurate because it is the manufacturing source |
+| Founders, the team, the first testers | Real faces who have genuinely used it, with consent |
+| A pilot, waitlist or beta cohort | The only honest source of a pre-launch figure |
+
+A pre-launch proof beat **is not a stat.** Substitute the mechanism for the outcome: show the thing working, in
+full, without claiming a result. A demonstration that survives scrutiny persuades an early buyer more than a
+number they can tell was invented — and it cannot be retracted later.
+
+If you will be shooting rather than sourcing, that belongs in the direction (step 2), not after it: a
+raking-light product film needs a physical unit, and discovering that at step 8 means rebuilding the direction.
+This is why pipeline steps 1–3 are a loop.
+
 ### 4.3 The negative list
 
 Write down what may **never** appear. A negative list is cheaper to enforce than a positive one, because it

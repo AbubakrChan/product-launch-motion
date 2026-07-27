@@ -121,6 +121,60 @@ reports:
 Every one of those is a taste judgement that a machine cannot make and a human makes in
 about two seconds of watching. Which is why the loop is the deliverable, not the render.
 
+## Taking a note
+
+A director's note is a **symptom report, not a specification.** The person giving it is
+almost always right that something is wrong and almost never precise about what. Implement
+the words literally and you will fix nothing; ignore them and you will fix nothing twice.
+
+The move is to translate the note into a mechanism before touching anything:
+
+| The note | The literal reading (wrong) | The mechanism (right) |
+|---|---|---|
+| "Make it 3D" | Add a rotation | A camera rig, depth on the elements the story touches, and a coordinate refactor so the shot can move as one object |
+| "I don't like the ripple" | Delete the ripple element | Find *everything* that reads as a ripple — there were two, and removing one would not have satisfied the note |
+| "It looks basic" | Add effects | A shot is carrying a beat with two rectangles. Rebuild what the shot *is*, not how it is decorated |
+| "Add a typing sound" | Raise the cue volume | Measure. The cue may already exist and be arithmetically inaudible |
+| "Speed it up" | Compress everything uniformly | Usually: tighten the clauses, keep or lengthen the tail holds |
+| "The cursor is bad" | Redraw the cursor | It is probably invisible, not ugly — size, stroke and shadow before shape |
+
+Three habits make this reliable:
+
+1. **Ask what they saw, not what they want.** "At which second?" turns an aesthetic note
+   into a frame number.
+2. **Reproduce it before fixing it.** Extract the frame. If you cannot see what they saw,
+   you do not understand the note yet.
+3. **Say what you changed in their words.** "The cursor is bigger and clicks with a
+   press-and-ripple" closes the loop; "refactored the transform hierarchy" does not.
+
+When a note is genuinely wrong — and sometimes it is — the answer is a measurement, not an
+argument. Two frames judged "too small" in the reference film turned out to occupy 60% and
+77% of the frame width; the measurement ended the discussion in one line.
+
+## Iteration economics
+
+Full renders are the slowest possible way to check anything, and the habit of re-rendering
+to see a change is what makes a film take a week.
+
+| To check | Use | Cost |
+|---|---|---|
+| A tween's shape or timing | Studio/preview scrub at that second | seconds |
+| Layout, composition, legibility | `snapshot --at t1,t2,t3` | seconds |
+| Sync across a whole shot | Render that ONE frame's composition | ~1s per second of film |
+| The grade, transitions, cuts | Draft-quality full render | ~half a final render |
+| Anything audio | Full render + master, then measure | minutes |
+| Delivery | Final render, master, verify | minutes |
+
+Practical rules:
+
+- **Snapshot before you render.** Most defects are visible in a still.
+- **Iterate at draft quality**, and only go final when the shot is locked. Grain and
+  `-crf 19` are for delivery, not for a look-see.
+- **Render one composition, not the film**, when you are working on one shot.
+- **Batch audio changes.** Audio is the only class of change that genuinely requires a full
+  render plus a master to verify, so make all of them, then verify once.
+- Keep the raws. Re-mastering is seconds; re-rendering is minutes.
+
 ## How to review your own film
 
 Watch it three times, looking for one class of problem each time. Reviewing for everything

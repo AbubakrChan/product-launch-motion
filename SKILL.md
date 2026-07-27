@@ -1,6 +1,6 @@
 ---
 name: product-launch-motion
-description: "Direct and render a professional product launch video, promo film, demo video, or animated product explainer from code — HTML/CSS/GSAP compositions rendered deterministically to MP4, with voiceover-synced motion, camera moves, a fake-cursor UI demo, film grade and broadcast-loudness mastering. Use when asked to make a launch video, product video, promo video, teaser, sizzle reel, feature announcement film, demo reel, or motion graphics for a product, and when asked to improve, critique or rescue an existing one that looks basic. Works for SaaS, mobile apps, hardware, e-commerce, dev tools and services. Also covers storyboarding, scriptwriting for voiceover, word-level audio sync, kinetic typography, GSAP timelines, HyperFrames, Remotion, film grain, sound design, LUFS mastering and ffmpeg."
+description: "Use when making, directing or rescuing a product launch video, promo, teaser, demo reel, sizzle, feature-announcement film or animated product explainer built from code — and when an existing one looks basic, reads as a slideshow, has reveals that miss the voiceover, an invisible cursor, an inaudible sound effect, a clipped or too-quiet mix, or every video coming out looking the same. Covers SaaS, apps, hardware, e-commerce, dev tools, services. Keywords include motion design, storyboard, voiceover sync, kinetic typography, GSAP, HyperFrames, Remotion, film grain, LUFS, ffmpeg."
 ---
 
 # Product Launch Motion
@@ -72,9 +72,13 @@ If the asset sits 20 dB under the narration bed, raising its volume moves the mi
 tenths of a dB — measured, not guessed. Level the *asset*, then verify the cue landed in
 the delivered file. → `references/07-sound-and-master.md`
 
-**7 · Nothing ends moving.** Every frame lands and holds. Motion is cued to meaning; a
-shot that is still drifting when it cuts reads as a screensaver, and a shot where
-everything drifts independently reads as one too. → `references/04-motion-grammar.md`
+**7 · Nothing ends moving.** Every shot resolves. Motion is cued to meaning; a shot still
+drifting when it cuts reads as a screensaver, and a shot where everything drifts
+independently reads as one too. *Scope:* this governs **resolution, not stillness**. A
+single-take film whose camera never stops satisfies it by decelerating to rest before the
+end; a shot that holds a deliberate slow move while its content is settled satisfies it
+too. What it forbids is a shot cutting while the thing it was saying is still arriving.
+→ `references/04-motion-grammar.md`
 
 **8 · Ration the accent.** Two grounds (one for the argument, one for the product), one
 accent colour or gradient, and a written budget for where it may appear — typically:
@@ -92,10 +96,37 @@ three different directions, pick one, and give the film a signature move that no
 has. A film that could be a competitor's film with the logo swapped has no direction.
 → `references/11-creative-direction.md`
 
+## Red flags
+
+These are the thoughts that precede every skipped step. Each one is a signal to stop and
+do the thing you are about to talk yourself out of.
+
+| The thought | What it actually means |
+|---|---|
+| "I'll estimate the timings and fix them later" | You will not. Every cue will be wrong, and re-deriving them all costs more than doing it once now |
+| "Three directions is overkill for this one" | You have one idea and no basis for believing it is good. Two of the three are meant to die |
+| "The brand is purple, so this palette is fine" | Check whether you derived it or inherited it from the examples here |
+| "It sounds fine to me" | You are listening on the machine that rendered it, at a volume you chose, knowing what to listen for. Measure it |
+| "The change is in the source, so it's in the film" | Two documented bugs in this repo's history were exactly that. Sample the delivered file |
+| "The gates passed" | Gates catch broken, not bad. They have never once caught a boring film |
+| "It's a small tweak, no need to re-verify" | Small tweaks are how a −14 LUFS master became a clipped one |
+| "I'll just overwrite the last render" | Then you cannot prove the fix worked, and the version the director preferred is gone |
+| "They said make it 3D, so I'll add rotation" | Take the note as a symptom, not a spec. "Make it 3D" meant a camera rig, a cursor rebuild and a coordinate refactor |
+| "I'll add the camera move at the end" | A camera changes what every coordinate means. Retrofitting a rig means redoing every position in the shot |
+| "It's close enough to on-the-word" | 200ms off reads as lag to a viewer who cannot name why |
+
+Violating the letter of a law is violating the law. "Mostly deterministic" is
+non-deterministic; "roughly on the word" is off the word.
+
 ## The pipeline
 
-Thirteen steps. Do not skip 1, 2, 5 or 13 — they are the ones people skip, and they are
+Fourteen steps. Do not skip 1, 2, 5 or 13 — they are the ones people skip, and they are
 the ones that decide whether the film is any good.
+
+Steps 1–3 are a **loop, not a sequence**: the direction depends on which real assets exist,
+and the truth pass often kills a direction outright (you cannot shoot a raking-light
+product film for a product that has not been manufactured). Cycle them until they agree,
+then go forward.
 
 | # | Step | Output | Reference |
 |---|---|---|---|
@@ -112,6 +143,7 @@ the ones that decide whether the film is any good.
 | 11 | **Render + master** — two-pass loudnorm, limiter, re-encode | `renders/*.mp4` | `scripts/master.sh` |
 | 12 | **Verify in the delivered file** — frames at the changed beats, cue levels measured | evidence | `scripts/verify-cue.sh` |
 | 13 | **Direct** — watch it, list the defects yourself, fix, re-render as a NEW file | v2, v3, … | `references/08-qa-and-direction.md` |
+| 14 | **Ship the set** — vertical cut, captions, poster, loop, stills, licences | `deliverables/` | `references/12-deliverables.md` |
 
 ### Build order (step 9) is not negotiable
 
@@ -143,6 +175,7 @@ Load only what the current step needs.
 | `references/08-qa-and-direction.md` | The gates, snapshot review, verifying the delivered file, and the director loop that turns a v1 into a v7 |
 | `references/09-shot-catalog.md` | 14 shot *constructions* to adapt — prompt/composer, results list, workspace, pipeline tracker, stat count-up, testimonial, comparison, hardware hero, terminal, map, chart, end card. Never a running order to copy |
 | `references/10-traps.md` | Every trap we hit, each with the measurement that proves it. Read this before debugging anything |
+| `references/12-deliverables.md` | The set that actually ships: vertical re-layouts, platform safe areas, captions from your existing word timings, poster frame, loops, naming and handoff |
 
 ## Scripts
 
@@ -182,6 +215,8 @@ rather than shipping quietly.
 - [ ] Loudness measured on the delivered file: −14 LUFS ±0.5, true peak ≤ −1 dBTP
 - [ ] Every SFX cue you added is measurably present in the delivered file
 - [ ] Renders are versioned (`video-v3.mp4`), never overwritten
+- [ ] The deliverable set exists, not just the master — vertical cut, captions, poster
+- [ ] Third-party licences (music, SFX, fonts, photography) recorded with the handoff
 - [ ] You have written down what you would fix next
 
 ## Worked example

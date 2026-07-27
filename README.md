@@ -25,8 +25,8 @@ actually moving, or is everything just drifting? Can you see the cursor? Is the
 "typing sound" you added *actually audible*, or is it 20 dB under the narration and
 mathematically inaudible?
 
-This skill is that craft, written down — ten laws, a thirteen-step pipeline, fourteen shot
-constructions, and thirty-plus traps, each recorded with **the measurement that proves it**
+This skill is that craft, written down — ten laws, a fourteen-step pipeline, fourteen shot
+constructions, and thirty-four traps, each recorded with **the measurement that proves it**
 rather than the vibe that suggested it.
 
 It was extracted from the launch film for [Cheerful](https://www.cheerful.ai) — 44.2
@@ -65,7 +65,7 @@ See `references/11-creative-direction.md`. Read it before anything else.
 
 - **`SKILL.md`** — the laws, the pipeline, and a routing table. Under 500 lines so it
   loads fast; everything else is progressive disclosure.
-- **11 reference documents** — creative direction, story and truth, word-locked sync,
+- **12 reference documents** — creative direction, story and truth, word-locked sync,
   motion grammar, the camera rig, the cursor spec, look and grade, sound and mastering, QA
   and direction, the shot catalog, and the trap index.
 - **6 runnable scripts** — audio wiring, film grade, SFX levelling, word timings,
@@ -74,6 +74,11 @@ See `references/11-creative-direction.md`. Read it before anything else.
   camera rig and cursor already built. Copy it; don't retype it.
 - **A worked example** — the real film, revision by revision, with the note that prompted
   each change and the measurement that closed it.
+- **A baseline evaluation** — the skill was tested against itself: the same two scenarios
+  run with and without it, in fresh contexts. That evaluation found three bugs in the
+  skill's own scripts and one whole missing chapter, all of which are now fixed. The runs,
+  the findings and the resulting changes are in
+  [`evals/BASELINE.md`](evals/BASELINE.md).
 
 ## Install
 

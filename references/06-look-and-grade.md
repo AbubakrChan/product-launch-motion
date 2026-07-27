@@ -7,6 +7,19 @@ does nothing or destroys the film. The substitutes below survive a frame-by-fram
 B2B SaaS launch, purple `#b04adc` / orange `#ff7247`) is a worked **example**; §10 derives the same system from
 any palette.
 
+> **Read §10 first, and treat the rest as a parts bin.** Testing found that working forward through this file
+> produces the same *value architecture* every time — warm off-white ground, one grey, lifted near-black ink,
+> accent plus AA-safe variant — even when the hues are completely different. Two films can share no colour and
+> still be recognisably the same film. That architecture is one option among several: a film built on two mid
+> values with no near-white and no near-black is valid, and so is a monochrome film with no accent at all.
+> Decide the architecture in `references/11-creative-direction.md`, then come back here for the mechanics.
+>
+> The same applies to the grade itself. `scripts/wire-grade.mjs` will happily give every film grain **and** a
+> vignette **and** specular sweeps, and that combination is this kit's default look, not a law. `--grain 0` and
+> `--vignette 0` are first-class choices: a scanner-lit or clinical film wants no vignette, a crisp graphic film
+> wants no grain, and a film whose own key light provides its light passes should not also carry synthetic
+> ones. Pick the treatments your direction needs and switch the others off.
+
 ## 1 · Grounds before effects
 
 Build the two registers first — the ground under the argument, the ground under the product — with zero effects

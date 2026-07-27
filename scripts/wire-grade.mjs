@@ -82,22 +82,36 @@ for (const m of html.matchAll(/data-composition-src="[^"]+\.html"[^>]*>/g)) {
 }
 if (!total) throw new Error(`no frame wrappers found in ${INDEX} — assemble first`);
 
-const block = `
-    ${MARK_OPEN}
-    <div
-      id="hf-grade"
-      class="clip"
-      data-start="0"
-      data-duration="${total.toFixed(3)}"
-      data-track-index="${TRACK}"
-      style="position:absolute;inset:0;z-index:9000;pointer-events:none"
-    >
+// Each treatment is emitted only if it is switched on. This matters more than it looks:
+// the anti-sameness check in references/11-creative-direction.md says to pick the treatments
+// your direction needs and drop the rest, and if the tool always writes all three then the
+// tool wins and every film made with this skill gets the same look. `--grain 0`,
+// `--vignette 0` and omitting `--sweeps` are first-class choices, not degenerate cases.
+const useGrain = GRAIN > 0;
+const useVignette = VIGNETTE > 0;
+const useSweeps = SWEEPS.length > 0 && SWEEP > 0;
+
+if (!useGrain && !useVignette && !useSweeps) {
+  console.error("every treatment is off — nothing to wire. Use --off to strip the block instead.");
+  process.exit(1);
+}
+
+const vignetteEl = useVignette
+  ? `
       <!-- vignette: transparent centre → dark corners, straight alpha -->
-      <div style="position:absolute;inset:0;background:radial-gradient(ellipse 78% 74% at 50% 48%, rgba(8,6,14,0) 44%, rgba(8,6,14,${(VIGNETTE * 0.4).toFixed(3)}) 78%, rgba(8,6,14,${VIGNETTE}) 100%)"></div>
+      <div style="position:absolute;inset:0;background:radial-gradient(ellipse 78% 74% at 50% 48%, rgba(8,6,14,0) 44%, rgba(8,6,14,${(VIGNETTE * 0.4).toFixed(3)}) 78%, rgba(8,6,14,${VIGNETTE}) 100%)"></div>`
+  : "";
+
+const sweepEl = useSweeps
+  ? `
       <!-- specular sweep — parked off-canvas, driven once per beat.
            The gradient axis is 90deg and the ELEMENT is skewed: an angled gradient on a
            tall box projects corner-to-corner and shows a hard seam. -->
-      <div id="hf-grade-sweep" style="position:absolute;top:-24%;left:0;width:40%;height:148%;opacity:0;background:linear-gradient(90deg, rgba(255,255,255,0) 0%, rgba(255,255,255,${SWEEP}) 50%, rgba(255,255,255,0) 100%)"></div>
+      <div id="hf-grade-sweep" style="position:absolute;top:-24%;left:0;width:40%;height:148%;opacity:0;background:linear-gradient(90deg, rgba(255,255,255,0) 0%, rgba(255,255,255,${SWEEP}) 50%, rgba(255,255,255,0) 100%)"></div>`
+  : "";
+
+const grainEl = useGrain
+  ? `
       <!-- moving grain: the noise's luminance is moved into ALPHA by the colour matrix,
            so the plate is black speckles over transparency rather than a grey haze — which
            is what lets it work with no blend mode. -->
@@ -110,22 +124,17 @@ const block = `
                                                0.34 0.34 0.34 0 0" />
         </filter>
         <rect width="1920" height="1080" filter="url(#hf-grade-noise)" />
-      </svg>
-    </div>
-    <script>
-      /* grade pass — appended to the root timeline the assembler built. */
-      (function () {
-        var tl = window.__timelines && window.__timelines["main"];
-        if (!tl) return;
-        var TOTAL = ${total.toFixed(3)};
-        var turb = document.getElementById("hf-grade-turb");
-        var sweep = document.getElementById("hf-grade-sweep");
+      </svg>`
+  : "";
 
+const grainJs = useGrain
+  ? `
         /* Grain: one driver for the whole film. seed = floor(t * 12) % 12 — a pure
            function of the playhead, so a seek to any time reproduces the same grain field.
            12Hz, not per-frame: re-seeding every frame reads as electronic sizzle rather
            than film, and it defeats inter-frame compression (a 30Hz cut encoded to 85MB
            against ~9MB ungrained). Real film grain is also held across frames at 24fps. */
+        var turb = document.getElementById("hf-grade-turb");
         var clock = { t: 0 };
         var lastSeed = -1;
         tl.to(clock, {
@@ -134,16 +143,40 @@ const block = `
             var seed = Math.floor(clock.t * 12) % 12;
             if (seed !== lastSeed) { lastSeed = seed; turb.setAttribute("seed", String(seed)); }
           },
-        }, 0);
+        }, 0);`
+  : "";
 
+const sweepJs = useSweeps
+  ? `
         /* Specular sweeps — one pass per story beat, no repeat. */
+        var sweep = document.getElementById("hf-grade-sweep");
         gsap.set(sweep, { skewX: -14 });
         var SWEEPS = ${JSON.stringify(SWEEPS)};
         SWEEPS.forEach(function (s) {
           tl.fromTo(sweep, { opacity: 0 }, { opacity: 1, duration: 0.14, ease: "power1.out" }, s.at);
           tl.fromTo(sweep, { xPercent: -140 }, { xPercent: 260, duration: s.dur, ease: "power2.inOut" }, s.at);
           tl.to(sweep, { opacity: 0, duration: 0.2, ease: "power1.in" }, s.at + s.dur - 0.2);
-        });
+        });`
+  : "";
+
+const block = `
+    ${MARK_OPEN}
+    <div
+      id="hf-grade"
+      class="clip"
+      data-start="0"
+      data-duration="${total.toFixed(3)}"
+      data-track-index="${TRACK}"
+      style="position:absolute;inset:0;z-index:9000;pointer-events:none"
+    >${vignetteEl}${sweepEl}${grainEl}
+    </div>
+    <script>
+      /* grade pass — appended to the root timeline the assembler built. */
+      (function () {
+        var tl = window.__timelines && window.__timelines["main"];
+        if (!tl) return;
+        var TOTAL = ${total.toFixed(3)};
+${grainJs}${sweepJs}
       })();
     </script>
     ${MARK_CLOSE}`;
@@ -152,11 +185,17 @@ const anchor = html.lastIndexOf("</body>");
 if (anchor === -1) throw new Error(`${INDEX} has no </body>`);
 const out = html.slice(0, anchor) + block + "\n  " + html.slice(anchor);
 
-console.log(
-  `grade: total ${total.toFixed(3)}s · grain ${GRAIN} (seed = f(playhead)) · vignette ${VIGNETTE} · ${SWEEPS.length} specular sweep(s)`,
-);
-if (!SWEEPS.length) {
-  console.log(`  hint: name your story beats — --sweeps "7.92:0.9,24.62:0.9,40.17:0.95"`);
+const active = [
+  useGrain ? `grain ${GRAIN} (seed = f(playhead))` : null,
+  useVignette ? `vignette ${VIGNETTE}` : null,
+  useSweeps ? `${SWEEPS.length} specular sweep(s) at ${SWEEPS.map((s) => s.at).join(", ")}s` : null,
+].filter(Boolean);
+console.log(`grade: total ${total.toFixed(3)}s · ${active.join(" · ")}`);
+if (active.length === 3) {
+  console.log(`  note: all three treatments are on, which is this kit's default look.`);
+  console.log(`  Your direction should be choosing them, not inheriting them —`);
+  console.log(`  --grain 0 and --vignette 0 are first-class choices. A scanner-lit or`);
+  console.log(`  clinical film wants no vignette; a crisp graphic film wants no grain.`);
 }
 if (dry) process.exit(0);
 writeFileSync(INDEX, out);
