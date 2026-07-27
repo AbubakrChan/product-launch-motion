@@ -24,6 +24,13 @@
 
 set -euo pipefail
 
+# `--help` prints the header comment above — one source of truth for the usage text, and it
+# exits 0 so wrapping this in a Makefile or CI job does not fail the build.
+if [[ "${1:-}" == "--help" || "${1:-}" == "-h" ]]; then
+  sed -n '2,/^$/p' "$0" | sed -E 's/^# ?//'
+  exit 0
+fi
+
 FILE="${1:-}"
 START="${2:-}"
 DUR="${3:-}"

@@ -193,8 +193,8 @@ All are dependency-light Node/bash, all idempotent, all safe to re-run.
 | `scripts/assemble.mjs` | Writes `index.html` from `film.json`, measuring every frame's length from its voiceover instead of letting you guess it |
 | `scripts/transitions.mjs` | Injects the between-frame crossings — dissolve, zoom-through, push, cut — at the instant each frame's narration ends |
 | `scripts/wire-audio.mjs` | Mounts a music bed + a cue table of SFX into the assembled index, resolving frame-relative cue times against real frame starts |
-| `scripts/wire-grade.mjs` | Injects the film grade: playhead-seeded grain, vignette, and specular sweeps on named story beats. `--off` removes it for the contrast gate |
-| `scripts/level-sfx.mjs` | Fixes the quiet-source problem: trims and gain-limits an SFX asset to a target level, and prints before/after measurements |
+| `scripts/wire-grade.mjs` | Injects the film grade: playhead-seeded grain, vignette, and specular sweeps at times you pass (`--sweeps 7.9:0.9,…`; no sweeps unless you ask). Each treatment is independently switchable; `--off` removes the whole block for the contrast gate |
+| `scripts/level-sfx.mjs` | Fixes the quiet-source problem: cuts from the first transient, applies a fixed `--gain` through a limiter, and prints before/after measurements. It reports; it deliberately does not declare a cue "audible" |
 | `scripts/word-timings.mjs` | Turns a word-level transcript into the cue table the frames read |
 | `scripts/master.sh` | Two-pass loudnorm → true-peak limiter → `-crf 19 -tune film` re-encode → verification readout |
 | `scripts/verify-cue.sh` | Measures a time window in the *delivered* MP4, so you can prove a cue is audible instead of assuming it |
@@ -232,6 +232,6 @@ rather than shipping quietly.
 ## Worked example
 
 `examples/CASE-STUDY.md` walks the real film this skill was extracted from: a 44.2s
-B2B SaaS launch film, 11 frames, seven director revisions from "this is very basic" to
+B2B SaaS launch film, 11 frames, six rounds of director's notes from "this is very basic" to
 delivered — with the specific note, the specific fix, and the measurement for each pass.
 Read it when you want to see the loop in step 12 actually running.

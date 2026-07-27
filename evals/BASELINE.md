@@ -7,6 +7,12 @@ change listed at the bottom came out of this, not out of taste.
 Four runs, two scenarios, one fresh context each. Same model, same prompts except for the
 instruction to read the skill.
 
+**What is not here:** the raw transcripts. What follows is a write-up, not a machine-checked
+artifact, and every finding below should be read as "this is what the runs surfaced and what
+was changed as a result" — not as a reproducible benchmark. `evals/evals.json` is likewise a
+set of *specifications*, not a test report: nothing in this repo records a pass/fail for
+them.
+
 ---
 
 ## Scenario 1 — "the typing sound is inaudible"

@@ -5,7 +5,10 @@
     "substantive requests it should own (and stays out of ones it should not). The second",
     "group checks that, once active, it enforces the laws rather than just describing them.",
     "",
-    "Assertions use { text, passed, evidence }."
+    "Assertions are plain strings — the criteria a run is judged against. These are",
+    "SPECIFICATIONS, not a test report: this file records nothing about whether any",
+    "particular run passed. The two scenarios that HAVE been run, with and without the",
+    "skill, are written up in evals/BASELINE.md, findings and all."
   ],
   "evals": [
     {
@@ -22,7 +25,7 @@
     {
       "id": 2,
       "prompt": "Here's our product video: renders/v1.mp4. It looks basic and I can't say why. Fix it.",
-      "expected_output": "Activates the skill for a rescue pass. Samples the delivered file at multiple beats, produces a written defect list against the nine laws before editing, and diagnoses specific causes (reveals off-word, no camera, cursor too small, nothing holding at cuts).",
+      "expected_output": "Activates the skill for a rescue pass. Samples the delivered file at multiple beats, produces a written defect list against the ten laws before editing, and diagnoses specific causes (reveals off-word, no camera, cursor too small, nothing holding at cuts).",
       "assertions": [
         "Extracts frames from the delivered file rather than reasoning only from source",
         "Produces a written defect list before making changes",

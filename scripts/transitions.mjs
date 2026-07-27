@@ -31,6 +31,18 @@
 import { readFileSync, writeFileSync, existsSync } from "node:fs";
 
 const argv = process.argv.slice(2);
+// `--help` prints the header comment above. One source of truth for the usage text, and it
+// exits 0 — a --help that exits non-zero breaks every Makefile and CI job that wraps it.
+if (argv.includes("--help") || argv.includes("-h")) {
+  const doc = [];
+  for (const line of readFileSync(new URL(import.meta.url), "utf8").split("\n").slice(1)) {
+    if (!line.startsWith("//")) break;
+    doc.push(line.replace(/^\/\/ ?/, ""));
+  }
+  console.log(doc.join("\n").trim());
+  process.exit(0);
+}
+
 const flag = (name, fallback) => {
   const i = argv.indexOf(`--${name}`);
   return i === -1 ? fallback : argv[i + 1];
@@ -43,15 +55,23 @@ const dry = argv.includes("--dry");
 const OPEN = "/* transitions:start */";
 const CLOSE = "/* transitions:end */";
 
-if (!existsSync(INDEX)) throw new Error(`no ${INDEX} — run assemble.mjs first`);
+if (!existsSync(INDEX)) {
+  console.error(`no ${INDEX} — run assemble.mjs first (or pass --index <file>)`);
+  process.exit(1);
+}
+if (!existsSync(MANIFEST)) {
+  console.error(`no ${MANIFEST} — copy assets/film.example.json and edit it`);
+  process.exit(1);
+}
 const film = JSON.parse(readFileSync(MANIFEST, "utf8"));
 let html = readFileSync(INDEX, "utf8");
 
 if (!html.includes(OPEN) || !html.includes(CLOSE)) {
-  throw new Error(
-    `${INDEX} has no transitions markers — it was not written by assemble.mjs. ` +
-      `Add ${OPEN} … ${CLOSE} inside the root timeline's IIFE.`,
+  console.error(
+    `${INDEX} has no transitions markers — it was not written by assemble.mjs.\n` +
+      `Either re-run assemble.mjs, or add ${OPEN} … ${CLOSE} inside your root timeline's IIFE.`,
   );
+  process.exit(1);
 }
 
 // Read the real starts back off the assembled DOM rather than recomputing them. Two sources
@@ -64,7 +84,10 @@ for (const m of html.matchAll(/<div\b[^>]*data-composition-src="[^"]+"[^>]*>/g))
   const duration = Number(tag.match(/data-duration="([\d.]+)"/)?.[1] ?? NaN);
   if (id && Number.isFinite(start)) wrappers.push({ id, start, duration });
 }
-if (!wrappers.length) throw new Error(`no frame wrappers in ${INDEX} — assemble first`);
+if (!wrappers.length) {
+  console.error(`no frame wrappers in ${INDEX} — assemble first`);
+  process.exit(1);
+}
 
 const t = (n) => String(Number(n.toFixed(3)));
 

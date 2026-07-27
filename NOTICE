@@ -1,0 +1,50 @@
+NOTICE — third-party material and what the MIT licence does not cover
+=====================================================================
+
+The MIT licence in LICENSE covers the material this repository's authors wrote: SKILL.md,
+the files under references/, scripts/, assets/ and evals/, and the prose of README.md and
+examples/CASE-STUDY.md.
+
+It does NOT and cannot cover the third-party material referenced or depicted here. Nothing
+in LICENSE grants you any right to the following, and you should assume you have none:
+
+Images under examples/
+----------------------
+The stills and the animated GIF are frames from a launch film made for Cheerful
+(https://www.cheerful.ai). They are included to show construction and craft, and are
+published here with Cheerful's permission for that purpose only. They depict, variously:
+
+  - product photography and the AG1(R) wordmark, property of AG1;
+  - the spacegoods(R) wordmark and a photograph of a named Spacegoods employee, property
+    of Spacegoods and the individual;
+  - the Shopify and Instagram names and marks, property of their owners;
+  - photographs of real people appearing as creator avatars.
+
+You may not reuse, redistribute, modify or incorporate these images into your own work.
+Fork the repository and you take the code and the documentation, not the pictures.
+
+Tools and dependencies these scripts assume
+-------------------------------------------
+None of these are bundled here; you install them yourself and they carry their own terms.
+
+  - GSAP — GreenSock. Free for the great majority of uses under the GSAP Standard "No
+    Charge" licence (https://gsap.com/licensing/), but read it before you ship: the terms
+    turn on how your project is monetised, not on how you use the library. The docs here
+    tell you to vendor gsap.min.js into your own project; that copy is GreenSock's, under
+    GreenSock's terms, not this repository's.
+  - HyperFrames — https://github.com/heygen-com/hyperframes, the default renderer.
+  - FFmpeg — required at runtime by four of the scripts; check its licensing if you
+    redistribute a build (LGPL or GPL depending on how it was configured).
+  - Node.js — MIT.
+
+What the reference film used, as an example of a credits block
+---------------------------------------------------------------
+Not shipped here; recorded because references/12-deliverables.md tells you to keep one, and
+a worked example is more use than the instruction alone:
+
+  - Voice — Kokoro-82M (Apache 2.0), voice af_heart, generated locally.
+  - Music and SFX — Pixabay Content License.
+  - Fonts — DM Sans (SIL OFL 1.1), Inter (SIL OFL 1.1).
+  - Framework — HyperFrames.
+
+If you believe something here infringes your rights, open an issue and it will be removed.

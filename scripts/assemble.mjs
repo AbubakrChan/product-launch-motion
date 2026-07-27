@@ -44,6 +44,18 @@ import { readFileSync, writeFileSync, existsSync } from "node:fs";
 import { spawnSync } from "node:child_process";
 
 const argv = process.argv.slice(2);
+// `--help` prints the header comment above. One source of truth for the usage text, and it
+// exits 0 — a --help that exits non-zero breaks every Makefile and CI job that wraps it.
+if (argv.includes("--help") || argv.includes("-h")) {
+  const doc = [];
+  for (const line of readFileSync(new URL(import.meta.url), "utf8").split("\n").slice(1)) {
+    if (!line.startsWith("//")) break;
+    doc.push(line.replace(/^\/\/ ?/, ""));
+  }
+  console.log(doc.join("\n").trim());
+  process.exit(0);
+}
+
 const flag = (name, fallback) => {
   const i = argv.indexOf(`--${name}`);
   return i === -1 ? fallback : argv[i + 1];
@@ -54,7 +66,8 @@ const OUT = flag("out", "index.html");
 const dry = argv.includes("--dry");
 
 if (!existsSync(MANIFEST)) {
-  console.error(`no ${MANIFEST}. See the header of this file for its shape.`);
+  console.error(`no ${MANIFEST} — copy assets/film.example.json and edit it,\n` +
+    `or run: node scripts/assemble.mjs --help`);
   process.exit(1);
 }
 const film = JSON.parse(readFileSync(MANIFEST, "utf8"));
@@ -64,7 +77,10 @@ const H = film.height ?? 1080;
 const BG = film.background ?? "#000";
 const GSAP = film.gsap ?? "vendor/gsap.min.js";
 const frames = film.frames ?? [];
-if (!frames.length) throw new Error(`${MANIFEST} has no frames`);
+if (!frames.length) {
+  console.error(`${MANIFEST} has no frames`);
+  process.exit(1);
+}
 
 // Trailing zeros are noise in a diff and make every re-run look like a change.
 const t = (n) => String(Number(n.toFixed(3)));

@@ -28,10 +28,22 @@
 // this finds the first real transient and starts there.
 
 import { execFileSync, spawnSync } from "node:child_process";
-import { existsSync } from "node:fs";
+import { readFileSync, existsSync } from "node:fs";
 import { basename, dirname, extname, join } from "node:path";
 
 const argv = process.argv.slice(2);
+// `--help` prints the header comment above. One source of truth for the usage text, and it
+// exits 0 — a --help that exits non-zero breaks every Makefile and CI job that wraps it.
+if (argv.includes("--help") || argv.includes("-h")) {
+  const doc = [];
+  for (const line of readFileSync(new URL(import.meta.url), "utf8").split("\n").slice(1)) {
+    if (!line.startsWith("//")) break;
+    doc.push(line.replace(/^\/\/ ?/, ""));
+  }
+  console.log(doc.join("\n").trim());
+  process.exit(0);
+}
+
 const input = argv.find((a) => !a.startsWith("--"));
 const flag = (name, fallback) => {
   const i = argv.indexOf(`--${name}`);

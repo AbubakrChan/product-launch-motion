@@ -30,7 +30,7 @@ constructions, and thirty-four traps, each recorded with **the measurement that 
 rather than the vibe that suggested it.
 
 It was extracted from the launch film for [Cheerful](https://www.cheerful.ai) — 44.2
-seconds, eleven shots, seven director revisions — and written to work for **any** product:
+seconds, eleven shots, six rounds of director's notes — and written to work for **any** product:
 SaaS, mobile apps, hardware, e-commerce, dev tools, marketplaces, services. The full
 revision history, note by note, is in [`examples/CASE-STUDY.md`](examples/CASE-STUDY.md).
 
@@ -65,9 +65,10 @@ See `references/11-creative-direction.md`. Read it before anything else.
 
 - **`SKILL.md`** — the laws, the pipeline, and a routing table. Under 500 lines so it
   loads fast; everything else is progressive disclosure.
-- **12 reference documents** — creative direction, story and truth, word-locked sync,
-  motion grammar, the camera rig, the cursor spec, look and grade, sound and mastering, QA
-  and direction, the shot catalog, and the trap index.
+- **12 reference documents** — creative direction; the renderer contract (and how every
+  law ports to Remotion); story and truth; word-locked sync; motion grammar; the camera rig
+  and cursor spec; look and grade; sound and mastering; QA and direction; the shot catalog;
+  the trap index; and deliverables.
 - **8 runnable scripts** — assembly, transitions, audio wiring, film grade, SFX levelling,
   word timings, mastering, and cue verification. Dependency-light, idempotent, safe to
   re-run. `assemble.mjs` measures every frame from its voiceover, so a duration is never
@@ -88,7 +89,9 @@ See `references/11-creative-direction.md`. Read it before anything else.
 npx skills add AbubakrChan/product-launch-motion
 ```
 
-Or drop it in by hand:
+That installs it **into the current project** (`./.agents/skills/`), so it travels with
+the repo. For every project on the machine, clone it into your user skills directory
+instead:
 
 ```bash
 git clone https://github.com/AbubakrChan/product-launch-motion \
@@ -100,17 +103,29 @@ Then just ask:
 > Make a 45-second launch video for my product at example.com
 
 Claude Code loads the skill on any launch-video, promo, demo-reel or motion-design
-request. You can also invoke it explicitly with `/product-launch-motion`.
+request. To force it, name it: *"use the product-launch-motion skill"*.
 
 ## Requirements
 
 | Need | For | Notes |
 |---|---|---|
-| **Node ≥ 22** | the renderer and all scripts | required |
+| **Node ≥ 20** | the scripts | required — the scripts themselves need only Node 18; HyperFrames sets the real floor |
 | **FFmpeg** | measuring voiceover, mastering, levelling, verification | required — `brew install ffmpeg` (`ffprobe` ships with it) |
 | **A seek-based renderer** | HTML → MP4 | [HyperFrames](https://hyperframes.heygen.com) by default; Remotion notes included |
+| **GSAP** | every frame's timeline | required — vendor it, don't CDN it (below) |
 | Python ≥ 3.10 | local text-to-speech | optional — only if you want free offline VO |
 | A word-level transcriber | sync timings | optional — Whisper locally, or any API that returns word timestamps |
+
+**Vendor GSAP before your first frame.** The frame skeleton loads `vendor/gsap.min.js`,
+and a render should need no network at all — a CDN fetch that fails at frame 900 of 1,300
+wastes the whole render:
+
+```bash
+mkdir -p vendor && curl -sL https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js \
+  -o vendor/gsap.min.js
+```
+
+GSAP is free under its [standard licence](https://gsap.com/licensing/) for this use.
 
 No paid API is required to produce a complete film. Voiceover can be local
 ([Kokoro-82M](https://github.com/hexgrad/kokoro), ~80M params, runs on CPU), a commercial
@@ -130,7 +145,8 @@ cp assets/BRIEF.md ./BRIEF.md          # product, audience, the ONE claim, appro
 #     (any TTS or a human recording; output one wav per narration line)
 
 # 4 · word timings → the cue table every frame reads
-node scripts/word-timings.mjs --transcript transcript.json --out audio_meta.json
+node scripts/word-timings.mjs --transcript 01.json --id 01-hook --out audio_meta.json
+#     (or point it at a directory of them: --in transcripts/ --out audio_meta.json)
 
 # 5 · storyboard, then build one HTML frame per beat. The skeleton gives you the
 #     camera rig and cursor; the LOOK comes from your direction, not from it.
@@ -188,8 +204,9 @@ Each one is documented as *when to use it and what breaks*, not just as a name.
 
 ## Stack — and what we tried before settling
 
-The film this came from was a bake-off. Five motion tools were raced on the same beats,
-and the verdicts are baked into the skill so you don't repeat the experiment:
+The film this came from was a bake-off: five motion tools, one beat each, built and
+rendered for real rather than compared on paper. The verdicts are baked into the skill so
+you don't repeat the experiment:
 
 | Tool | Verdict | Why |
 |---|---|---|
@@ -203,11 +220,13 @@ and the verdicts are baked into the skill so you don't repeat the experiment:
 
 ## A taste of the trap index
 
-These are the ones that cost hours. All twenty are in `references/10-traps.md`.
+These are the ones that cost hours. All 34 are in `references/10-traps.md`.
 
 - **Cue volume cannot rescue a quiet source.** Raising a typing SFX from `0.35` to `0.85`
   moved the delivered mix by **0.1 dB** — because the source sat at −37 dB mean under a
-  −17 dB narration bed. Level the asset, not the cue.
+  −21 dB narration stem. Level the asset, not the cue. (Measure against the isolated
+  **stem**, not the mastered window — the window in this film read −16.7 dB, a 4.6 dB
+  error in exactly the direction that flatters the cue.)
 - **`alimiter` silently applies makeup gain** unless you pass `level=disabled`, which
   pushed a −14 LUFS master to −13.0 LUFS / −0.0 dBFS — louder than the target the limiter
   was added to protect.
@@ -215,7 +234,7 @@ These are the ones that cost hours. All twenty are in `references/10-traps.md`.
   as its own layer — a `multiply` vignette over transparency paints its own source colour.
 - **`object-position` is inert when source and box share an aspect ratio**, so it cannot
   reframe a square avatar from a square photo. It looks like it should. It does nothing.
-- **Per-frame grain destroys compression** — a 9 MB render became 85 MB and read as
+- **Per-frame grain destroys compression** — a 9.3 MB render became 67.3 MB and read as
   electronic sizzle. Re-seed at 12 Hz, like real film held across frames.
 - **A full-canvas grade breaks automated contrast checks**, which then report bogus
   1.06:1 ratios. Gate with the grade off, ship with it on.
@@ -250,9 +269,30 @@ can read, diff and fix, so the output is deterministic, brand-exact, and never i
 number or a face.
 
 **How long does a film take?**
-The 44-second reference film renders in ~50 seconds on an M-series laptop and masters in
-under 10. The direction loop — the part that matters — takes as many passes as you have
+Measured on an M-series laptop: the 44-second reference film **renders in 51s**
+(`rendered in 51.1s`, 40 MB raw) and **masters in 30s** (`real 30.35` — two ffmpeg
+passes plus a full re-encode, and the re-encode is most of it). The direction loop — the part that matters — takes as many passes as you have
 notes.
+
+## Troubleshooting
+
+The trap index covers defects in the *film*. These are the ones that bite while setting up.
+
+| What you see | What it means |
+|---|---|
+| `no film.json — copy assets/film.example.json and edit it` | The manifest is the input to the whole chain. Copy the example; it is the reference film's real one. |
+| `no index.html — run assemble.mjs first` | Wiring scripts mount into an assembled index; they never create one. |
+| `no cue table at audio/cues.json` | `cp assets/cues.example.json audio/cues.json`, then edit. |
+| `no frame wrappers in index.html — assemble first` | Your index has no `data-composition-src` elements, so there is nothing to time against. |
+| `<file> has no transitions markers` | The index wasn't written by `assemble.mjs`. Re-assemble, or paste `/* transitions:start */ … /* transitions:end */` into your root timeline's IIFE. |
+| `ffprobe not found — install ffmpeg` | `brew install ffmpeg` (Linux: `apt install ffmpeg`). Needed to measure voiceover, not just to master. |
+| `gsap is not defined` in the render | You copied the frame skeleton without vendoring GSAP — see Requirements. |
+| A tween plays in preview and is missing in the render | Something in it is non-deterministic — `Math.random`, `Date.now`, a CSS `transition`, `repeat`/`yoyo`. The renderer seeks; it does not play. See the determinism rules in `references/01-renderer-contract.md`. |
+| The whole film renders white | A `mix-blend-mode` over a per-track composite: a `multiply` vignette with no backdrop paints its own source colour. Trap 1, and it is not visible in the source. |
+| An edit to `index.html` keeps disappearing | The index is generated. Put it in a wiring script's marked block instead. Trap 3. |
+| Everything works and the film is boring | That is the actual hard problem, and it is what `references/11-creative-direction.md` and `08-qa-and-direction.md` are for. |
+
+Every script takes `--help` and prints its own documentation.
 
 ## Contributing
 
@@ -262,4 +302,9 @@ and the before/after. That standard is the whole reason this file is useful.
 
 ## License
 
-MIT. The craft is meant to travel.
+MIT — see [`LICENSE`](LICENSE). The craft is meant to travel.
+
+**The pictures do not.** The stills and GIF under `examples/` are frames from a real client
+film: they contain third-party brand marks, product photography and photographs of real
+people, and MIT grants you nothing in respect of any of it. See [`NOTICE`](NOTICE) before
+you reuse anything visual from this repo.

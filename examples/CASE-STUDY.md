@@ -15,7 +15,9 @@ this product's claim and this brand's palette. Yours should look nothing like it
 - **Delivered**: 44.2s · 1920×1080 @ 30fps · 11 frames · 30 MB · −14.0 LUFS / −0.8 dBTP
 - **Built with**: HTML + CSS + GSAP, rendered by HyperFrames; local TTS narration; a frozen
   local SFX kit; ffmpeg mastering
-- **Render time**: ~50s. **Master time**: ~10s. The direction loop took days.
+- **Render time**: 51s (measured). **Master time**: 30s (measured). The direction loop
+  took days — which is the honest ratio: the machine time is nothing, the deciding is
+  everything.
 
 ![The search surface with glass borders and a rack-focused stat](still-2.jpg)
 
@@ -74,7 +76,7 @@ beats) and sub-bass under the two hero reveals. Both had complications worth rec
 - The first grade attempt used `mix-blend-mode` and **rendered the entire film white**,
   because each track composites as its own layer and a `multiply` over transparency paints
   its own source colour.
-- Per-frame grain took the render from **9 MB to 85 MB** and read as electronic sizzle. The
+- Per-frame grain took the render from **9.3 MB to 67.3 MB** and read as electronic sizzle. The
   fix was a 12 Hz re-seed and a `-crf 19 -tune film` re-encode.
 - A full-canvas grade broke the automated contrast gate, which reported a nonsense
   **1.06:1**. The pass got an `--off` switch so contrast can be gated with the grade
@@ -90,7 +92,7 @@ bug that only shows up when you watch the film instead of the frame.
 
 ### v3 → v4 · runtimes, and a bake-off
 
-Five motion tools were raced on the same beats to find out what was worth adopting. The
+Five motion tools were raced, one beat each, to find out what was worth adopting. The
 verdicts are in the README's stack table; the short version is that GSAP earns its place,
 Lottie is good for a logo draw-on with one serious trap, Rive can be mounted but not
 authored by an agent, Three.js is a one-shot tool, and Remotion is a genuine peer whose
@@ -133,7 +135,8 @@ The final note was six notes, and they are the reason half this repo exists.
 ![The inbox shot with a 3D turn, a camera push and a visible cursor](still-3.jpg)
 
 **"Add a typing sound."** There already was one. It was mathematically inaudible: the source
-was a distant room recording at −37.4 dB mean, under a −16.7 dB narration bed. Raising the
+was a distant room recording at −37.4 dB mean, against a narration stem at −21.3 dB
+(the mastered *window* read −16.7 dB — flattering, and the wrong thing to measure). Raising the
 cue volume from 0.35 to 0.85 moved the delivered mix by **0.1 dB** — measured. The fix was
 to level the *asset* (+22 dB through a limiter), after which the delivered window's peak
 went from **−4.6 dB to −1.4 dB**. This is where Law 6 comes from.

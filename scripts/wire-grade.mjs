@@ -26,9 +26,21 @@
 //   WCAG sampler read text against the grade and report nonsense (a real 1.06:1 on text
 //   that passes comfortably). Gate with it off, ship with it on.
 
-import { readFileSync, writeFileSync } from "node:fs";
+import { readFileSync, writeFileSync, existsSync } from "node:fs";
 
 const argv = process.argv.slice(2);
+// `--help` prints the header comment above. One source of truth for the usage text, and it
+// exits 0 — a --help that exits non-zero breaks every Makefile and CI job that wraps it.
+if (argv.includes("--help") || argv.includes("-h")) {
+  const doc = [];
+  for (const line of readFileSync(new URL(import.meta.url), "utf8").split("\n").slice(1)) {
+    if (!line.startsWith("//")) break;
+    doc.push(line.replace(/^\/\/ ?/, ""));
+  }
+  console.log(doc.join("\n").trim());
+  process.exit(0);
+}
+
 const flag = (name, fallback) => {
   const i = argv.indexOf(`--${name}`);
   return i === -1 ? fallback : argv[i + 1];
@@ -63,6 +75,10 @@ const MARK_OPEN = "<!-- wire-grade:start -->";
 const MARK_CLOSE = "<!-- wire-grade:end -->";
 const TRACK = 990;
 
+if (!existsSync(INDEX)) {
+  console.error(`no ${INDEX} — run assemble.mjs first (or pass --index <file>)`);
+  process.exit(1);
+}
 let html = readFileSync(INDEX, "utf8");
 html = html.replace(new RegExp(`\\n?[ \\t]*${MARK_OPEN}[\\s\\S]*?${MARK_CLOSE}`, "g"), "");
 
