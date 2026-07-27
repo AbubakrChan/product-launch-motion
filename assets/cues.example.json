@@ -1,0 +1,68 @@
+{
+  "_readme": [
+    "The SFX cue table. `scripts/wire-audio.mjs` reads this and mounts it into the",
+    "assembled index, resolving each frame-relative `at` against that frame's real start.",
+    "",
+    "Author cue times FRAME-RELATIVE. It is the only way they survive a re-order or a",
+    "re-cut upstream: absolute times all move, frame-relative times do not.",
+    "",
+    "Always fill `word`. When the script is re-cut every second changes and no word does,",
+    "so a table annotated with words can be re-derived and a table of bare numbers cannot.",
+    "",
+    "Before trusting a cue, prove it landed in the delivered file:",
+    "  ./scripts/verify-cue.sh renders/video-v1.mp4 <absolute start> <dur>",
+    "If raising `vol` barely moves the delivered peak, the SOURCE is too quiet — level the",
+    "asset with scripts/level-sfx.mjs. See references/07-sound-and-master.md."
+  ],
+
+  "bed": {
+    "src": "audio/music/bed.mp3",
+    "volume": 0.1
+  },
+
+  "sfxDir": "audio/sfx",
+
+  "cues": {
+    "01-hook": [
+      { "sfx": "type-short", "at": 0.11, "dur": 0.45, "vol": 0.3, "word": "Find" },
+      { "sfx": "type-short", "at": 1.16, "dur": 0.45, "vol": 0.3, "word": "email" },
+      { "sfx": "riser-build", "at": 2.85, "dur": 0.85, "vol": 0.18, "word": "into the impact on 'post.'" }
+    ],
+
+    "02-thesis": [
+      { "sfx": "bass-drop", "at": 0.02, "dur": 1.7, "vol": 0.22, "word": "Hire — sub-bass on the hero reveal" },
+      { "sfx": "ux-chime", "at": 0.05, "dur": 0.57, "vol": 0.3, "word": "Hire" },
+      { "sfx": "swish", "at": 1.05, "dur": 0.45, "vol": 0.28, "word": "not" }
+    ],
+
+    "03-prompt": [
+      { "sfx": "mouse-click", "at": 0.04, "dur": 0.36, "vol": 0.45, "word": "Ask — click into the field" },
+      {
+        "sfx": "keyboard-typing-loud",
+        "at": 0.27,
+        "dur": 0.76,
+        "vol": 0.55,
+        "word": "plain English — the query types",
+        "_note": "the -loud variant, not the raw asset: the raw sits at -37 dB mean under a -17 dB bed and no cue volume can lift it. See scripts/level-sfx.mjs."
+      },
+      { "sfx": "mouse-click", "at": 1.3, "dur": 0.36, "vol": 0.5, "word": "it goes — submit" },
+      { "sfx": "ux-chime", "at": 1.55, "dur": 0.34, "vol": 0.3, "word": "to work" }
+    ],
+
+    "04-results": [
+      { "sfx": "whoosh-slide", "at": 0.0, "dur": 0.31, "vol": 0.32, "word": "the surface arrives" },
+      { "sfx": "chime-soft", "at": 0.16, "dur": 0.8, "vol": 0.22, "word": "searches — the scan sweep" },
+      { "sfx": "pop", "at": 1.47, "dur": 0.27, "vol": 0.2, "word": "million — filter chips" },
+      { "sfx": "pop", "at": 1.53, "dur": 0.27, "vol": 0.18, "word": "(chip 2)" },
+      { "sfx": "swish", "at": 2.34, "dur": 0.4, "vol": 0.15, "word": "the camera pushes in" },
+      { "sfx": "click", "at": 2.84, "dur": 0.27, "vol": 0.4, "word": "finds — the cursor click" }
+    ],
+
+    "05-cta": [
+      { "sfx": "whoosh", "at": 0.0, "dur": 0.72, "vol": 0.3, "word": "the end card arrives" },
+      { "sfx": "ux-chime", "at": 1.29, "dur": 0.57, "vol": 0.3, "word": "the brand word" },
+      { "sfx": "bass-drop", "at": 1.29, "dur": 1.8, "vol": 0.2, "word": "sub under the brand word" },
+      { "sfx": "chime", "at": 2.56, "dur": 0.84, "vol": 0.25, "word": "the URL" }
+    ]
+  }
+}

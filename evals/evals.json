@@ -1,0 +1,97 @@
+{
+  "skill_name": "product-launch-motion",
+  "_readme": [
+    "Trigger and behaviour evaluations. The first group checks that the skill activates on",
+    "substantive requests it should own (and stays out of ones it should not). The second",
+    "group checks that, once active, it enforces the laws rather than just describing them.",
+    "",
+    "Assertions use { text, passed, evidence }."
+  ],
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "We're launching our API monitoring tool next Thursday. Can you put together a 45-second launch video for the landing page hero?",
+      "expected_output": "Activates the skill. Starts with intake (BRIEF), asks for or gathers real brand assets and the approved-figures list, and does NOT begin building frames before the voiceover exists.",
+      "assertions": [
+        "Produces or requests a BRIEF before any composition work",
+        "States that the voiceover must be rendered before frame durations are set",
+        "Refuses to invent metrics for the product"
+      ],
+      "files": []
+    },
+    {
+      "id": 2,
+      "prompt": "Here's our product video: renders/v1.mp4. It looks basic and I can't say why. Fix it.",
+      "expected_output": "Activates the skill for a rescue pass. Samples the delivered file at multiple beats, produces a written defect list against the nine laws before editing, and diagnoses specific causes (reveals off-word, no camera, cursor too small, nothing holding at cuts).",
+      "assertions": [
+        "Extracts frames from the delivered file rather than reasoning only from source",
+        "Produces a written defect list before making changes",
+        "Names at least two specific laws the film violates"
+      ],
+      "files": ["renders/v1.mp4"]
+    },
+    {
+      "id": 3,
+      "prompt": "The typing sound effect in our demo video is too quiet. I bumped the volume to 0.9 and it's still inaudible.",
+      "expected_output": "Recognises the volume-arithmetic law. Measures the asset and the narration window rather than adjusting the cue again, then levels the asset and verifies the change in the delivered file.",
+      "assertions": [
+        "Measures the source asset level with ffmpeg before changing anything",
+        "Explains that cue volume cannot rescue a quiet source, with the arithmetic",
+        "Levels the asset and verifies the delivered-file window afterwards"
+      ],
+      "files": []
+    },
+    {
+      "id": 4,
+      "prompt": "Add a camera push-in on the Save button for the settings shot, and have the cursor click it.",
+      "expected_output": "Uses the two-node rig, puts the zoom origin on the button's own centre, keeps the cursor inside the rig, checks the keep-out arithmetic before choosing the scale, and cues the click to a word.",
+      "assertions": [
+        "Rotation and scale are placed on different elements",
+        "The zoom origin is the clicked control's centre",
+        "The keep-out ceiling is computed before the scale is chosen"
+      ],
+      "files": []
+    },
+    {
+      "id": 5,
+      "prompt": "Our mastered launch film measures -13 LUFS and peaks at 0.0 dBFS. What happened?",
+      "expected_output": "Identifies the alimiter makeup-gain trap (missing level=disabled) and the loudnorm linear=true clipping trap, and re-masters with verification against the delivered file.",
+      "assertions": [
+        "Names level=disabled as the cause of the ~1 dB overshoot",
+        "Re-measures the delivered file with ebur128 rather than trusting the filter graph"
+      ],
+      "files": []
+    },
+    {
+      "id": 6,
+      "prompt": "Make a 30-second video showing off our new espresso machine — it's a physical product, no software UI at all.",
+      "expected_output": "Activates and selects hardware-appropriate shots (hero on a floating plane, exploded view, unboxing) rather than SaaS shots, applies the same laws, and warns about bloom over near-white product photography.",
+      "assertions": [
+        "Selects shots from the hardware entries in the catalog, not the UI entries",
+        "Applies the truth pass to product photography and claims",
+        "Does not propose a fake cursor for a product with no UI"
+      ],
+      "files": []
+    },
+    {
+      "id": 7,
+      "prompt": "Trim 4 seconds off the middle of the film — the product section drags.",
+      "expected_output": "Recognises that re-cutting narration invalidates every word-locked cue, and either re-transcribes or explains the uniform-tempo rescale rule, rather than nudging timings by ear.",
+      "assertions": [
+        "States that cues must be re-derived after a re-cut",
+        "Does not adjust individual cue times by estimate"
+      ],
+      "files": []
+    },
+    {
+      "id": 8,
+      "prompt": "Can you add captions to this recording of our CEO's keynote?",
+      "expected_output": "Does NOT activate this skill — captioning existing talking-head footage is outside its scope, and the skill says so explicitly.",
+      "assertions": [
+        "Declines to apply the launch-film pipeline",
+        "Points to caption tooling instead"
+      ],
+      "files": []
+    }
+  ]
+}

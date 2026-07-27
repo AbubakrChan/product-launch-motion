@@ -1,0 +1,393 @@
+<!--
+  frame-skeleton.html — a working frame. Copy this; don't retype it.
+
+  What is already built in here, because these are the parts people get wrong:
+    · the two-node camera rig (dolly node + 3D turn node)          Law 4
+    · a cursor at prop scale with the full three-layer click stack Law 5
+    · glass borders that render in a per-track compositing renderer
+    · a word-cued timeline with the cue table in a comment          Law 2
+    · a locked hold at the end — nothing is moving at the cut       Law 7
+
+  Everything the camera moves lives INSIDE #stage, in stage-local coordinates. That is what
+  keeps the cursor glued to its target through the turn and the push. If you add an element
+  as a canvas-space sibling of the rig, you have broken the shot.
+
+  Replace: the id prefix (f01-), the geometry, the copy, and the cue times.
+  Keep: the structure, the comments explaining WHY, and the hold at the end.
+-->
+<template>
+  <script src="vendor/gsap.min.js"></script>
+
+  <style>
+    /* Self-hosted fonts only — a render should need no network at all. */
+    @font-face {
+      font-family: "YourSans";
+      src: url("fonts/YourSans-Variable.woff2") format("woff2-variations");
+      font-weight: 100 900;
+      font-display: block;
+    }
+
+    /* The frame root. Style #root, never a class on the composition element. */
+    #root {
+      position: relative;
+      width: 1920px;
+      height: 1080px;
+      overflow: hidden;
+      font-family: "YourSans", sans-serif;
+      -webkit-font-smoothing: antialiased;
+      color: #2c2c2c;
+    }
+
+    /* ── ground ──────────────────────────────────────────────────────────────
+       Full-bleed ground rides on a clip layer, never on #root. Depth from light:
+       a base colour plus two soft brand radials. No blurred screenshot. */
+    .f01-ground {
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 56% 46% at 16% -8%, rgba(80, 60, 200, 0.12), rgba(80, 60, 200, 0) 64%),
+        radial-gradient(ellipse 42% 38% at 92% 6%, rgba(255, 120, 70, 0.07), rgba(255, 120, 70, 0) 68%),
+        #fafafb;
+    }
+
+    /* ── THE CAMERA RIG ──────────────────────────────────────────────────────
+       #f01-cam    owns the DOLLY (scale) only. Its origin is the control the
+                   camera pushes toward, which makes that control a fixed point
+                   of the transform — so cursor coordinates survive the push.
+       #f01-stage  owns the 3D TURN (perspective + rotation) only.
+
+       Two nodes, not one: a whole-shot rotation and a mid-shot scale on the same
+       element fight over one transform matrix and the move judders. */
+    .f01-cam,
+    .f01-stage {
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 1400px;
+      height: 700px;
+    }
+    .f01-cam {
+      left: 260px;  /* rig origin in canvas space */
+      top: 148px;
+    }
+    .f01-stage {
+      transform-style: preserve-3d;  /* lets children carry real z for parallax */
+    }
+
+    /* ── the surface ─────────────────────────────────────────────────────── */
+    .f01-card {
+      position: absolute;
+      inset: 0;
+      border-radius: 22px;
+      background: #ffffff;
+      border: 1px solid rgba(16, 14, 25, 0.08);
+      box-shadow:
+        0 1px 2px rgba(16, 14, 25, 0.04),
+        0 40px 90px -40px rgba(16, 14, 25, 0.28);
+      will-change: transform, opacity;
+    }
+
+    /* ── glass borders ───────────────────────────────────────────────────────
+       `backdrop-filter` is useless here: the renderer composites each .clip track
+       on its own, so there is no backdrop to blur. Fake it honestly with a 14px
+       frosted band and a 1.5px gradient hairline, both built from the
+       padding + mask-composite ring trick. Keep them INSIDE the card box so a
+       camera push can't shove a plate edge into the bottom keep-out band. */
+    .f01-glassband,
+    .f01-rim {
+      position: absolute;
+      inset: 0;
+      border-radius: 22px;
+      -webkit-mask:
+        linear-gradient(#000 0 0) content-box,
+        linear-gradient(#000 0 0);
+      -webkit-mask-composite: xor;
+      mask-composite: exclude;
+      pointer-events: none;
+      opacity: 0;
+    }
+    .f01-glassband {
+      padding: 14px;
+      background: linear-gradient(
+        135deg,
+        rgba(80, 60, 200, 0.10) 0%,
+        rgba(255, 255, 255, 0.60) 42%,
+        rgba(255, 120, 70, 0.09) 100%
+      );
+      z-index: 5;
+    }
+    .f01-rim {
+      padding: 1.5px;
+      background: linear-gradient(
+        135deg,
+        rgba(80, 60, 200, 0.50) 0%,
+        rgba(255, 255, 255, 0.85) 46%,
+        rgba(255, 120, 70, 0.45) 100%
+      );
+      z-index: 7;
+    }
+
+    /* ── content (replace all of this) ───────────────────────────────────── */
+    .f01-title {
+      position: absolute;
+      left: 56px;
+      top: 52px;
+      font-size: 34px;
+      font-weight: 600;
+      letter-spacing: -0.01em;
+      white-space: nowrap;
+      will-change: transform, opacity;
+    }
+    .f01-row {
+      position: absolute;
+      left: 56px;
+      width: 700px;
+      height: 92px;
+      border-radius: 14px;
+      background: rgba(16, 14, 25, 0.025);
+      border: 1px solid rgba(16, 14, 25, 0.07);
+      will-change: transform, opacity;
+    }
+    .f01-btn {
+      position: absolute;
+      left: 1080px;
+      top: 520px;
+      width: 154px;
+      height: 52px;
+      border-radius: 100px;
+      background: linear-gradient(90deg, #5a3cc8 13%, #ff7846 90%);
+      box-shadow: 0 10px 24px -12px rgba(90, 60, 200, 0.55);
+      display: grid;
+      place-items: center;
+      transform-origin: 50% 50%;
+      will-change: transform;
+    }
+    .f01-btn span {
+      font-size: 22px;
+      font-weight: 600;
+      color: #fff;
+    }
+
+    /* ── the cursor ──────────────────────────────────────────────────────────
+       44×54, not life-size: a true-to-life ~32px pointer vanishes into a
+       saturated control. Position by the TIP: left/top = click point minus the
+       tip offset, which is ≈ (6, 3) for this path at this size. */
+    #f01-cursor {
+      position: absolute;
+      left: 1151px;  /* click point 1157 − 6 */
+      top: 543px;    /* click point  546 − 3 */
+      width: 44px;
+      height: 54px;
+      opacity: 0;
+      transform-origin: 14% 6%;
+      pointer-events: none;
+      z-index: 60;
+      filter: drop-shadow(0 6px 16px rgba(16, 14, 25, 0.42));
+      will-change: transform;
+    }
+    /* Three-layer click feedback: soft bloom → hard ring → the arrow's own press.
+       Negative margins mean left/top ARE the click centre. */
+    .f01-bloom,
+    .f01-ripple {
+      position: absolute;
+      border-radius: 50%;
+      opacity: 0;
+      transform-origin: 50% 50%;
+      pointer-events: none;
+    }
+    .f01-bloom {
+      width: 148px;
+      height: 148px;
+      margin-left: -74px;
+      margin-top: -74px;
+      background: radial-gradient(
+        circle at 50% 50%,
+        rgba(80, 60, 200, 0.34) 0%,
+        rgba(255, 120, 70, 0.16) 46%,
+        rgba(255, 120, 70, 0) 70%
+      );
+      z-index: 39;
+    }
+    .f01-ripple {
+      width: 104px;
+      height: 104px;
+      margin-left: -52px;
+      margin-top: -52px;
+      border: 2px solid rgba(80, 60, 200, 0.55);
+      z-index: 40;
+    }
+    #f01-bloom-1,
+    #f01-ripple-1 {
+      left: 1157px;  /* the button's centre, in stage-local coordinates */
+      top: 546px;
+    }
+  </style>
+
+  <div
+    id="root"
+    data-composition-id="01-example"
+    data-width="1920"
+    data-height="1080"
+    data-duration="4.20"
+  >
+    <!-- track 0 · ground -->
+    <div class="clip f01-ground" data-start="0" data-duration="4.20" data-track-index="0"></div>
+
+    <!-- track 1 · the camera rig; everything the camera moves lives in here -->
+    <div class="clip f01-cam" id="f01-cam" data-start="0" data-duration="4.20" data-track-index="1">
+      <div class="f01-stage" id="f01-stage">
+        <div class="f01-card" id="f01-card"></div>
+
+        <div class="f01-title" id="f01-title">Your headline here</div>
+        <div class="f01-row" id="f01-row-0" style="top: 140px"></div>
+        <div class="f01-row" id="f01-row-1" style="top: 252px"></div>
+        <div class="f01-row" id="f01-row-2" style="top: 364px"></div>
+        <div class="f01-btn" id="f01-btn"><span>Accept</span></div>
+
+        <!-- glass borders sit over the card's own content -->
+        <div class="f01-glassband" id="f01-glassband"></div>
+        <div class="f01-rim" id="f01-rim"></div>
+
+        <!-- the cursor and its click feedback, on the surface -->
+        <div class="f01-bloom" id="f01-bloom-1"></div>
+        <div class="f01-ripple" id="f01-ripple-1"></div>
+        <div id="f01-cursor">
+          <svg viewBox="0 0 24 30" width="44" height="54" xmlns="http://www.w3.org/2000/svg">
+            <path
+              d="M3.4 1.6 L3.4 25.4 L9.7 19.4 L13.7 29.2 L17.9 27.3 L14 17.7 L21.9 17.1 Z"
+              fill="#FFFFFF"
+              stroke="rgba(16,14,25,0.8)"
+              stroke-width="1.6"
+              stroke-linejoin="round"
+            />
+          </svg>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    (function () {
+      /* ═══════════════════════════════════════════════════════════════════════
+         VO: "Your line of narration goes here, and each word has a time."
+         "Your"@0.03   "line"@0.31   "narration"@0.88   "each"@1.90
+         "word"@2.24   "time."@2.86                     duration 3.40s
+
+         Every cue below carries the word it lands on. When the script is re-cut
+         all the seconds move and none of the words do, so a table annotated with
+         words survives a re-cut and a table of bare numbers does not.
+      ═══════════════════════════════════════════════════════════════════════ */
+
+      window.__timelines = window.__timelines || {};
+      var tl = gsap.timeline({ paused: true });
+      var DUR = 3.40; // animated span; the frame holds to its data-duration
+
+      var cam = document.getElementById("f01-cam");
+      var stage = document.getElementById("f01-stage");
+
+      /* ── camera · the turn (whole shot) ──────────────────────────────────
+         The surface starts angled away and squares up as the shot resolves.
+         Never resolve to exactly 0 — a hair of angle keeps the depth. */
+      gsap.set(stage, { transformPerspective: 2600, transformOrigin: "50% 52%" });
+      tl.fromTo(
+        stage,
+        { rotationY: -7.2, rotationX: 2.1 },
+        { rotationY: -1.3, rotationX: 0.5, duration: DUR, ease: "power1.inOut" },
+        0,
+      );
+
+      /* ── depth ───────────────────────────────────────────────────────────
+         A few pixels of z on the elements the story touches, so they parallax
+         against the card under the turn. Static: the turn supplies the motion. */
+      gsap.set("#f01-btn", { z: 22 });
+      gsap.set("#f01-row-0", { z: 12 });
+
+      /* ── camera · the dolly (back half) ──────────────────────────────────
+         Origin = the button's own centre, in percentages of the rig box:
+           (1157 / 1400) = 82.6%   ·   (546 / 700) = 78.0%
+         That makes the button a fixed point of the scale, so the cursor stays
+         aimed with no compensating maths.
+
+         Check the ceiling before choosing the scale:
+           bottom_after = bottom + (bottom − origin_y) · (scale − 1)
+         Run it on all four edges against your keep-out band. */
+      gsap.set(cam, { transformOrigin: "82.6% 78.0%" });
+      tl.to(cam, { scale: 1.10, duration: 0.36, ease: "power2.inOut" }, 1.60);
+      tl.to(cam, { scale: 1.00, duration: 0.36, ease: "power2.inOut" }, 2.86);
+
+      /* ── entrances ───────────────────────────────────────────────────────
+         fromTo, not to, so a seek reproduces the start state. 0.24–0.38s,
+         power3.out, opacity plus a small translate — never opacity alone. */
+      tl.fromTo("#f01-card", { opacity: 0, scale: 0.99 },
+                             { opacity: 1, scale: 1, duration: 0.36, ease: "power3.out" }, 0);
+      tl.to(["#f01-glassband", "#f01-rim"], { opacity: 1, duration: 0.50, ease: "power2.out" }, 0.08);
+
+      // "Your"@0.03 — the headline
+      tl.fromTo("#f01-title", { opacity: 0, y: 10 },
+                              { opacity: 1, y: 0, duration: 0.28, ease: "power3.out" }, 0.03);
+
+      // "line"@0.31 — the rows cascade. 0.06 stagger reads; much more outruns the voice.
+      tl.fromTo(["#f01-row-0", "#f01-row-1", "#f01-row-2"],
+                { opacity: 0, x: -18 },
+                { opacity: 1, x: 0, duration: 0.28, ease: "power3.out", stagger: 0.06 }, 0.31);
+
+      // "narration"@0.88 — the control the shot is about
+      tl.fromTo("#f01-btn", { opacity: 0, y: 10 },
+                            { opacity: 1, y: 0, duration: 0.30, ease: "power3.out" }, 0.88);
+
+      /* ── the click ───────────────────────────────────────────────────────
+         Shared routine so every click in the film feels identical. */
+      function click(n, at) {
+        var bloom = "#f01-bloom-" + n;
+        var ring = "#f01-ripple-" + n;
+        // the bloom LEADS the press by 0.1s — this is what makes a click read as
+        // intentional rather than as a shape appearing
+        tl.fromTo(bloom, { opacity: 0, scale: 0.3 },
+                         { opacity: 1, scale: 0.62, duration: 0.12, ease: "power2.out" }, at - 0.1);
+        tl.to("#f01-cursor", { scale: 0.86, duration: 0.06, ease: "power2.in" }, at);
+        tl.to("#f01-cursor", { scale: 1, duration: 0.26, ease: "back.out(2.4)" }, at + 0.06);
+        tl.to(bloom, { opacity: 0, scale: 1.15, duration: 0.34, ease: "power2.out" }, at);
+        // immediateRender:false — otherwise GSAP paints the "from" state on frame 0
+        tl.fromTo(ring, { opacity: 0.75, scale: 0.34 },
+                        { opacity: 0, scale: 1.5, duration: 0.42, ease: "power2.out",
+                          immediateRender: false }, at);
+      }
+
+      /* Cursor travel: enter off-target, a 0.05s anticipation pull-back, then a
+         BOWED path — x and y on different eases and durations, so the move curves
+         instead of sliding on a ruler line. Start early; land the CLICK on the
+         word. Never butt-join tweens on one property (a move ending at 1.38 and
+         the next starting at 1.38 is reported as an overlap). */
+      tl.set("#f01-cursor", { x: -150, y: 120 }, 1.60);
+      tl.to("#f01-cursor", { opacity: 1, duration: 0.14, ease: "none" }, 1.62);
+      tl.to("#f01-cursor", { x: -158, y: 128, duration: 0.05, ease: "power1.out" }, 1.64);
+      tl.to("#f01-cursor", { x: 0, duration: 0.20, ease: "power2.inOut" }, 1.70);
+      tl.to("#f01-cursor", { y: 0, duration: 0.24, ease: "power1.inOut" }, 1.70);
+
+      // "each"@1.90 — the click lands exactly on its word
+      click(1, 1.90);
+
+      /* The control must REACT. A cursor pressing a button that does not move is
+         uncanny: depress it on the click frame, spring it back. */
+      tl.to("#f01-btn", { scale: 0.94, duration: 0.09, ease: "power1.in" }, 1.90);
+      tl.to("#f01-btn", { scale: 1, duration: 0.30, ease: "back.out(1.8)" }, 1.99);
+
+      /* ── a deterministic count-up ────────────────────────────────────────
+         A proxy object with snap + onUpdate is a pure function of timeline time,
+         so it is identical under a reverse seek. Never write to the DOM from a
+         wall clock. Give the element `font-variant-numeric: tabular-nums` so the
+         numerals do not reflow, and grow it with transform, never font-size. */
+      // var COUNT = { v: 0 }, el = document.getElementById("f01-num");
+      // tl.to(COUNT, { v: 852, duration: 0.72, ease: "power2.out", snap: { v: 1 },
+      //                onUpdate: function () { el.textContent = Math.round(COUNT.v); } }, 2.24);
+
+      /* ── the cursor leaves, and the frame locks ──────────────────────────
+         Law 7: nothing is moving at the cut. The last tween ends at 2.86 + 0.36
+         = 3.22, inside DUR, and the remaining time is a true hold. Extract the
+         last frame of the shot and confirm it is static. */
+      tl.to("#f01-cursor", { opacity: 0, duration: 0.20, ease: "none" }, 2.60);
+
+      window.__timelines["01-example"] = tl;
+    })();
+  </script>
+</template>
