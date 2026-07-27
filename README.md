@@ -25,21 +25,49 @@ actually moving, or is everything just drifting? Can you see the cursor? Is the
 "typing sound" you added *actually audible*, or is it 20 dB under the narration and
 mathematically inaudible?
 
-This skill is that craft, written down — nine laws, a twelve-step pipeline, fourteen
-reusable shots, and roughly twenty traps, each recorded with **the measurement that proves
-it** rather than the vibe that suggested it.
+This skill is that craft, written down — ten laws, a thirteen-step pipeline, fourteen shot
+constructions, and thirty-plus traps, each recorded with **the measurement that proves it**
+rather than the vibe that suggested it.
 
-It was extracted from a real 44.2-second B2B SaaS launch film that went through seven
-director revisions, and it is written to work for **any** product: SaaS, mobile apps,
-hardware, e-commerce, dev tools, marketplaces, services.
+It was extracted from the launch film for [Cheerful](https://www.cheerful.ai) — 44.2
+seconds, eleven shots, seven director revisions — and written to work for **any** product:
+SaaS, mobile apps, hardware, e-commerce, dev tools, marketplaces, services. The full
+revision history, note by note, is in [`examples/CASE-STUDY.md`](examples/CASE-STUDY.md).
+
+## It is a director, not a template
+
+**Two products should never get the same film.** That is the whole design constraint, and
+it is why the first thing the skill does is refuse to start building.
+
+The laws are fixed — truth, word-locked sync, determinism, sound arithmetic, mastering
+targets, verification. **The look is not.** Palette, ground, depth, camera personality,
+typography, texture, pacing, structure, whether there is a cursor, whether there is a
+voice at all: all of it is derived per product from the claim, the brand, the audience and
+the category. Before a single frame is built, the skill writes **three genuinely different
+visual directions, judges them, and kills two.**
+
+It also insists on a **signature move** — one thing this film does that no other film does,
+expressing that product's specific claim. A dev tool might play out as one continuously
+scrolling terminal buffer. A skincare brand might match-cut every transition on the same
+circular form. A fintech dashboard might be a single horizontal pan across one enormous
+ledger. Same discipline, unrecognisably different films.
+
+And it ships anti-sameness checks that name its own defaults so you can refuse them:
+
+> Are you using the reference film's gradient? Then you took its accent instead of deriving
+> one. Does your film have glass borders *and* a gradient-mesh ground *and* specular
+> sweeps? That is the default kit applied wholesale. **Could a competitor use this
+> direction unchanged? Then kill it — it is a category template, not a direction.**
+
+See `references/11-creative-direction.md`. Read it before anything else.
 
 ## What you get
 
 - **`SKILL.md`** — the laws, the pipeline, and a routing table. Under 500 lines so it
   loads fast; everything else is progressive disclosure.
-- **10 reference documents** — story and truth, word-locked sync, motion grammar, the
-  camera rig, the cursor spec, look and grade, sound and mastering, QA and direction, the
-  shot catalog, and the trap index.
+- **11 reference documents** — creative direction, story and truth, word-locked sync,
+  motion grammar, the camera rig, the cursor spec, look and grade, sound and mastering, QA
+  and direction, the shot catalog, and the trap index.
 - **6 runnable scripts** — audio wiring, film grade, SFX levelling, word timings,
   mastering, and cue verification. Dependency-light, idempotent, safe to re-run.
 - **4 templates** — brief, storyboard, cue table, and a working frame skeleton with the
@@ -87,26 +115,36 @@ TTS voice, or a human recording — the pipeline only needs a WAV and its word t
 # 1 · scaffold + intake
 cp assets/BRIEF.md ./BRIEF.md          # product, audience, the ONE claim, approved figures
 
-# 2 · voiceover FIRST — frame durations come from real VO length, never estimates
+# 2 · DIRECTION — write three different looks, judge them, kill two, name the
+#     signature move. Ten minutes here decides everything downstream.
+#     → references/11-creative-direction.md
+
+# 3 · voiceover FIRST — frame durations come from real VO length, never estimates
 #     (any TTS or a human recording; output one wav per narration line)
 
-# 3 · word timings → the cue table every frame reads
+# 4 · word timings → the cue table every frame reads
 node scripts/word-timings.mjs --transcript transcript.json --out audio_meta.json
 
-# 4 · storyboard, then build one HTML frame per beat from the skeleton
+# 5 · storyboard, then build one HTML frame per beat. The skeleton gives you the
+#     camera rig and cursor; the LOOK comes from your direction, not from it.
 cp assets/frame-skeleton.html compositions/frames/01-hook.html
 
-# 5 · assemble → transitions → audio → grade  (this order, every time)
+# 6 · assemble → transitions → audio → grade  (this order, every time)
 node scripts/wire-audio.mjs && node scripts/wire-grade.mjs
 
-# 6 · gates, render, master, verify
+# 7 · gates, render, master, verify
 npx hyperframes check --no-contrast
 npx hyperframes render -o renders/video-v1-raw.mp4
 ./scripts/master.sh renders/video-v1-raw.mp4 renders/video-v1.mp4
 ./scripts/verify-cue.sh renders/video-v1.mp4 10.72 0.76    # prove the cue is audible
 ```
 
-## What it actually produces
+## One film it produced
+
+These frames are **one direction**, executed — not the house look. A dev tool, a skincare
+brand and a fintech dashboard built with this skill should share none of this film's
+palette, ground, camera behaviour or typography. What they share is the discipline
+underneath.
 
 ![Product surface with glass borders, filtered results and a rack-focused stat](examples/still-2.jpg)
 
@@ -173,6 +211,13 @@ These are the ones that cost hours. All twenty are in `references/10-traps.md`.
   1.06:1 ratios. Gate with the grade off, ship with it on.
 
 ## FAQ
+
+**Will every video made with this look the same?**
+No, and the skill is built to prevent it. The look is derived per product, the pipeline
+forces three competing directions before any building, and there is a checklist that names
+the skill's own defaults so an agent can catch itself reaching for them. What repeats is
+the discipline — sync, determinism, sound arithmetic, mastering — not the aesthetic. See
+`references/11-creative-direction.md`.
 
 **Does this work for physical products, not just software?**
 Yes. The shot catalog covers hardware heroes, unboxing and exploded views, e-commerce

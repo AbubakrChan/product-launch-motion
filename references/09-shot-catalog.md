@@ -2,7 +2,9 @@
 
 Fourteen shots covering almost every beat a launch film needs. Each is a *claim carrier*: it exists to make one sentence land, and it fails when asked to carry two.
 
-Pick shots at storyboard time (pipeline step 6), before you open a single HTML file. Write the shot name into `../assets/STORYBOARD.md` beside the VO line it serves, then build from `../assets/frame-skeleton.html`. Construction detail lives in `04-motion-grammar.md` (easing, staggers, holds) and `05-camera-3d-cursor.md` (rigs, cursor); this file is *which* shot and *why*.
+> **These are constructions, not layouts.** Each entry says what a shot has to *do* — the claim it carries, what arrives in what order, how it fails. It deliberately does not prescribe where things sit, what colour they are, or how the camera behaves: those come from your direction (`11-creative-direction.md`), and two films using the same shot should still look nothing alike. Copying an entry's composition wholesale is how you end up with a film that could belong to anyone. Take the mechanism; invent the picture.
+
+Pick shots at storyboard time (pipeline step 7), before you open a single HTML file. Write the shot name into `../assets/STORYBOARD.md` beside the VO line it serves, then build from `../assets/frame-skeleton.html`. Construction detail lives in `04-motion-grammar.md` (easing, staggers, holds) and `05-camera-3d-cursor.md` (rigs, cursor); this file is *which* shot and *why*.
 
 Where a shot cites an example, that example is the reference film in `../examples/CASE-STUDY.md` — one 44.2s B2B SaaS launch, an instance and not the shape. Every shot below is written for hardware, e-commerce, apps, dev tools and services equally.
 

@@ -15,8 +15,17 @@ the plumbing examples are HyperFrames.
 
 **This skill exists because green tooling is not the same as good film.** A composition
 can lint clean, render without error, and still be a slideshow. The value below is the
-craft that separates the two, plus the ~20 traps that cost real hours to find — each one
+craft that separates the two, plus the traps that cost real hours to find — each one
 recorded with the measurement that proves it, not the vibe that suggested it.
+
+**It is a discipline, not a template.** The laws below are fixed; the *look* is not, and
+deciding it is your job as director. Two films built from this skill should be
+unmistakably different from each other — different palette, ground, camera personality,
+type, texture, sound and structure — because they are arguing different claims for
+different audiences. Before you build anything, write three genuinely different visual
+directions and kill two: `references/11-creative-direction.md`. Reaching for the reference
+film's look because it is documented here is the one failure mode that makes everything
+else worthless.
 
 ## When to use this
 
@@ -27,9 +36,10 @@ video that "looks basic".
 Do not use it for: talking-head editing, screen-recording with captions slapped on, or
 anything where the deliverable is a live web page rather than a video file.
 
-## The nine laws
+## The ten laws
 
-Break one and the film reads amateur, however good the individual frames are.
+Break one and the film reads amateur, however good the individual frames are. Note what
+they do **not** cover: none of them tells you what the film should look like.
 
 **1 · Truth first.** Every number, logo, face, screenshot and testimonial on screen is
 real and sourced. Before animating anything, write down the approved figures — the exact
@@ -76,26 +86,34 @@ none of the things that make a film bad. After every render, extract frames from
 **delivered file** at the beats you changed, look at them, and write down what is wrong
 before anyone else does. → `references/08-qa-and-direction.md`
 
+**10 · No house style.** The look is derived from *this* product's claim, brand, audience
+and category — never inherited from the last film or from the examples in this repo. Write
+three different directions, pick one, and give the film a signature move that no other film
+has. A film that could be a competitor's film with the logo swapped has no direction.
+→ `references/11-creative-direction.md`
+
 ## The pipeline
 
-Twelve steps. Do not skip 1, 4 or 12 — they are the ones people skip.
+Thirteen steps. Do not skip 1, 2, 5 or 13 — they are the ones people skip, and they are
+the ones that decide whether the film is any good.
 
 | # | Step | Output | Reference |
 |---|---|---|---|
 | 1 | **Intake** — the product, the audience, the ONE claim, the angle (usually the product's own headline) | `BRIEF.md` | `assets/BRIEF.md` |
-| 2 | **Truth pass** — collect real assets, real screens, real customers, and fix the approved-figures list | `assets/`, figures list | `references/02-story-and-truth.md` |
-| 3 | **Script** — 40–60s written for the ear; one clause per beat; the claim lands in the first 10s | `SCRIPT.md` | `references/02-story-and-truth.md` |
-| 4 | **Voiceover** — render or record the VO *before* building anything; frame durations come from real VO length | `assets/voice/*.wav` | `references/03-word-locked-sync.md` |
-| 5 | **Word timings** — transcribe with word-level timestamps into a cue table | `audio_meta.json` | `scripts/word-timings.mjs` |
-| 6 | **Storyboard** — frames, durations, register map, and a shot per beat from the catalog | `STORYBOARD.md` | `references/09-shot-catalog.md` |
-| 7 | **Build frames** — one HTML file per frame; camera rig and cursor from the skeleton; every tween cued to a word | `compositions/frames/*.html` | `references/04-motion-grammar.md` |
-| 8 | **Assemble** — index, transitions, audio, grade — in that order, every time | `index.html` | `references/01-renderer-contract.md` |
-| 9 | **Gates** — lint/runtime/layout/motion with the grade on; contrast with the grade off | 0 errors | `references/08-qa-and-direction.md` |
-| 10 | **Render + master** — two-pass loudnorm, limiter, re-encode | `renders/*.mp4` | `scripts/master.sh` |
-| 11 | **Verify in the delivered file** — frames at the changed beats, cue levels measured | evidence | `scripts/verify-cue.sh` |
-| 12 | **Direct** — watch it, list the defects yourself, fix, re-render as a NEW file | v2, v3, … | `references/08-qa-and-direction.md` |
+| 2 | **Direction** — three genuinely different visual directions, judged and cut to one, plus a signature move | direction block | `references/11-creative-direction.md` |
+| 3 | **Truth pass** — collect real assets, real screens, real customers, and fix the approved-figures list | `assets/`, figures list | `references/02-story-and-truth.md` |
+| 4 | **Script** — 40–60s written for the ear; one clause per beat; the claim lands in the first 10s | `SCRIPT.md` | `references/02-story-and-truth.md` |
+| 5 | **Voiceover** — render or record the VO *before* building anything; frame durations come from real VO length | `assets/voice/*.wav` | `references/03-word-locked-sync.md` |
+| 6 | **Word timings** — transcribe with word-level timestamps into a cue table | `audio_meta.json` | `scripts/word-timings.mjs` |
+| 7 | **Storyboard** — frames, durations, the register map from your direction, and a shot per beat | `STORYBOARD.md` | `references/09-shot-catalog.md` |
+| 8 | **Build frames** — one HTML file per frame; camera rig and cursor from the skeleton; every tween cued to a word | `compositions/frames/*.html` | `references/04-motion-grammar.md` |
+| 9 | **Assemble** — index, transitions, audio, grade — in that order, every time | `index.html` | `references/01-renderer-contract.md` |
+| 10 | **Gates** — lint/runtime/layout/motion with the grade on; contrast with the grade off | 0 errors | `references/08-qa-and-direction.md` |
+| 11 | **Render + master** — two-pass loudnorm, limiter, re-encode | `renders/*.mp4` | `scripts/master.sh` |
+| 12 | **Verify in the delivered file** — frames at the changed beats, cue levels measured | evidence | `scripts/verify-cue.sh` |
+| 13 | **Direct** — watch it, list the defects yourself, fix, re-render as a NEW file | v2, v3, … | `references/08-qa-and-direction.md` |
 
-### Build order (step 8) is not negotiable
+### Build order (step 9) is not negotiable
 
 The index is generated, so anything hand-added to it is destroyed on re-assemble and must
 be re-injected. Every wiring script here is idempotent (it replaces its own marked block),
@@ -114,6 +132,7 @@ Load only what the current step needs.
 
 | File | What's in it |
 |---|---|
+| `references/11-creative-direction.md` | **Read this first.** What is fixed and what is free, the direction dials, deriving a look from the product, diverging to three directions, the signature move, five worked directions, and the anti-sameness checks |
 | `references/01-renderer-contract.md` | How HTML becomes video: timed tracks, the seekable timeline, determinism rules, build order, and what to do on Remotion instead |
 | `references/02-story-and-truth.md` | Angle, arc, the register map, the approved-figures discipline, honesty rules, and how to source real assets for *any* product |
 | `references/03-word-locked-sync.md` | Getting word timings, writing the cue table, pacing, holds, and why VO comes first |
@@ -122,7 +141,7 @@ Load only what the current step needs.
 | `references/06-look-and-grade.md` | Palette rationing, glass borders without `backdrop-filter`, film grain, vignette, specular sweeps, and the blend-mode trap |
 | `references/07-sound-and-master.md` | SFX design, sub-bass, silence before the hero beat, the volume-arithmetic law, asset levelling, and the mastering chain |
 | `references/08-qa-and-direction.md` | The gates, snapshot review, verifying the delivered file, and the director loop that turns a v1 into a v7 |
-| `references/09-shot-catalog.md` | 14 reusable shots — SaaS UI, prompt/composer, results list, inbox, pipeline tracker, stat count-up, testimonial, comparison, hardware hero, terminal, map, chart, unboxing, end card |
+| `references/09-shot-catalog.md` | 14 shot *constructions* to adapt — prompt/composer, results list, workspace, pipeline tracker, stat count-up, testimonial, comparison, hardware hero, terminal, map, chart, end card. Never a running order to copy |
 | `references/10-traps.md` | Every trap we hit, each with the measurement that proves it. Read this before debugging anything |
 
 ## Scripts
@@ -152,6 +171,9 @@ All are dependency-light Node/bash, all idempotent, all safe to re-run.
 A launch film is finished when all of these are true. Anything less, say so plainly
 rather than shipping quietly.
 
+- [ ] Three directions were written and two were killed; the chosen one is recorded
+- [ ] The film has a signature move you can name in one sentence
+- [ ] It does not look like the examples in this repo, or like the last film you made
 - [ ] Every on-screen number is on the approved-figures list
 - [ ] Every reveal sits on its word (spot-check five at random against the transcript)
 - [ ] Gates: 0 errors with the grade on; contrast passes with the grade off

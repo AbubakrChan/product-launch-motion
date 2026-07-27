@@ -1,10 +1,16 @@
-# Case study — a 44.2s B2B SaaS launch film, v1 → v7
+# Case study — Cheerful, v1 → v7
 
-This skill was extracted from one film. It is worth reading the revision history rather
-than just the finished frames, because **every technique in this repo exists as the answer
-to a specific director's note** — and the notes are the part you cannot get from a tutorial.
+This skill was extracted from one film: the launch video for
+[Cheerful](https://www.cheerful.ai). It is worth reading the revision history rather than
+just the finished frames, because **every technique in this repo exists as the answer to a
+specific director's note** — and the notes are the part you cannot get from a tutorial.
 
-- **Product**: an AI-native influencer-marketing platform (SaaS, B2B, sales-led)
+Read it as *one direction executed well*, not as the shape a launch film should take. The
+two-register flip, the purple-to-orange accent and the reconstructed inbox are answers to
+this product's claim and this brand's palette. Yours should look nothing like it —
+`references/11-creative-direction.md` is about making sure of that.
+
+- **Product**: Cheerful — an AI-native influencer-marketing platform (SaaS, B2B, sales-led)
 - **Angle**: the product's own headline — *"Hire the agent, not the agency"*
 - **Delivered**: 44.2s · 1920×1080 @ 30fps · 11 frames · 30 MB · −14.0 LUFS / −0.8 dBTP
 - **Built with**: HTML + CSS + GSAP, rendered by HyperFrames; local TTS narration; a frozen
