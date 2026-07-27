@@ -232,6 +232,6 @@ rather than shipping quietly.
 ## Worked example
 
 `examples/CASE-STUDY.md` walks the real film this skill was extracted from: a 44.2s
-B2B SaaS launch film, 11 frames, six rounds of director's notes from "this is very basic" to
+B2B SaaS launch film, 11 frames, seven rounds of notes from "this is very basic" to
 delivered — with the specific note, the specific fix, and the measurement for each pass.
 Read it when you want to see the loop in step 12 actually running.

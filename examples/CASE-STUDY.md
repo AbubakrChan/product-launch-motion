@@ -166,6 +166,47 @@ the louder keystrokes pushed the master to **+1.1 dBFS** (clipped), and the limi
 fix that silently applied makeup gain and produced **−13.0 LUFS / −0.0 dBFS** until
 `level=disabled` was passed.
 
+### v7 → v8 · the round nobody asked for
+
+The first seven rounds came from a director watching the film. The eighth came from
+reading it — an audit of every claim the repository made, run before publishing it.
+Nobody had watched anything. All three findings were real.
+
+**The typing sound started 0.435s late.** Not missing, not quiet — late. The levelled
+asset had been cut from the top of a field recording, so it opened with room tone, and by
+the time the first keystroke landed 56% of the typing animation had already played in
+silence. A window measurement passed it: the peak inside the window was a healthy −1.4 dB,
+it was just in the wrong half. Only a per-100ms envelope shows it:
+
+```
+before   10.72: -4.6   10.82: -6.3   10.92: -6.0   11.02: -4.7   11.12: -1.6
+after    10.72: -1.1   10.82: -1.3   10.92: -1.2   11.02: -1.5   11.12: -0.9
+```
+
+`scripts/level-sfx.mjs` now detects the first transient and trims the head by default, and
+`verify-cue.sh` prints the envelope rather than a single number — the tool that missed the
+bug was changed, not just the file.
+
+**The testimonial was a paraphrase.** The card read *"One person did the work of a whole
+team"*, under a named person's real photograph and his employer's wordmark. His published
+sentence is *"Cheerful turned our 1-person team into a 10-person operation."* Close enough
+to feel harmless, and it is not: attributing words to a real person that they did not say
+is the one failure law 1 exists to prevent, and it had survived seven rounds because it
+reads well.
+
+**Four real people's photographs were wearing invented names.** The creator rows showed
+photographs lifted from the campaign's own detected posts, relabelled "Sam Kim ·
+@lifewithsam · 391K followers" and three more like it. Law 1 warns that a stock face makes
+a real product look fake; a *real* face under an invented name is worse, and the law did
+not say so because the case had not come up. The rows are now initial avatars, tinted from
+the film's own accent gradient so they cost no new colour — and they read better, because
+a product UI showing initials is a thing that genuinely happens.
+
+The lesson is the uncomfortable one: **watching the film would never have found any of
+these.** Two of the three are only visible by measuring, and the third by checking a
+sentence against its source. A director's loop and an auditor's loop catch different
+defects, and a film that has had only one of them has not been finished.
+
 ## What the loop actually taught
 
 1. **Almost every note was about meaning, not polish.** "This is very basic" meant a shot

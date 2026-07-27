@@ -32,34 +32,25 @@ actually moving, or is everything just drifting? Can you see the cursor? Is the
 "typing sound" you added *actually audible*, or is it 20 dB under the narration and
 mathematically inaudible?
 
-This skill is that craft, written down — ten laws, a fourteen-step pipeline, fourteen shot
-constructions, and thirty-four traps, each recorded with **the measurement that proves it**
-rather than the vibe that suggested it. It also refuses to hand you a house style: the
-laws are fixed, the look is not, and the skill writes three competing visual directions
-and kills two before it builds anything
-(`references/11-creative-direction.md`).
+This skill is that craft, written down — ten laws, a fourteen-step pipeline, fourteen
+shots, and thirty-four traps, each recorded with **the measurement that proves it** rather
+than the vibe that suggested it.
+
+It also won't hand you a house style. Before building anything it writes three different
+visual directions and kills two, so two products never get the same film.
 
 ## What you get
 
-- **`SKILL.md`** — the laws, the pipeline, and a routing table. Under 500 lines so it
-  loads fast; everything else is progressive disclosure.
-- **12 reference documents** — creative direction; the renderer contract (and how every
-  law ports to Remotion); story and truth; word-locked sync; motion grammar; the camera rig
-  and cursor spec; look and grade; sound and mastering; QA and direction; the shot catalog;
-  the trap index; and deliverables.
-- **8 runnable scripts** — assembly, transitions, audio wiring, film grade, SFX levelling,
-  word timings, mastering, and cue verification. Dependency-light, idempotent, safe to
-  re-run. `assemble.mjs` measures every frame from its voiceover, so a duration is never
-  something you type or maintain.
-- **5 templates** — brief, storyboard, film manifest, cue table, and a working frame
-  skeleton with the camera rig and cursor already built. Copy it; don't retype it.
-- **A worked example** — the real film, revision by revision, with the note that prompted
-  each change and the measurement that closed it.
-- **A baseline evaluation** — the skill was tested against itself: the same two scenarios
-  run with and without it, in fresh contexts. That evaluation found three bugs in the
-  skill's own scripts and one whole missing chapter, all of which are now fixed. The runs,
-  the findings and the resulting changes are in
-  [`evals/BASELINE.md`](evals/BASELINE.md).
+- **12 reference documents** — direction, story, sync, motion, camera, look, sound, QA,
+  a catalog of 14 shots, 34 traps, and how to ship the final set.
+- **8 scripts** that do the fiddly parts: assemble, transitions, audio, grade, levelling,
+  word timings, mastering, and proving a sound is audible.
+- **5 templates**, including a frame that already has the camera rig and cursor in it.
+- **A worked example** — a real film, revision by revision, with the note that prompted
+  each change.
+- **A baseline evaluation** — the skill run against itself, with and without. It found
+  three bugs in its own scripts and one missing chapter; all fixed.
+  [`evals/BASELINE.md`](evals/BASELINE.md)
 
 ## Install
 
@@ -67,82 +58,66 @@ and kills two before it builds anything
 npx skills add AbubakrChan/product-launch-motion
 ```
 
-Works in Claude Code, and in 16 other agent tools via
-[`.agents/skills`](https://github.com/obra/skills). That installs it **into the current project** (`./.agents/skills/`), so it travels with
-the repo. For every project on the machine, clone it into your user skills directory
-instead:
-
-```bash
-git clone https://github.com/AbubakrChan/product-launch-motion \
-  ~/.claude/skills/product-launch-motion
-```
-
-Then just ask:
+Then ask for what you want:
 
 > Make a 45-second launch video for my product at example.com
 
-Claude Code loads the skill on any launch-video, promo, demo-reel or motion-design
-request. To force it, name it: *"use the product-launch-motion skill"*.
+That's it. The skill takes it from there — it will ask you the things it needs.
 
-## Requirements
+**You'll need** [Node](https://nodejs.org) and [FFmpeg](https://ffmpeg.org)
+(`brew install ffmpeg`). Everything else it tells you about when it needs it, and nothing
+costs money: the voiceover can be a free local model, your own voice, or any TTS you
+already pay for.
 
-| Need | For | Notes |
-|---|---|---|
-| **Node ≥ 20** | the scripts | required — the scripts themselves need only Node 18; HyperFrames sets the real floor |
-| **FFmpeg** | measuring voiceover, mastering, levelling, verification | required — `brew install ffmpeg` (`ffprobe` ships with it) |
-| **A seek-based renderer** | HTML → MP4 | [HyperFrames](https://hyperframes.heygen.com) by default; Remotion notes included |
-| **GSAP** | every frame's timeline | required — vendor it, don't CDN it (below) |
-| Python ≥ 3.10 | local text-to-speech | optional — only if you want free offline VO |
-| A word-level transcriber | sync timings | optional — Whisper locally, or any API that returns word timestamps |
+<details>
+<summary>The full requirements list, if you like knowing up front</summary>
 
-**Vendor GSAP before your first frame.** The frame skeleton loads `vendor/gsap.min.js`,
-and a render should need no network at all — a CDN fetch that fails at frame 900 of 1,300
-wastes the whole render:
+| Need | Notes |
+|---|---|
+| Node ≥ 20 | runs the scripts |
+| FFmpeg | measures the voiceover, masters the film, proves a sound is audible |
+| A renderer | [HyperFrames](https://hyperframes.heygen.com) by default; works with Remotion too |
+| GSAP | every frame's timeline. Vendor it rather than loading from a CDN, so a render never depends on the network: `curl -sL https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js -o vendor/gsap.min.js`. Free for this use under GSAP's [standard licence](https://gsap.com/licensing/) |
+| Python 3.10+ | *optional* — only for free offline text-to-speech |
+| A transcriber | *optional* — Whisper, or anything that returns word-level timestamps |
 
-```bash
-mkdir -p vendor && curl -sL https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js \
-  -o vendor/gsap.min.js
-```
+</details>
 
-GSAP is free under its [standard licence](https://gsap.com/licensing/) for this use.
+<details>
+<summary>What it actually does, step by step</summary>
 
-No paid API is required to produce a complete film. Voiceover can be local
-([Kokoro-82M](https://github.com/hexgrad/kokoro), ~80M params, runs on CPU), a commercial
-TTS voice, or a human recording — the pipeline only needs a WAV and its word timings.
-
-## Quickstart
+You don't have to run any of this yourself — it's what the skill does when you ask. It's
+here so you can see the shape of it, and so you can drive it by hand if you'd rather.
 
 ```bash
-# 1 · scaffold + intake
-cp assets/BRIEF.md ./BRIEF.md          # product, audience, the ONE claim, approved figures
+# 1 · the brief — product, audience, the one claim
+cp assets/BRIEF.md ./BRIEF.md
 
-# 2 · DIRECTION — write three different looks, judge them, kill two, name the
-#     signature move. Ten minutes here decides everything downstream.
-#     → references/11-creative-direction.md
+# 2 · direction — three different looks, two of them killed
+#     this is the step that decides whether the film is any good
 
-# 3 · voiceover FIRST — frame durations come from real VO length, never estimates
-#     (any TTS or a human recording; output one wav per narration line)
+# 3 · voiceover first. Frame lengths come from the real recording, never a guess
 
-# 4 · word timings → the cue table every frame reads
+# 4 · word timings, so every reveal can be cued to the word that describes it
 node scripts/word-timings.mjs --transcript 01.json --id 01-hook --out audio_meta.json
-#     (or point it at a directory of them: --in transcripts/ --out audio_meta.json)
 
-# 5 · storyboard, then build one HTML frame per beat. The skeleton gives you the
-#     camera rig and cursor; the LOOK comes from your direction, not from it.
+# 5 · one HTML file per shot, starting from a skeleton that already has
+#     the camera rig and the cursor
 cp assets/frame-skeleton.html compositions/frames/01-hook.html
 
-# 6 · assemble → transitions → audio → grade  (this order, every time)
-#     assemble.mjs measures each frame from its voiceover — you never type a duration
-cp assets/film.example.json ./film.json     # then edit: your frames, your VO, your crossings
+# 6 · assemble the film — this order, every time
+cp assets/film.example.json ./film.json
 node scripts/assemble.mjs && node scripts/transitions.mjs \
   && node scripts/wire-audio.mjs && node scripts/wire-grade.mjs
 
-# 7 · gates, render, master, verify
+# 7 · check, render, master, and prove it worked
 npx hyperframes check --no-contrast
 npx hyperframes render -o renders/video-v1-raw.mp4
 ./scripts/master.sh renders/video-v1-raw.mp4 renders/video-v1.mp4
-./scripts/verify-cue.sh renders/video-v1.mp4 10.72 0.76    # prove the cue is audible
+./scripts/verify-cue.sh renders/video-v1.mp4 10.72 0.76
 ```
+
+</details>
 
 ## The craft it encodes
 
@@ -162,11 +137,15 @@ progressive disclosure, state flips.
 
 Each one is documented as *when to use it and what breaks*, not just as a name.
 
-## Stack — and what we tried before settling
+## Stack
 
-Before settling on this stack, five motion tools were raced — one beat each, built and
-rendered for real rather than compared on paper. The verdicts are baked into the skill so
-you don't repeat the experiment:
+**GSAP for the motion, HyperFrames to render it, FFmpeg to master it.** Remotion works
+too, and the skill includes the translation.
+
+<details>
+<summary>Five tools were raced before settling on that — here's what lost, and why</summary>
+
+One beat each, built and rendered for real rather than compared on paper.
 
 | Tool | Verdict | Why |
 |---|---|---|
@@ -178,26 +157,23 @@ you don't repeat the experiment:
 | **Rive** | **Runtime yes, authoring no** | The runtime is seek-deterministic (verified: 150 frames rendered twice, identical hashes). But `.riv` is a compiled binary and the editor is GUI-only, so an agent can't author one. |
 | After Effects, C4D, Octane, Blender | **Ruled out** | GUI-only or not installable. An agent cannot drive them. This is why the whole system is code. |
 
+</details>
+
 ## A taste of the trap index
 
 These are the ones that cost hours. All 34 are in `references/10-traps.md`.
 
-- **Cue volume cannot rescue a quiet source.** Raising a typing SFX from `0.35` to `0.85`
-  moved the delivered mix by **0.1 dB** — because the source sat at −37 dB mean under a
-  −21 dB narration stem. Level the asset, not the cue. (Measure against the isolated
-  **stem**, not the mastered window — the window in this film read −16.7 dB, a 4.6 dB
-  error in exactly the direction that flatters the cue.)
-- **`alimiter` silently applies makeup gain** unless you pass `level=disabled`, which
-  pushed a −14 LUFS master to −13.0 LUFS / −0.0 dBFS — louder than the target the limiter
-  was added to protect.
-- **A `mix-blend-mode` overlay renders the whole film white** when each track composites
-  as its own layer — a `multiply` vignette over transparency paints its own source colour.
-- **`object-position` is inert when source and box share an aspect ratio**, so it cannot
-  reframe a square avatar from a square photo. It looks like it should. It does nothing.
-- **Per-frame grain destroys compression** — a 9.3 MB render became 67.3 MB and read as
-  electronic sizzle. Re-seed at 12 Hz, like real film held across frames.
-- **A full-canvas grade breaks automated contrast checks**, which then report bogus
-  1.06:1 ratios. Gate with the grade off, ship with it on.
+- **Turning a sound effect up cannot save a quiet one.** Going from `0.35` to `0.85`
+  moved the actual film by **0.1 dB**. Fix the file, not the volume.
+- **A film can render completely white** from one line of CSS (`mix-blend-mode`), and
+  nothing about the source will tell you why.
+- **Film grain makes the file 7× bigger** — 9.3 MB became 67.3 MB — unless you hold the
+  grain across frames the way real film does.
+- **Your sound effect can be in the film, at the right volume, and still start too late
+  to hear** if the audio file opens with a moment of silence. That one shipped.
+
+Each of the 34 is written up with the command that proves it, in
+`references/10-traps.md`.
 
 ## FAQ
 
@@ -235,7 +211,8 @@ notes.
 
 ## Troubleshooting
 
-The trap index covers defects in the *film*. These are the ones that bite while setting up.
+<details>
+<summary>Common setup errors and what they mean</summary>
 
 | What you see | What it means |
 |---|---|
@@ -252,6 +229,8 @@ The trap index covers defects in the *film*. These are the ones that bite while 
 | Everything works and the film is boring | That is the actual hard problem, and it is what `references/11-creative-direction.md` and `08-qa-and-direction.md` are for. |
 
 Every script takes `--help` and prints its own documentation.
+
+</details>
 
 ## Contributing
 
