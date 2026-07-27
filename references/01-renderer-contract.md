@@ -201,8 +201,8 @@ before it: SFX cues resolve against frame starts that exist only *after* transit
 injected, and the grade's span is the total those wrappers imply.
 
 ```bash
-node scripts/assemble.mjs        # writes index.html from the storyboard
-node scripts/transitions.mjs     # cuts and dissolves; shifts nothing else
+node scripts/assemble.mjs        # writes index.html from film.json + the measured VO
+node scripts/transitions.mjs     # the crossings; shifts nothing else
 node scripts/wire-audio.mjs      # music bed + word-locked SFX, resolved against real frame starts
 node scripts/wire-grade.mjs      # grain + vignette + specular sweeps, spanning the real total
 ```
@@ -213,13 +213,20 @@ Never estimate a frame length. Render the narration first, measure it, derive th
 it — `references/03-word-locked-sync.md` covers why this ordering is not optional. The
 relationship has two parts:
 
-- **The next frame starts when the current frame's narration ends**, not when its clip ends.
-- **A frame's `data-duration` = its measured VO length + the outgoing transition's duration.**
-  That surplus is the overlap the dissolve or zoom-through lives in.
+- **`hold` = the measured VO length + a pad.** The pad — ~0.25s — is the breath after the
+  last word. Without it the cut lands on the final syllable and the shot reads as rushed
+  even when every tween inside it was right. Raise it on a beat you want to land.
+- **The next frame starts at `hold`**, not when the clip ends.
+- **A frame's `data-duration` = `hold` + the outgoing transition's duration.** That second
+  surplus is the overlap the dissolve or zoom-through lives in.
 
-Example, from the reference film: frame 08's VO measures 6.3s, its clip runs `data-start`
-24.6 → `data-duration` 6.8, and frame 09 starts at 30.9 — a 0.5s overlap, exactly the
-dissolve tween injected at 30.9.
+Example, from the reference film: frame 08's VO file measures 5.968s; a 0.332s pad makes
+its hold 6.3; a 0.5s dissolve makes its `data-duration` 6.8 against a `data-start` of 24.6;
+and frame 09 starts at 30.9 — exactly where the dissolve tween is injected.
+
+`scripts/assemble.mjs` does all of this from `film.json`, calling `ffprobe` for the measured
+length, so the only numbers you ever type are the pad and the transition duration — the two
+that are actually creative decisions.
 
 For a separate reason, a frame's own timeline should also finish **before** its
 `data-duration` runs out, so the shot lands and holds instead of cutting mid-move: in the

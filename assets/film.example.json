@@ -1,0 +1,104 @@
+{
+  "_note": [
+    "The reference film's real manifest. `node scripts/assemble.mjs` turns this plus the",
+    "eleven voiceover files into index.html, and lands on 44.189s against the shipped cut's",
+    "44.2 — the 11ms is the hand-rounding in the original, which is the point: measure once",
+    "in a script and the number stops being something you maintain.",
+    "",
+    "You write: which frame, which VO file, how it leaves. You never write a duration —",
+    "assemble.mjs measures each frame from its narration with ffprobe.",
+    "",
+    "`pad` is the breath after the last word, before the transition starts. 0.25s is the",
+    "default and most frames just take it. The two that don't are decisions: 03-turn is the",
+    "pivot of the whole film and 11-cta is the end card, and both are held longer on purpose.",
+    "That is what a pad is for — rhythm, not slack.",
+    "",
+    "`out.type` is one of dissolve, zoom-through, push, push-right, cut. Note that this film",
+    "uses four of them and groups them by meaning: zoom-through where one thing causes the",
+    "next, push through the product sequence, dissolve between unrelated beats. A film where",
+    "every crossing is the same move reads as a slideshow.",
+    "",
+    "The last frame has no `out` — nothing follows it to cross into."
+  ],
+
+  "width": 1920,
+  "height": 1080,
+  "background": "#FAFAFB",
+  "gsap": "vendor/gsap.min.js",
+  "pad": 0.25,
+
+  "frames": [
+    {
+      "id": "01-hook",
+      "src": "compositions/frames/01-hook.html",
+      "vo": "assets/voice/01.wav",
+      "out": { "type": "dissolve", "duration": 0.5 }
+    },
+    {
+      "id": "02-pain",
+      "src": "compositions/frames/02-pain.html",
+      "vo": "assets/voice/02.wav",
+      "pad": 0.3,
+      "out": { "type": "zoom-through", "duration": 0.4 }
+    },
+    {
+      "id": "03-turn",
+      "src": "compositions/frames/03-turn.html",
+      "vo": "assets/voice/03.wav",
+      "pad": 0.58,
+      "out": { "type": "zoom-through", "duration": 0.4 }
+    },
+    {
+      "id": "04-prompt",
+      "src": "compositions/frames/04-prompt.html",
+      "vo": "assets/voice/04.wav",
+      "pad": 0.21,
+      "out": { "type": "push", "duration": 0.5 }
+    },
+    {
+      "id": "05-discovery",
+      "src": "compositions/frames/05-discovery.html",
+      "vo": "assets/voice/05.wav",
+      "out": { "type": "push", "duration": 0.5 }
+    },
+    {
+      "id": "06-outreach",
+      "src": "compositions/frames/06-outreach.html",
+      "vo": "assets/voice/06.wav",
+      "out": { "type": "push", "duration": 0.5 }
+    },
+    {
+      "id": "07-gifting-detection",
+      "src": "compositions/frames/07-gifting-detection.html",
+      "vo": "assets/voice/07.wav",
+      "pad": 0.31,
+      "out": { "type": "dissolve", "duration": 0.5 }
+    },
+    {
+      "id": "08-proof-numbers",
+      "src": "compositions/frames/08-proof-numbers.html",
+      "vo": "assets/voice/08.wav",
+      "pad": 0.33,
+      "out": { "type": "dissolve", "duration": 0.5 }
+    },
+    {
+      "id": "09-proof-quote",
+      "src": "compositions/frames/09-proof-quote.html",
+      "vo": "assets/voice/09.wav",
+      "pad": 0.35,
+      "out": { "type": "zoom-through", "duration": 0.4 }
+    },
+    {
+      "id": "10-contrast",
+      "src": "compositions/frames/10-contrast.html",
+      "vo": "assets/voice/10.wav",
+      "out": { "type": "dissolve", "duration": 0.5 }
+    },
+    {
+      "id": "11-cta",
+      "src": "compositions/frames/11-cta.html",
+      "vo": "assets/voice/11.wav",
+      "pad": 0.65
+    }
+  ]
+}

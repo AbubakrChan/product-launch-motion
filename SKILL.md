@@ -152,11 +152,18 @@ be re-injected. Every wiring script here is idempotent (it replaces its own mark
 so the safe move is always to re-run the whole chain:
 
 ```bash
-node scripts/assemble.mjs        # or your renderer's assemble step
-node scripts/transitions.mjs     # cuts and dissolves between frames
+node scripts/assemble.mjs        # film.json + measured VO → index.html
+node scripts/transitions.mjs     # the crossings between frames
 node scripts/wire-audio.mjs      # music bed + word-locked SFX cues
 node scripts/wire-grade.mjs      # grain + vignette + specular sweeps
 ```
+
+`assemble.mjs` reads `film.json` (`assets/film.example.json` is a filled-in one) and
+**measures** every frame from its voiceover with `ffprobe`, so you never type a duration.
+It applies the arithmetic each downstream cue depends on: `hold = VO + pad` — the breath
+after the last word, because a shot that cuts on the last syllable reads as rushed — and
+`duration = hold + the outgoing transition`. The next frame starts at `hold`, **not** at
+`duration`; the difference is the overlap the transition lives in.
 
 ## Reference map
 
@@ -183,6 +190,8 @@ All are dependency-light Node/bash, all idempotent, all safe to re-run.
 
 | Script | Does |
 |---|---|
+| `scripts/assemble.mjs` | Writes `index.html` from `film.json`, measuring every frame's length from its voiceover instead of letting you guess it |
+| `scripts/transitions.mjs` | Injects the between-frame crossings — dissolve, zoom-through, push, cut — at the instant each frame's narration ends |
 | `scripts/wire-audio.mjs` | Mounts a music bed + a cue table of SFX into the assembled index, resolving frame-relative cue times against real frame starts |
 | `scripts/wire-grade.mjs` | Injects the film grade: playhead-seeded grain, vignette, and specular sweeps on named story beats. `--off` removes it for the contrast gate |
 | `scripts/level-sfx.mjs` | Fixes the quiet-source problem: trims and gain-limits an SFX asset to a target level, and prints before/after measurements |
@@ -196,6 +205,7 @@ All are dependency-light Node/bash, all idempotent, all safe to re-run.
 |---|---|
 | `assets/BRIEF.md` | Intake: product, audience, claim, angle, constraints, approved figures |
 | `assets/STORYBOARD.md` | Frame-by-frame plan with durations, register, shot type and VO line |
+| `assets/film.example.json` | The assemble manifest: frames, voiceover, pads and transitions — the reference film's real one |
 | `assets/cues.example.json` | The SFX cue table format, annotated |
 | `assets/frame-skeleton.html` | A working frame: camera rig, glass borders, cursor with the full click stack, and a word-cued timeline. Copy this, don't retype it |
 

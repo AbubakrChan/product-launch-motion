@@ -68,10 +68,12 @@ See `references/11-creative-direction.md`. Read it before anything else.
 - **12 reference documents** — creative direction, story and truth, word-locked sync,
   motion grammar, the camera rig, the cursor spec, look and grade, sound and mastering, QA
   and direction, the shot catalog, and the trap index.
-- **6 runnable scripts** — audio wiring, film grade, SFX levelling, word timings,
-  mastering, and cue verification. Dependency-light, idempotent, safe to re-run.
-- **4 templates** — brief, storyboard, cue table, and a working frame skeleton with the
-  camera rig and cursor already built. Copy it; don't retype it.
+- **8 runnable scripts** — assembly, transitions, audio wiring, film grade, SFX levelling,
+  word timings, mastering, and cue verification. Dependency-light, idempotent, safe to
+  re-run. `assemble.mjs` measures every frame from its voiceover, so a duration is never
+  something you type or maintain.
+- **5 templates** — brief, storyboard, film manifest, cue table, and a working frame
+  skeleton with the camera rig and cursor already built. Copy it; don't retype it.
 - **A worked example** — the real film, revision by revision, with the note that prompted
   each change and the measurement that closed it.
 - **A baseline evaluation** — the skill was tested against itself: the same two scenarios
@@ -105,7 +107,7 @@ request. You can also invoke it explicitly with `/product-launch-motion`.
 | Need | For | Notes |
 |---|---|---|
 | **Node ≥ 22** | the renderer and all scripts | required |
-| **FFmpeg** | mastering, levelling, verification | required — `brew install ffmpeg` |
+| **FFmpeg** | measuring voiceover, mastering, levelling, verification | required — `brew install ffmpeg` (`ffprobe` ships with it) |
 | **A seek-based renderer** | HTML → MP4 | [HyperFrames](https://hyperframes.heygen.com) by default; Remotion notes included |
 | Python ≥ 3.10 | local text-to-speech | optional — only if you want free offline VO |
 | A word-level transcriber | sync timings | optional — Whisper locally, or any API that returns word timestamps |
@@ -135,7 +137,10 @@ node scripts/word-timings.mjs --transcript transcript.json --out audio_meta.json
 cp assets/frame-skeleton.html compositions/frames/01-hook.html
 
 # 6 · assemble → transitions → audio → grade  (this order, every time)
-node scripts/wire-audio.mjs && node scripts/wire-grade.mjs
+#     assemble.mjs measures each frame from its voiceover — you never type a duration
+cp assets/film.example.json ./film.json     # then edit: your frames, your VO, your crossings
+node scripts/assemble.mjs && node scripts/transitions.mjs \
+  && node scripts/wire-audio.mjs && node scripts/wire-grade.mjs
 
 # 7 · gates, render, master, verify
 npx hyperframes check --no-contrast
