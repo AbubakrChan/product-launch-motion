@@ -1,9 +1,18 @@
 # Product Launch Motion — a Claude Code Skill
 
-**Make Dribbble-level product launch videos from code.** Install the skill, point Claude
-Code at your product, and it directs and renders a launch film: one shape that morphs
-through every scene and never cuts, springs, a cursor that drives every change, camera
-zooms, real numbers on rolling odometers, music-synced SFX, real motion blur, 60 fps.
+### Paste your website URL. Get a product launch video. That's it.
+
+```bash
+npx skills add AbubakrChan/product-launch-motion
+```
+
+Then, in Claude Code:
+
+> Make a launch video for https://your-website.com
+
+Claude reads your site, writes the story, directs every scene and renders a 60 fps MP4 with
+music, synced sound effects and real motion blur. No editing, no After Effects, no templates.
+The film below came out of exactly that.
 
 <details>
 <summary><b>v2 is here.</b> Use it with Claude Opus 5.5 to get results like the films below.</summary>
@@ -40,14 +49,6 @@ button → loader → check → dynamic island → video reel → slider → tog
 click and drag, and the last frame is the first frame.
 
 </td></tr></table>
-
-```bash
-npx skills add AbubakrChan/product-launch-motion
-```
-
-Then ask for it:
-
-> Make a launch video for my product at example.com. You're the director.
 
 ---
 
