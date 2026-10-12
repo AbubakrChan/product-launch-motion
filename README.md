@@ -1,243 +1,118 @@
-# Product Launch Motion Design — a Claude Code Skill
+# Product Launch Motion — a Claude Code Skill
 
-**Make product launch videos from code.** Install this skill, point Claude Code at your
-product, and it directs and renders a launch film: script, voiceover, word-synced reveals,
-real camera moves, film grade, broadcast-loudness master — as HTML, CSS and GSAP, rendered
-frame by frame to MP4.
+**Make Dribbble-level product launch videos from code.** Install the skill, point Claude
+Code at your product, and it directs and renders a launch film: one shape that morphs
+through every scene and never cuts, springs, a cursor that drives every change, camera
+zooms, real numbers on rolling odometers, music-synced SFX, real motion blur, 60 fps.
 
-[![Four beats from the film: a query typing itself, a filtered creator list with a rack-focused stat, a 3D-turned inbox with a cursor clicking Accept, and the end card](examples/film-preview.webp)](https://github.com/AbubakrChan/product-launch-motion/releases/download/v1.0.0/product-launch-motion-example-film.mp4)
+> **v2 is here.** This skill has been rebuilt on a newer, simpler stack: plain HTML and
+> closed-form springs instead of GSAP and HyperFrames, music-first timing instead of
+> voiceover, and Playwright subframes with ffmpeg motion blur. **Use it with Claude Opus 5.5
+> to get results like the films below.** The original v1 (190 ⭐, thank you) is kept in
+> [`legacy/`](legacy/).
 
-Four beats from it, above. **[▶ Watch all 45 seconds](https://github.com/AbubakrChan/product-launch-motion/releases/download/v1.0.0/product-launch-motion-example-film.mp4)** — eleven
-shots, no After Effects, no stock footage, no GPU renderer, no diffusion model. The render
-is deterministic, so the same commit produces the same file. Example for http://cheerful.ai/
+[![The launch film: a typed brief, a search wall of creators, a personal email, an inbox on autopilot, a 432,014,696 views odometer and the wordmark](examples/film-preview.webp)](https://github.com/AbubakrChan/product-launch-motion/releases/download/v2.0.0/launch-film-1080p60.mp4)
+
+**[▶ Watch the launch film in full quality](https://github.com/AbubakrChan/product-launch-motion/releases/download/v2.0.0/launch-film-1080p60.mp4)**
+(27 s, 1920×1080, 60 fps, with sound). Made for [cheerful.ai](https://www.cheerful.ai). No After Effects, no
+stock templates, no AI video model: every frame is HTML computed from time.
+
+<table><tr>
+<td width="45%"><a href="https://github.com/AbubakrChan/product-launch-motion/releases/download/v2.0.0/one-shape-loop-1440.mp4"><img src="examples/one-shape-loop.webp" alt="One shape, never cut: a button becomes a loader, a check, a creator reel, a rate slider, a toggle, tabs, a chart, a command palette and a toast, then loops"></a></td>
+<td>
+
+**[▶ One shape, never cut](https://github.com/AbubakrChan/product-launch-motion/releases/download/v2.0.0/one-shape-loop-1440.mp4)**
+(14 s seamless loop, 1440×1440)
+
+The idea the whole skill is built on. One element morphs through eleven UI states:
+button → loader → check → dynamic island → video reel → slider → toggle → tabs → chart →
+⌘K palette → toast → button. Its content swaps with a short blur, the cursor does every
+click and drag, and the last frame is the first frame.
+
+</td></tr></table>
 
 ```bash
 npx skills add AbubakrChan/product-launch-motion
 ```
+
+Then ask for it:
+
+> Make a launch video for my product at example.com. You're the director.
 
 ---
 
-## Why this exists
+## What makes it look expensive
 
-Programmatic video tools solve rendering. They do not solve **direction** — and direction
-is the entire difference between a launch film and a slideshow.
+These are the rules the skill enforces. Each one came from a review note on a real film
+([`references/prompts.md`](references/prompts.md) has the prompts and notes, verbatim).
 
-A composition can lint clean, render without error, hit every deadline, and still look
-like a template. The gap is craft: does the reveal land on the word? Is the camera
-actually moving, or is everything just drifting? Can you see the cursor? Is the
-"typing sound" you added *actually audible*, or is it 20 dB under the narration and
-mathematically inaudible?
+- **One shape, never cut.** Every state is the same element morphing size, radius and
+  colour. Transitions are morphs, camera pushes, or zooms into an element that *becomes*
+  the next scene.
+- **Blur content swaps.** Text inside a morphing container exits short and early, then the
+  new text springs in. Nothing overlaps.
+- **Springs, a tiny overshoot at most.** Closed-form damped springs, never bouncy easing.
+  Toggle knobs and tab indicators stretch because their two edges ride different springs.
+- **A cursor drives everything.** Real clicks with press-scale and ripple, real drags that
+  spring back on release. The product's own agent can take over as a second cursor.
+- **The camera frames every state.** An empty frame is a bug. Pull-backs reveal scale: one
+  email becomes a wall of hundreds.
+- **Music first.** The beat grid is measured with numpy, the drop lands on the big moment,
+  and every synthesized UI sound is placed by its own measured peak, so it hits the beat.
+- **Real data, original scenes.** Real numbers on odometers, customer logos slammed one per
+  beat, and nothing copied from the product's website.
+- **You get a director.** It makes the creative calls itself and logs each one as a
+  `DECISION:` line you can overturn in one reply.
 
-This skill is that craft, written down — ten laws, a fourteen-step pipeline, fourteen
-shots, and thirty-four traps, each recorded with **the measurement that proves it** rather
-than the vibe that suggested it.
+## What's in the box
 
-It also won't hand you a house style. Before building anything it writes three different
-visual directions and kills two, so two products never get the same film.
-
-## What you get
-
-- **12 reference documents** — direction, story, sync, motion, camera, look, sound, QA,
-  a catalog of 14 shots, 34 traps, and how to ship the final set.
-- **8 scripts** that do the fiddly parts: assemble, transitions, audio, grade, levelling,
-  word timings, mastering, and proving a sound is audible.
-- **5 templates**, including a frame that already has the camera rig and cursor in it.
-- **A worked example** — a real film, revision by revision, with the note that prompted
-  each change.
-- **A baseline evaluation** — the skill run against itself, with and without. It found
-  three bugs in its own scripts and one missing chapter; all fixed.
-  [`evals/BASELINE.md`](evals/BASELINE.md)
-
-## Install
-
-```bash
-npx skills add AbubakrChan/product-launch-motion
-```
-
-Then ask for what you want:
-
-> Make a 45-second launch video for my product at example.com
-
-That's it. The skill takes it from there — it will ask you the things it needs.
-
-**You'll need** [Node](https://nodejs.org) and [FFmpeg](https://ffmpeg.org)
-(`brew install ffmpeg`). Everything else it tells you about when it needs it, and nothing
-costs money: the voiceover can be a free local model, your own voice, or any TTS you
-already pay for.
-
-<details>
-<summary>The full requirements list, if you like knowing up front</summary>
-
-| Need | Notes |
+| Path | What it is |
 |---|---|
-| Node ≥ 20 | runs the scripts |
-| FFmpeg | measures the voiceover, masters the film, proves a sound is audible |
-| A renderer | [HyperFrames](https://hyperframes.heygen.com) by default; works with Remotion too |
-| GSAP | every frame's timeline. Vendor it rather than loading from a CDN, so a render never depends on the network: `curl -sL https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js -o vendor/gsap.min.js`. Free for this use under GSAP's [standard licence](https://gsap.com/licensing/) |
-| Python 3.10+ | *optional* — only for free offline text-to-speech |
-| A transcriber | *optional* — Whisper, or anything that returns word-level timestamps |
+| [`SKILL.md`](SKILL.md) | The creative direction and the process Claude follows |
+| [`references/prompts.md`](references/prompts.md) | The original prompts and every review note, verbatim. Swap the product and reuse them |
+| [`references/technique.md`](references/technique.md) | Springs, camera, cursor, odometer, audio and render code patterns |
+| [`legacy/`](legacy/) | The v1 skill: voiceover-led films with GSAP + HyperFrames, 34 traps |
 
-</details>
+## Requirements
 
-<details>
-<summary>What it actually does, step by step</summary>
+| Need | For |
+|---|---|
+| [Claude Code](https://claude.com/claude-code) with **Opus 5.5** | Directing and building the film. Smaller models follow the rules but miss the detail |
+| Node ≥ 20 + Playwright | Rendering |
+| FFmpeg | Motion blur, encoding, loudness checks |
+| Python 3 + numpy | Beat grid and synthesized SFX |
+| A ~120 BPM royalty-free song | Optional. Check each track's licence; some free libraries mix in restricted items |
 
-You don't have to run any of this yourself — it's what the skill does when you ask. It's
-here so you can see the shape of it, and so you can drive it by hand if you'd rather.
+Everything runs locally and nothing costs money.
 
-```bash
-# 1 · the brief — product, audience, the one claim
-cp assets/BRIEF.md ./BRIEF.md
+## How it works
 
-# 2 · direction — three different looks, two of them killed
-#     this is the step that decides whether the film is any good
-
-# 3 · voiceover first. Frame lengths come from the real recording, never a guess
-
-# 4 · word timings, so every reveal can be cued to the word that describes it
-node scripts/word-timings.mjs --transcript 01.json --id 01-hook --out audio_meta.json
-
-# 5 · one HTML file per shot, starting from a skeleton that already has
-#     the camera rig and the cursor
-cp assets/frame-skeleton.html compositions/frames/01-hook.html
-
-# 6 · assemble the film — this order, every time
-cp assets/film.example.json ./film.json
-node scripts/assemble.mjs && node scripts/transitions.mjs \
-  && node scripts/wire-audio.mjs && node scripts/wire-grade.mjs
-
-# 7 · check, render, master, and prove it worked
-npx hyperframes check --no-contrast
-npx hyperframes render -o renders/video-v1-raw.mp4
-./scripts/master.sh renders/video-v1-raw.mp4 renders/video-v1.mp4
-./scripts/verify-cue.sh renders/video-v1.mp4 10.72 0.76
+```
+brief ──► state list on the beat grid ──► one HTML film, every pixel = f(t) in seek(t)
+      ──► one frame per beat, contact sheet, fix ──► Playwright: 4 subframes per frame
+      ──► ffmpeg tmix (motion blur) ──► 60 fps H.264 + mix ──► storyboard + seam scan
 ```
 
-</details>
+Because every frame is a pure function of time, renders are deterministic: seek to any
+moment and you get the same pixels, which is what makes per-beat QA and parallel rendering
+possible.
 
-## The craft it encodes
+## v1 → v2
 
-Timing and easing — custom-bezier ease-out, spring and settle, staggered entrances,
-anticipation, speed ramping, deliberate holds, beat-synced cuts.
-**Camera** — dolly, parallax, orbit and turntable, rack focus, whip pan, zoom-to-detail.
-**Type** — kinetic typography, mask reveal from the baseline, blur-in, tracking-in,
-odometer counters, text morphs.
-**Look** — film grain, bloom and halation, chromatic aberration, light sweeps, aurora and
-gradient-mesh grounds, glassmorphism, vignette, lifted blacks, a tight palette with one
-accent.
-**3D and product** — exploded views, floating isometric mockups, HDRI-style lighting.
-**SaaS and UI** — fake cursor with ripples, UI card staggers, skeleton-to-results loading,
-progressive disclosure, state flips.
-**Sound** — whooshes, UI ticks, sub-bass on hero hits, and silence before the reveal.
-**Structure** — cold opens, problem-agitate-solve arcs, register flips as story turns.
-
-Each one is documented as *when to use it and what breaks*, not just as a name.
-
-## Stack
-
-**GSAP for the motion, HyperFrames to render it, FFmpeg to master it.** Remotion works
-too, and the skill includes the translation.
-
-<details>
-<summary>Five tools were raced before settling on that — here's what lost, and why</summary>
-
-One beat each, built and rendered for real rather than compared on paper.
-
-| Tool | Verdict | Why |
+| | v1 (legacy) | v2 |
 |---|---|---|
-| **GSAP** | **Core of the system** | Best craft-per-cost, seek-deterministic, zero new dependency. Every frame's timeline is one paused GSAP timeline. |
-| **HyperFrames** | **The renderer** | HTML-as-video with a seekable timeline, word-level audio mounting and a real lint/layout/contrast gate. |
-| **Lottie** (`lottie-web`) | **Use for logo draw-ons** | Great for vector draw-on. Trap: an animated multi-dimensional *layer* transform silently blanks the layer in render while playing fine in preview. Keep layer transforms static; drive motion from GSAP on the container. |
-| **Remotion** | **Per-shot co-host** | Genuinely better React ergonomics, real `spring()` physics, and a WebGL post pass over live DOM. We kept the long-form film elsewhere for its word-sync workflow, but Remotion is a first-class choice — the skill's laws all port. |
-| **Three.js** | **One hero shot only** | The only real-camera, real-light route without a GPU renderer. Trap: bloom over a near-white UI screenshot blows out to a white cloud — tone-map first. |
-| **Rive** | **Runtime yes, authoring no** | The runtime is seek-deterministic (verified: 150 frames rendered twice, identical hashes). But `.riv` is a compiled binary and the editor is GUI-only, so an agent can't author one. |
-| After Effects, C4D, Octane, Blender | **Ruled out** | GUI-only or not installable. An agent cannot drive them. This is why the whole system is code. |
+| Timing | Locked to voiceover words | Locked to the music's measured beat grid |
+| Motion | GSAP timelines | Closed-form springs, pure `seek(t)` |
+| Renderer | HyperFrames | Playwright subframes + ffmpeg `tmix` motion blur |
+| Structure | Shots and transitions | One shape that never cuts |
+| Sound | Library SFX, levelled | Synthesized SFX placed by measured peak |
+| Depth | CSS camera rig | Camera springs + optional WebGL glass |
 
-</details>
-
-## A taste of the trap index
-
-These are the ones that cost hours. All 34 are in `references/10-traps.md`.
-
-- **Turning a sound effect up cannot save a quiet one.** Going from `0.35` to `0.85`
-  moved the actual film by **0.1 dB**. Fix the file, not the volume.
-- **A film can render completely white** from one line of CSS (`mix-blend-mode`), and
-  nothing about the source will tell you why.
-- **Film grain makes the file 7× bigger** — 9.3 MB became 67.3 MB — unless you hold the
-  grain across frames the way real film does.
-- **Your sound effect can be in the film, at the right volume, and still start too late
-  to hear** if the audio file opens with a moment of silence. That one shipped.
-
-Each of the 34 is written up with the command that proves it, in
-`references/10-traps.md`.
-
-## FAQ
-
-**Will every video made with this look the same?**
-No. The pipeline forces three competing directions before any building, and a checklist
-names the skill's own defaults so an agent can catch itself reaching for them. What
-repeats is the discipline — sync, determinism, sound arithmetic, mastering — not the
-aesthetic. `references/11-creative-direction.md`.
-
-**Does this work for physical products, not just software?**
-Yes. The shot catalog covers hardware heroes, unboxing and exploded views, e-commerce
-line items and floating product mockups alongside the SaaS shots. The laws are
-product-agnostic; only the shot selection changes.
-
-**Do I have to use HyperFrames?**
-No. The laws — word-locked sync, the two-node camera, the cursor spec, sound arithmetic,
-mastering — are renderer-neutral, and `references/01-renderer-contract.md` includes the
-Remotion equivalents. HyperFrames is the default because it ships the gates.
-
-**Can I use my own voice, or a cloned one?**
-Yes. The pipeline needs a WAV plus word-level timestamps. Anything that produces those
-works — human recording, ElevenLabs, local Kokoro. Swapping voices means re-deriving the
-timings, because every cue is locked to the words.
-
-**Is this an AI video generator?**
-No, and that is the point. Nothing is diffused or hallucinated. Every frame is code you
-can read, diff and fix, so the output is deterministic, brand-exact, and never invents a
-number or a face.
-
-**How long does a film take?**
-Measured on an M-series laptop: the 44-second reference film **renders in 51s**
-(`rendered in 51.1s`, 40 MB raw) and **masters in 30s** (`real 30.35` — two ffmpeg
-passes plus a full re-encode, and the re-encode is most of it). The direction loop — the part that matters — takes as many passes as you have
-notes.
-
-## Troubleshooting
-
-<details>
-<summary>Common setup errors and what they mean</summary>
-
-| What you see | What it means |
-|---|---|
-| `no film.json — copy assets/film.example.json and edit it` | The manifest is the input to the whole chain. Copy the example; it is the reference film's real one. |
-| `no index.html — run assemble.mjs first` | Wiring scripts mount into an assembled index; they never create one. |
-| `no cue table at audio/cues.json` | `cp assets/cues.example.json audio/cues.json`, then edit. |
-| `no frame wrappers in index.html — assemble first` | Your index has no `data-composition-src` elements, so there is nothing to time against. |
-| `<file> has no transitions markers` | The index wasn't written by `assemble.mjs`. Re-assemble, or paste `/* transitions:start */ … /* transitions:end */` into your root timeline's IIFE. |
-| `ffprobe not found — install ffmpeg` | `brew install ffmpeg` (Linux: `apt install ffmpeg`). Needed to measure voiceover, not just to master. |
-| `gsap is not defined` in the render | You copied the frame skeleton without vendoring GSAP — see Requirements. |
-| A tween plays in preview and is missing in the render | Something in it is non-deterministic — `Math.random`, `Date.now`, a CSS `transition`, `repeat`/`yoyo`. The renderer seeks; it does not play. See the determinism rules in `references/01-renderer-contract.md`. |
-| The whole film renders white | A `mix-blend-mode` over a per-track composite: a `multiply` vignette with no backdrop paints its own source colour. Trap 1, and it is not visible in the source. |
-| An edit to `index.html` keeps disappearing | The index is generated. Put it in a wiring script's marked block instead. Trap 3. |
-| Everything works and the film is boring | That is the actual hard problem, and it is what `references/11-creative-direction.md` and `08-qa-and-direction.md` are for. |
-
-Every script takes `--help` and prints its own documentation.
-
-</details>
-
-## Contributing
-
-Traps are the most valuable contribution. If you find one, open a PR against
-`references/10-traps.md` with the measurement that proves it — the number, the command,
-and the before/after. That standard is the whole reason this file is useful.
+v1 is still the better choice for a narrated explainer. It lives on in [`legacy/`](legacy/).
 
 ## License
 
-MIT — see [`LICENSE`](LICENSE). The craft is meant to travel.
+MIT for the skill and references — see [`LICENSE`](LICENSE).
 
-**The film does not.** The reference film and the frame reproduced under `examples/`
-belong to the client it was made for. See [`NOTICE`](NOTICE) — it also covers GSAP, which
-these docs tell you to vendor into your own project.
+**The sample films do not travel.** They were made for Cheerful and are theirs; see
+[`NOTICE`](NOTICE) for that and for third-party credits (music, footage, fonts).
