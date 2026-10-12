@@ -17,7 +17,7 @@ films below.** The original v1 (190 ⭐, thank you) is kept in [`legacy/`](legac
 
 [![The launch film: a typed brief, a search wall of creators, a personal email, an inbox on autopilot, a 432,014,696 views odometer and the wordmark](examples/film-preview.webp)](https://github.com/AbubakrChan/product-launch-motion/releases/download/v2.0.0/launch-film-1080p60.mp4)
 
-> 🔊 **Turn the sound on.** The preview above is silent. The real film is cut to the beat
+> 🔊 **Download it and turn the sound on.** The preview above is silent. The real film is cut to the beat
 > of its music, and every click, whoosh and number roll lands on a drum hit.
 > **[Download the film (1080p, 60 fps, with sound)](https://github.com/AbubakrChan/product-launch-motion/releases/download/v2.0.0/launch-film-1080p60.mp4)**
 > to watch it as intended.
