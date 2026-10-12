@@ -1,9 +1,12 @@
 ---
-name: product-launch-motion
-description: "Use when making, directing or rescuing a product launch video, promo, teaser, demo reel, sizzle, feature-announcement film or animated product explainer built from code — and when an existing one looks basic, reads as a slideshow, has reveals that miss the voiceover, an invisible cursor, an inaudible sound effect, a clipped or too-quiet mix, or every video coming out looking the same. Covers SaaS, apps, hardware, e-commerce, dev tools, services. Keywords include motion design, storyboard, voiceover sync, kinetic typography, GSAP, HyperFrames, Remotion, film grain, LUFS, ffmpeg."
+name: product-launch-motion-v1
+description: "Legacy v1 (voiceover-led, GSAP + HyperFrames). Use when making, directing or rescuing a product launch video, promo, teaser, demo reel, sizzle, feature-announcement film or animated product explainer built from code — and when an existing one looks basic, reads as a slideshow, has reveals that miss the voiceover, an invisible cursor, an inaudible sound effect, a clipped or too-quiet mix, or every video coming out looking the same. Covers SaaS, apps, hardware, e-commerce, dev tools, services. Keywords include motion design, storyboard, voiceover sync, kinetic typography, GSAP, HyperFrames, Remotion, film grain, LUFS, ffmpeg."
 ---
 
-# Product Launch Motion
+# Product Launch Motion — v1 (legacy)
+
+> This is the original v1 skill, kept for voiceover-led films. The current skill is
+> [`../SKILL.md`](../SKILL.md): music-first, one shape never cut, springs, no GSAP or HyperFrames.
 
 A production discipline for making launch films that look like a motion designer made
 them — not a slideshow with a voiceover on top.
@@ -231,7 +234,7 @@ rather than shipping quietly.
 
 ## Worked example
 
-`examples/CASE-STUDY.md` walks the real film this skill was extracted from: a 44.2s
+`CASE-STUDY.md` walks the real film this skill was extracted from: a 44.2s
 B2B SaaS launch film, 11 frames, seven rounds of notes from "this is very basic" to
 delivered — with the specific note, the specific fix, and the measurement for each pass.
 Read it when you want to see the loop in step 12 actually running.

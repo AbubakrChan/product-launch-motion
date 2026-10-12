@@ -272,7 +272,7 @@ So make the rule mechanical:
 
 Write it out, name what it inherited, and then build something that is *not* it. Its value
 was showing you the obvious answer so you could recognise it and move past it. This applies
-just as much to the reference film in `examples/CASE-STUDY.md`: a B2B SaaS brief should
+just as much to the reference film in `CASE-STUDY.md`: a B2B SaaS brief should
 treat that film as the answer to beat, not the answer to reuse.
 
 ## Anti-sameness checks
@@ -313,4 +313,4 @@ ships broken. Every one of them exists because something failed in a measurable 
 - `references/02-story-and-truth.md` — the claim your direction has to serve
 - `references/09-shot-catalog.md` — constructions to adapt, never a running order to copy
 - `references/06-look-and-grade.md` — the techniques, once you have chosen which you need
-- `examples/CASE-STUDY.md` — one direction, executed and revised seven times
+- `CASE-STUDY.md` — one direction, executed and revised seven times
