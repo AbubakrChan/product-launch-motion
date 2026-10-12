@@ -12,7 +12,7 @@ Then, in Claude Code:
 
 Claude reads your site, writes the story, directs every scene and renders a 60 fps MP4 with
 music, synced sound effects and real motion blur. No editing, no After Effects, no templates.
-The film below came out of exactly that.
+The film below started the same way: a URL, then a few rounds of notes.
 
 <details>
 <summary><b>v2 is here.</b> Use it with Claude Opus 5.5 to get results like the films below.</summary>
