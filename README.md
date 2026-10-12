@@ -6,25 +6,25 @@
 npx skills add AbubakrChan/product-launch-motion
 ```
 
+[![The launch film: a typed brief, a search wall of creators, a personal email, an inbox on autopilot, a 432,014,696 views odometer and the wordmark](examples/film-preview.webp)](https://github.com/AbubakrChan/product-launch-motion/releases/download/v2.0.0/launch-film-1080p60.mp4)
+
 Then, in Claude Code:
 
 > Make a launch video for https://your-website.com
 
 Claude reads your site, writes the story, directs every scene and renders a 60 fps MP4 with
 music, synced sound effects and real motion blur. No editing, no After Effects, no templates.
-The film below started the same way: a URL, then a few rounds of notes.
+The film above started the same way: a URL, then a few rounds of notes.
 
 <details>
-<summary><b>v2 is here.</b> Use it with Claude Opus 5.5 to get results like the films below.</summary>
+<summary><b>v2 is here.</b> Use it with Claude Opus 5.5 to get results like these films.</summary>
 
 This skill has been rebuilt on a newer, simpler stack: plain HTML and closed-form springs
 instead of GSAP and HyperFrames, music-first timing instead of voiceover, and Playwright
-subframes with ffmpeg motion blur. **Use it with Claude Opus 5.5 to get results like the
-films below.** The original v1 (190 ⭐, thank you) is kept in [`legacy/`](legacy/).
+subframes with ffmpeg motion blur. **Use it with Claude Opus 5.5 to get results like these
+films.** The original v1 (190 ⭐, thank you) is kept in [`legacy/`](legacy/).
 
 </details>
-
-[![The launch film: a typed brief, a search wall of creators, a personal email, an inbox on autopilot, a 432,014,696 views odometer and the wordmark](examples/film-preview.webp)](https://github.com/AbubakrChan/product-launch-motion/releases/download/v2.0.0/launch-film-1080p60.mp4)
 
 > 🔊 **Download it and turn the sound on.** The preview above is silent. The real film is cut to the beat
 > of its music, and every click, whoosh and number roll lands on a drum hit.
