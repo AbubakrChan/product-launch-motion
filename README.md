@@ -13,16 +13,22 @@ zooms, real numbers on rolling odometers, music-synced SFX, real motion blur, 60
 
 [![The launch film: a typed brief, a search wall of creators, a personal email, an inbox on autopilot, a 432,014,696 views odometer and the wordmark](examples/film-preview.webp)](https://github.com/AbubakrChan/product-launch-motion/releases/download/v2.0.0/launch-film-1080p60.mp4)
 
-**[▶ Watch the launch film in full quality](https://github.com/AbubakrChan/product-launch-motion/releases/download/v2.0.0/launch-film-1080p60.mp4)**
-(27 s, 1920×1080, 60 fps, with sound). Made for [cheerful.ai](https://www.cheerful.ai). No After Effects, no
-stock templates, no AI video model: every frame is HTML computed from time.
+> 🔊 **Turn the sound on.** The preview above is silent. The real film is cut to the beat
+> of its music, and every click, whoosh and number roll lands on a drum hit.
+> **[Download the film (1080p, 60 fps, with sound)](https://github.com/AbubakrChan/product-launch-motion/releases/download/v2.0.0/launch-film-1080p60.mp4)**
+> to watch it as intended.
+
+27 s, made for [cheerful.ai](https://www.cheerful.ai). No After Effects, no stock templates,
+no AI video model: every frame is HTML computed from time. Bonus: the same film with a
+[WebGL glass pass](https://github.com/AbubakrChan/product-launch-motion/releases/download/v2.0.0/launch-film-glass-1080p60.mp4)
+(refractive 3D shapes floating through every scene).
 
 <table><tr>
 <td width="45%"><a href="https://github.com/AbubakrChan/product-launch-motion/releases/download/v2.0.0/one-shape-loop-1440.mp4"><img src="examples/one-shape-loop.webp" alt="One shape, never cut: a button becomes a loader, a check, a creator reel, a rate slider, a toggle, tabs, a chart, a command palette and a toast, then loops"></a></td>
 <td>
 
 **[▶ One shape, never cut](https://github.com/AbubakrChan/product-launch-motion/releases/download/v2.0.0/one-shape-loop-1440.mp4)**
-(14 s seamless loop, 1440×1440)
+(14 s seamless loop, 1440×1440, with sound)
 
 The idea the whole skill is built on. One element morphs through eleven UI states:
 button → loader → check → dynamic island → video reel → slider → toggle → tabs → chart →
