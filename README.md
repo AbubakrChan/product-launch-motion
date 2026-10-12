@@ -6,6 +6,9 @@
 npx skills add AbubakrChan/product-launch-motion
 ```
 
+**Don't want to run it yourself?** Paste your URL at
+**[launchreel.89-167-9-64.sslip.io](https://launchreel.89-167-9-64.sslip.io)** and get the film made for you.
+
 [![The launch film: a typed brief, a search wall of creators, a personal email, an inbox on autopilot, a 432,014,696 views odometer and the wordmark](examples/film-preview.webp)](https://github.com/AbubakrChan/product-launch-motion/releases/download/v2.0.0/launch-film-1080p60.mp4)
 
 Then, in Claude Code:
