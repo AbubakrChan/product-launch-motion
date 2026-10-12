@@ -5,11 +5,15 @@ Code at your product, and it directs and renders a launch film: one shape that m
 through every scene and never cuts, springs, a cursor that drives every change, camera
 zooms, real numbers on rolling odometers, music-synced SFX, real motion blur, 60 fps.
 
-> **v2 is here.** This skill has been rebuilt on a newer, simpler stack: plain HTML and
-> closed-form springs instead of GSAP and HyperFrames, music-first timing instead of
-> voiceover, and Playwright subframes with ffmpeg motion blur. **Use it with Claude Opus 5.5
-> to get results like the films below.** The original v1 (190 ⭐, thank you) is kept in
-> [`legacy/`](legacy/).
+<details>
+<summary><b>v2 is here.</b> Use it with Claude Opus 5.5 to get results like the films below.</summary>
+
+This skill has been rebuilt on a newer, simpler stack: plain HTML and closed-form springs
+instead of GSAP and HyperFrames, music-first timing instead of voiceover, and Playwright
+subframes with ffmpeg motion blur. **Use it with Claude Opus 5.5 to get results like the
+films below.** The original v1 (190 ⭐, thank you) is kept in [`legacy/`](legacy/).
+
+</details>
 
 [![The launch film: a typed brief, a search wall of creators, a personal email, an inbox on autopilot, a 432,014,696 views odometer and the wordmark](examples/film-preview.webp)](https://github.com/AbubakrChan/product-launch-motion/releases/download/v2.0.0/launch-film-1080p60.mp4)
 
