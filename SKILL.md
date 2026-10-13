@@ -78,8 +78,10 @@ A complete working film to copy from lives in `~/code/cheerful-motion/launch2/`.
 1. **Ask for inputs first** (unless already given or he says "you decide"): 8–12 states the shape
    should become, palette (B/W, one accent, or the brand system), and a royalty-free ~120 BPM song.
    Offer "Director's cut / Director picks" options — he usually picks those.
-2. **Show the state list on the beat grid before writing code** (bar/beat table: what happens, which
-   element morphs into what, which sound).
+2. **Direct first, implement second.** Finalize a concise creative plan before writing animation code:
+   the product story and payoff, brand treatment, soundtrack and musical arc, then a beat-by-beat
+   scene plan covering framing, key interactions, transitions and sound cues. Show the plan, resolve
+   gaps as the director, and only then implement it. Do not wait for approval unless requested.
 3. **Build** one HTML file where every style is computed from time inside `seek(t)` — no CSS
    transitions, no timers, no state between frames.
 4. **Render one frame per beat before the full render**, contact-sheet it, and fix anything off the
