@@ -42,7 +42,10 @@ A complete working film to copy from lives in `~/code/cheerful-motion/launch2/`.
    cursor ("You").
 6. **The camera zooms so each state fills the frame.** Empty frames are a bug; frame the content, then
    push, whip or pull back. Pull-backs reveal scale (one email → a grid of hundreds; one post → a wall).
-7. **Music-first timing.** ~120 BPM, analyse the song with numpy for the beat grid, start on a
+7. **Music-first timing.** Choose the soundtrack before choreographing: energetic, brand-appropriate,
+   with a build, a clear drop and a satisfying ending. BPM alone is not energy; do not default to a
+   repetitive synthesized loop. Use a licensed track or an original score with that musical arc.
+   Aim for ~120 BPM, analyse the song with numpy for the beat grid, start on a
    downbeat, cut the song window so the drop lands on the product's big moment. Something happens on
    every beat; typing rides 32nds on a snare build; slams accelerate beats → 8ths → 16ths.
 8. **Every UI sound is synthesized and placed by its measured peak** on the kick-peak grid.
