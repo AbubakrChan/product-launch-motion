@@ -42,7 +42,7 @@ const same = (a, b) => { if (!a || !b || a.length !== b.length) return false; le
 const B = await openBrowser({ cdp: A.cdp });
 const pages = [];
 for (let w = 0; w < A.workers; w++) pages.push(await B.newPage(url + (url.includes('?') ? '&' : '?') + 'r=' + Date.now() + w));
-const DUR = await pages[0].evaluate(() => window.FILM_DUR);
+const DUR = (await pages[0].evaluate(() => window.FILM_DUR)) || A.dur;   // --dur for pages not built on core.js
 const T0 = A.from || 0, T1 = Math.min(A.to || DUR, DUR);
 const shot = async (p, t) => { await p.evaluate(tt => window.seek(tt), t); return p.screenshot({ type: FMT, quality: FMT === 'jpeg' ? 92 : undefined, clip: { x: 0, y: 0, width: 1920, height: 1080 } }); };
 const subT = i => Math.floor(i / SUB) / FPS + ((i % SUB) - (SUB - 1) / 2) / (FPS * SUB);
