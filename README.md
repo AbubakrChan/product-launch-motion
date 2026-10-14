@@ -6,6 +6,8 @@
 npx skills add AbubakrChan/product-launch-motion
 ```
 
+Already installed it? Get the latest version with `npx skills update`.
+
 [![The launch film: a typed brief, a search wall of creators, a personal email, an inbox on autopilot, a 432,014,696 views odometer, customer logos on the beat and the wordmark](examples/film-preview.webp)](https://github.com/AbubakrChan/product-launch-motion/releases/download/v2.0.0/launch-film-1080p60.mp4)
 
 **No Claude Code? Get the film made for you: a polished launch video in 30 minutes, from $20 → [launchvideos.app](https://launchvideos.app)**
@@ -122,6 +124,19 @@ possible.
 | Depth | CSS camera rig | Camera springs + optional WebGL glass |
 
 v1 is still the better choice for a narrated explainer. It lives on in [`legacy/`](legacy/).
+
+### Updating
+
+- **Installed v1 (before 13 October 2026)?** Run `npx skills update`. Your `product-launch-motion` skill is
+  replaced by v2.
+- **Installed v2 on 13 or 14 October 2026?** It was briefly named `motion-launch-video`, so `update` can't
+  find it. Reinstall once:
+  ```bash
+  npx skills remove motion-launch-video
+  npx skills add AbubakrChan/product-launch-motion
+  ```
+- **Want to keep v1 for narrated explainers?** Install it alongside v2:
+  `npx skills add AbubakrChan/product-launch-motion/legacy`
 
 ## Made by
 
