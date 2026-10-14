@@ -2,6 +2,8 @@
 
 ### Paste your website URL. Get a product launch video. That's it.
 
+By [Muhammad Abubakr](https://x.com/Muhamma77800831). New films and updates land on [X](https://x.com/Muhamma77800831) first.
+
 ```bash
 npx skills add AbubakrChan/product-launch-motion
 ```
@@ -122,6 +124,11 @@ possible.
 | Depth | CSS camera rig | Camera springs + optional WebGL glass |
 
 v1 is still the better choice for a narrated explainer. It lives on in [`legacy/`](legacy/).
+
+## Made by
+
+[Muhammad Abubakr](https://x.com/Muhamma77800831), who builds [Cheerful](https://www.cheerful.ai). Made a film with this skill?
+Tag [@Muhamma77800831](https://x.com/Muhamma77800831) on X and I'll share it.
 
 ## License
 
