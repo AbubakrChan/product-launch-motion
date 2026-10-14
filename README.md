@@ -2,13 +2,13 @@
 
 ### Paste your website URL. Get a product launch video. That's it.
 
-By [Muhammad Abubakr](https://x.com/Muhamma77800831). New films and updates land on [X](https://x.com/Muhamma77800831) first.
-
 ```bash
 npx skills add AbubakrChan/product-launch-motion
 ```
 
 [![The launch film: a typed brief, a search wall of creators, a personal email, an inbox on autopilot, a 432,014,696 views odometer, customer logos on the beat and the wordmark](examples/film-preview.webp)](https://github.com/AbubakrChan/product-launch-motion/releases/download/v2.0.0/launch-film-1080p60.mp4)
+
+By [Muhammad Abubakr](https://x.com/Muhamma77800831). New films and updates land on X first.
 
 **No Claude Code? Get the film made for you: a polished launch video in 30 minutes, for $10 → [launchreel.89-167-9-64.sslip.io](https://launchreel.89-167-9-64.sslip.io/?ref=readme)**
 
@@ -127,8 +127,11 @@ v1 is still the better choice for a narrated explainer. It lives on in [`legacy/
 
 ## Made by
 
-[Muhammad Abubakr](https://x.com/Muhamma77800831), who builds [Cheerful](https://www.cheerful.ai). Made a film with this skill?
-Tag [@Muhamma77800831](https://x.com/Muhamma77800831) on X and I'll share it.
+Muhammad Abubakr, who builds [Cheerful](https://www.cheerful.ai). Made a film with this skill?
+Tag me on X and I'll share it.
+
+[![Follow on X](https://img.shields.io/badge/@Muhamma77800831-000000?style=for-the-badge&logo=x&logoColor=white)](https://x.com/Muhamma77800831)
+[![LinkedIn](https://img.shields.io/badge/Muhammad_Abubakar-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/muhammad-abubakar-05173b20a/)
 
 ## License
 
