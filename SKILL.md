@@ -1,120 +1,107 @@
 ---
 name: product-launch-motion
-description: "Use when asked to make a launch video, product film, promo, teaser, motion design piece, UI motion reel, Dribbble-style animation or animated brand/logo sting: anything rendered to MP4 from HTML with springs, beat-synced music and sound. Carries Chan's taste (continuity, physical spring motion, music-first timing, real data, attention to detail, no templates), a direction process that makes every film different, and the proven build/render pipeline (pure seek(t), closed-form springs, Playwright subframes, ffmpeg tmix, numpy beat grid)."
+description: Use when asked to make a launch video, product film, motion design piece, UI motion reel, Dribbble-style UI animation or animated brand/logo sting — anything rendered to MP4 from HTML with a cursor, morphing UI, springs, beat-synced music and SFX. Carries Chan's full creative direction (one shape never cut, blur content swaps, springs, real data, logo slams, no creative limits) and the proven build/render pipeline (pure seek(t), closed-form springs, Playwright subframes, ffmpeg tmix, numpy beat grid).
 ---
 
-# Product launch films
+# Motion design launch videos
 
-You are the director. This file has three layers, and they behave differently:
+This is how Chan wants launch films made. It is the distilled direction from every prompt and review
+that produced "The Spark" (v1) and the real-data cut (v2) for Cheerful.
+The prompts themselves, verbatim and in order, are in `references/prompts.md` — read them before
+starting; they are the spec. The code patterns are in `references/technique.md`.
+A complete working film to copy from lives in `~/code/cheerful-motion/launch2/`.
 
-| Layer | What it is | How binding |
-|---|---|---|
-| **Taste** | Chan's, written as qualities a viewer feels | Every film has it |
-| **Craft** | The quality bar, each item learned from a real failure | Every film passes it |
-| **Direction** | What this film looks, moves and sounds like | Free, and different from recent films |
+## The stance: you are the director
 
-The Cheerful films in `examples/` are one past answer to learn craft from, not beats to reuse.
-**Do not open `examples/` until the direction is committed** (step 3). Reading a finished film
-first anchors you to it: it happened, and the next film came out as its remix.
+- **No constraints on creativity.** Chan says "I want you to be the director", "full creative control",
+  "think out of the box", "no limits on shapes or buttons". Do not ask permission for creative choices;
+  make them, log them as DECISIONs, and list them at the end so he can overturn any in one reply.
+- **Original, never a template, never a copy.** Do not lift the product website's copy, UI, stats or
+  images wholesale. Invent the scenes. "Anything that looks like a template" is banned.
+- **Launch-film energy.** Modern, futuristic, premium — the way top motion designers do it (Linear,
+  Apple, Arc). Something happens on every beat; there is no dead time.
+- **Attention to detail is the product.** Micro-interactions (button press, knob stretch, name pill
+  lag, click ripple, odometer settle, sticker tilt) are what make it read as expensive.
 
-## Taste
+## Non-negotiable motion rules
 
-These are qualities, not mechanisms. `references/direction.md` lists several ways to reach each one;
-the way Cheerful did it is only one of them.
+1. **One shape, never cut.** Every state is the same element morphing its size, radius and colour
+   while its content swaps with a short blur. Cuts are not encouraged; transitions are morphs,
+   camera moves, zooms into an element that becomes the next scene (a tile opens into an inbox,
+   a reply card becomes the order, the cursor becomes the logo star).
+2. **Content swaps with a short blur**, and text inside a morphing container gets its own enter and
+   exit timing — exit short and early — or old and new text overlap.
+3. **Springs everywhere, a tiny overshoot at most.** No bouncy easing. Closed-form damped spring step
+   responses only (see technique).
+4. **Leading/trailing edges on different springs** so things stretch: tab indicators, toggle knobs,
+   liquid pills — the leading edge runs ahead of the trailing one.
+5. **A cursor drives every change with real clicks and drags.** Drags are direct manipulation: while
+   held, the value is computed from the cursor position; on release it springs back from wherever it
+   was. The product's agent can be its own cursor (a gradient multiplayer cursor with a name pill, a
+   short motion trail, lean with velocity, press scale + ripple on clicks) handing off from the user's
+   cursor ("You").
+6. **The camera zooms so each state fills the frame.** Empty frames are a bug; frame the content, then
+   push, whip or pull back. Pull-backs reveal scale (one email → a grid of hundreds; one post → a wall).
+7. **Music-first timing.** Choose the soundtrack before choreographing: energetic, brand-appropriate,
+   with a build, a clear drop and a satisfying ending. BPM alone is not energy; do not default to a
+   repetitive synthesized loop. Use a licensed track or an original score with that musical arc.
+   Aim for ~120 BPM, analyse the song with numpy for the beat grid, start on a
+   downbeat, cut the song window so the drop lands on the product's big moment. Something happens on
+   every beat; typing rides 32nds on a snare build; slams accelerate beats → 8ths → 16ths.
+8. **Every UI sound is synthesized and placed by its measured peak** on the kick-peak grid.
+9. **Loops:** when the piece loops, the last frame is the first frame — cursor position and speed
+   included — or the loop stutters.
 
-- **Continuity.** The eye never loses its place. Things become other things instead of being swapped.
-- **Cause and effect.** Nothing changes by itself; something visibly makes each change happen.
-- **Physical, expensive motion.** Closed-form springs with at most a tiny overshoot. Never bouncy easing.
-- **Never dead.** Every moment is alive, but rhythm alternates: dense bars, breathing holds, one hit.
-- **Sound-first.** The soundtrack (a song, a score, or pure sound design) is chosen before
-  choreography, and the film is cut to its arc and its grid.
-- **Attention to detail is the product.** Micro-interactions, settles, press states, a ripple, a lag.
-- **Real and original.** Real, sourced numbers; invented micro-story. Never lift the product's
-  site copy, UI or images wholesale. Customer proof has rhythm (one at a time, on the beat), never a
-  "trusted by" row.
-- **Premium launch energy**, the way the best motion studios do it. Never a template.
-- **Banned unless Chan overrides:** bouncy easing, particle bursts, glows, gradients on UI chrome,
-  mismatched icon strokes, dead time, template looks.
+## Look
 
-Chan wants full creative control handed to you: make every creative call yourself, log each as a
-`DECISION:` line, and list them at the end so one reply can overturn any of them.
+- **Palette:** the brand's own design system (for Cheerful: warm near-white canvas, brand gradient
+  #B04ADC → #E35C91 → #FF7247 → #FFB21E, lilac/peach light pools, ink #111827). Not "black plus one
+  purple". One clean UI font.
+- **Banned (from the original brief, still binding unless Chan overrides):** bouncy easing, particle
+  bursts, glows, gradients on UI chrome, mismatched icon strokes, dead time, template looks.
 
-## Direction (per film)
+## Content
 
-Read `references/direction.md` and work it before any code. In short:
-
-1. **Derive** from the product: its claim and the feeling under it, its category's visual cliché
-   (meet it or break it, on purpose), where the film will play, and the brand's own material.
-2. **Write three directions** from the product, not from past films. They differ on every axis,
-   each with a signature move taken from the product's core verb and its own sound world.
-3. **Then check the ledger** (`~/.config/product-launch-motion/films.json`; on first use copy
-   `references/ledger-seed.json` there). A direction that matches one of the last three films on most
-   dials and structural axes needs a stated reason, or a rethink. It is a check, not a generator:
-   don't design by negating past films.
-4. **Keep one**; say why the others lost.
-5. **Pick moves that fit the product.** A cursor fits a product with a UI. A service, a hardware
-   product or an API needs another engine of cause and effect.
-
-## Craft
-
-1. **Pure time.** Every style is computed from `t` inside `seek(t)`. No CSS transitions, timers or
-   state carried between frames. Measure layout at build time, never inside `seek`. Children use
-   `visibility: inherit`, never `visible`.
-2. **Springs** are closed-form step responses; a value with many targets is the sum of one spring
-   per change. Give each film a spring personality (crisp, heavy, floaty, mechanical) instead of
-   one spring for everything. Anticipate big moves; let parts overlap and follow through.
-3. **Swaps have their own timing.** Text inside a morphing container enters and exits on its own
-   window, exiting short and early, or old and new text overlap.
-4. **Framing and legibility.** The camera frames each state; small content in a big empty frame is
-   a bug. Anything meant to be read is at least ~28 px on screen at 1080p, after camera zoom.
-   Decorative micro-labels nobody can read are a tell (see the "looks AI" list).
-5. **Motion that flows.** No unintended holds longer than ~0.4 s. No on/off pops (still, jump,
-   still): hits get anticipation and a settle. Fast moves get enough subframes not to strobe.
-6. **Music.** A licensed track or original score with a build, a drop and an ending (or a
-   sound-design-led film with no song, if that is the direction). Analyse it with numpy, start on a
-   downbeat, land the drop on the product's big moment. Every sound is placed by its own measured
-   peak on the grid: the song's kick-peak grid, or a tempo you set when there is no song. Pick genre
-   and tempo from the direction; ~120 BPM is not a rule.
-7. **Truth.** Every big number is real and sourced. Say which content is real and which invented.
-   Licensed media only, checked per item. Logos and likenesses need permission; say so.
-8. **Loops:** if the piece loops, the last frame is the first frame, cursor speed included.
-9. **Verify the delivered file**, not the page: storyboard, seam and outlier scan, motion energy,
-   loudness. The audio has not been heard by you; say so.
+- **Use real data.** Chan: "You have access to the database. You can be creative and not just pick
+  images." Pull real, defensible numbers read-only (creators reached, gifts sent, posts/views
+  tracked) and show them as rolling odometers. Invent the micro-story (creator, brand, messages) but
+  keep the big numbers true, and say which is which in the report.
+- **Customer logos one by one, boom boom boom** — never a website-style "trusted by" row. One shape
+  re-sized/re-coloured on every hit, only brands that really ran campaigns.
+- **Licensed media only.** Stock video/stills from free-licence sources, checked per item (Mixkit has
+  Restricted items mixed in). Never the product's own marketing images as a shortcut.
+- **Keep what he liked:** for Cheerful the headline intro, the typed brief, the discovery search wall
+  and the wordmark ending tested well — keep strong beats between versions and iterate the rest.
 
 ## Process
 
-1. **Understand the product**: the site, real numbers, brand fonts and colours, logos. Run research,
-   the music shortlist and asset fetching as parallel subagents where you can.
-2. **Inputs.** Ask only for what you can't decide: the one claim, the audience, must-show proof.
-   If Chan says "you decide" or "Director picks", decide.
-3. **Direction** (above). Then the plan: story and payoff, look, sound world, and a beat-by-beat
-   scene list on the song's grid with framing, interactions, transitions and sound cues. Resolve
-   gaps yourself; don't wait for approval unless asked. Now `examples/` may be opened for craft.
-4. **Build** one HTML film (`references/technique.md`).
-5. **Stills QA:** one frame per beat as a contact sheet, plus transitions at ±0.1 s and full-size
-   looks at text-heavy frames. Run the purity test (random `t`, fresh page vs sequenced).
-6. **Draft:** 540p, 30 fps, 1 subframe, with the mix. Check motion energy for holds, pops and
-   strobes. Show it to Chan if he is around: this is the cheapest moment to change direction.
-7. **Final render**, then verify the MP4 itself.
-8. **Ledger:** append this film to `~/.config/product-launch-motion/films.json`.
-9. **Report:** link, concept, the two directions that lost, scene list, real vs invented,
-   DECISIONs, caveats.
+1. **Ask for inputs first** (unless already given or he says "you decide"): 8–12 states the shape
+   should become, palette (B/W, one accent, or the brand system), and a royalty-free ~120 BPM song.
+   Offer "Director's cut / Director picks" options — he usually picks those.
+2. **Direct first, implement second.** Finalize a concise creative plan before writing animation code:
+   the product story and payoff, brand treatment, soundtrack and musical arc, then a beat-by-beat
+   scene plan covering framing, key interactions, transitions and sound cues. Show the plan, resolve
+   gaps as the director, and only then implement it. Do not wait for approval unless requested.
+3. **Build** one HTML file where every style is computed from time inside `seek(t)` — no CSS
+   transitions, no timers, no state between frames.
+4. **Render one frame per beat before the full render**, contact-sheet it, and fix anything off the
+   grid, cramped, empty, hard to read or overlapping. Then check transitions at ±0.1 s.
+5. **Full render** with Playwright subframes → ffmpeg tmix motion blur → 60 fps H.264 + mix.
+6. **Verify the MP4 itself** (1-per-second storyboard, frame-difference scan for seams/glitches),
+   serve it over the tailnet, and report: link, concept, scene list, real-vs-invented data,
+   DECISIONs, caveats (audio is unheard — say so; logo/likeness permissions).
 
 ## Gotchas that cost hours
 
-- Never put `will-change` on anything the camera scales: text renders blurry.
-- Springs start at their event: a target that must *arrive* at T is issued one settle-lead early.
+- Never put `will-change` on anything the camera scales — text renders blurry.
+- Springs start at their event: a target that must *arrive* at time T is issued one settle-lead early.
 - `hide()` that zeroes opacity must be undone by the draw function, or elements stay invisible.
 - Proportional digits jump in odometers: size each slot to its final glyph, clip only vertically.
-- Browsers cache scripts across render pages: load them with a `?v=` cache-buster, or a render
-  silently uses old code.
-- macOS Spotlight indexes subframe PNGs and can double render time: name the frame folder `*.noindex`.
-- Under memory pressure Chromium can capture a frame without its ground and throw nothing; one bad
-  subframe in four reads as flicker. Validate subframes, and kill a disconnected browser before
-  relaunching. Scan the MP4 for frames that differ from both neighbours.
-- Tight disks: render in chunks, encode each, delete its PNGs.
+- On the VPS: disk is tight (render in 4 s chunks and delete PNGs), Chromium is the first thing
+  earlyoom kills (auto-retry, relaunch, hard-exit when done), a stray `/tmp/inspect.py` shadows the
+  stdlib (run Python from the project dir), PreToolUse hooks block some ffmpeg glob strings.
 
 ## Output
 
-A `deliver/` folder served as a clickable link: the MP4, a 1-per-second storyboard, key stills,
-the previous version for comparison, and the plan.
+Deliverables in a `deliver/` folder served with `serve <dir>` (tailnet URL, never localhost):
+the MP4, a 1-per-second storyboard, key stills, and the previous version for comparison.

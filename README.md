@@ -58,32 +58,33 @@ click and drag, and the last frame is the first frame.
 
 ## What makes it look expensive
 
-Every film gets the same taste and the same quality bar, but its own look, motion and sound.
+These are the rules the skill enforces. Each one came from a review note on a real film
+([`references/prompts.md`](references/prompts.md) has the prompts and notes, verbatim).
 
-- **A director, not a template.** Before any code, Claude writes three directions that differ in
-  look, structure, camera and sound, keeps one, and checks it against your recent films so the
-  next film isn't a remix of the last. Creative calls are logged as `DECISION:` lines you can
-  overturn in one reply.
-- **Continuity.** The eye never loses its place: one shape morphing through every state, match
-  cuts, a line through the whole film, a camera that flies into the next scene.
-- **Springs, a tiny overshoot at most.** Closed-form damped springs, never bouncy easing, with a
-  motion personality chosen per film.
-- **Cause and effect.** Something visibly makes every change: a cursor with real clicks and drags,
-  a hand, the beat itself.
-- **Music first.** The beat grid is measured with numpy, the drop lands on the big moment, and
-  every sound is placed by its own measured peak.
-- **Real data, original scenes.** Real numbers, customer proof one hit at a time, nothing copied
-  from the product's website.
-- **Checked like a film.** Stills per beat, a draft with sound, motion checks for freezes and
-  stutter, then the final MP4 is verified frame by frame.
+- **One shape, never cut.** Every state is the same element morphing size, radius and
+  colour. Transitions are morphs, camera pushes, or zooms into an element that *becomes*
+  the next scene.
+- **Blur content swaps.** Text inside a morphing container exits short and early, then the
+  new text springs in. Nothing overlaps.
+- **Springs, a tiny overshoot at most.** Closed-form damped springs, never bouncy easing.
+  Toggle knobs and tab indicators stretch because their two edges ride different springs.
+- **A cursor drives everything.** Real clicks with press-scale and ripple, real drags that
+  spring back on release. The product's own agent can take over as a second cursor.
+- **The camera frames every state.** An empty frame is a bug. Pull-backs reveal scale: one
+  email becomes a wall of hundreds.
+- **Music first.** The beat grid is measured with numpy, the drop lands on the big moment,
+  and every synthesized UI sound is placed by its own measured peak, so it hits the beat.
+- **Real data, original scenes.** Real numbers on odometers, customer logos slammed one per
+  beat, and nothing copied from the product's website.
+- **You get a director.** It makes the creative calls itself and logs each one as a
+  `DECISION:` line you can overturn in one reply.
 
 ## What's in the box
 
 | Path | What it is |
 |---|---|
-| [`SKILL.md`](SKILL.md) | Taste, craft and the process Claude follows |
-| [`references/direction.md`](references/direction.md) | How each film gets its own direction: taste translated, dials, structure, three directions, the film ledger, "looks AI" tells |
-| [`examples/cheerful/`](examples/cheerful/) | The prompts and review notes behind the Cheerful films, verbatim. One past answer, not a template |
+| [`SKILL.md`](SKILL.md) | The creative direction and the process Claude follows |
+| [`references/prompts.md`](references/prompts.md) | The original prompts and every review note, verbatim. Swap the product and reuse them |
 | [`references/technique.md`](references/technique.md) | Springs, camera, cursor, odometer, audio and render code patterns |
 | [`legacy/`](legacy/) | The v1 skill: voiceover-led films with GSAP + HyperFrames, 34 traps |
 
@@ -95,16 +96,15 @@ Every film gets the same taste and the same quality bar, but its own look, motio
 | Node ≥ 20 + Playwright | Rendering |
 | FFmpeg | Motion blur, encoding, loudness checks |
 | Python 3 + numpy | Beat grid and synthesized SFX |
-| A royalty-free song | Optional; Claude can pick one. Check each track's licence; some free libraries mix in restricted items |
+| A ~120 BPM royalty-free song | Optional. Check each track's licence; some free libraries mix in restricted items |
 
 Everything runs locally and nothing costs money.
 
 ## How it works
 
 ```
-brief ──► three directions, keep one ──► scene list on the beat grid
-      ──► one HTML film, every pixel = f(t) in seek(t) ──► one frame per beat, contact sheet, fix
-      ──► draft with sound, motion check ──► Playwright: 4 subframes per frame
+brief ──► state list on the beat grid ──► one HTML film, every pixel = f(t) in seek(t)
+      ──► one frame per beat, contact sheet, fix ──► Playwright: 4 subframes per frame
       ──► ffmpeg tmix (motion blur) ──► 60 fps H.264 + mix ──► storyboard + seam scan
 ```
 
@@ -119,8 +119,8 @@ possible.
 | Timing | Locked to voiceover words | Locked to the music's measured beat grid |
 | Motion | GSAP timelines | Closed-form springs, pure `seek(t)` |
 | Renderer | HyperFrames | Playwright subframes + ffmpeg `tmix` motion blur |
-| Structure | Shots and transitions | Continuity: morphs, match cuts, camera moves; chosen per film |
-| Sound | Library SFX, levelled | A sound world per film, every sound placed by measured peak |
+| Structure | Shots and transitions | One shape that never cuts |
+| Sound | Library SFX, levelled | Synthesized SFX placed by measured peak |
 | Depth | CSS camera rig | Camera springs + optional WebGL glass |
 
 v1 is still the better choice for a narrated explainer. It lives on in [`legacy/`](legacy/).
