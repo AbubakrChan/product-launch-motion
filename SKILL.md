@@ -84,20 +84,18 @@ Read `references/direction.md` and work it before any code. In short:
 ## Process
 
 1. **Understand the product**: the site, real numbers, brand fonts and colours, logos. Run research,
-   the music shortlist (`engine/grid.py --scan`) and asset fetching as parallel subagents where you
-   can. Run `engine/preflight.sh`.
+   the music shortlist and asset fetching as parallel subagents where you can.
 2. **Inputs.** Ask only for what you can't decide: the one claim, the audience, must-show proof.
    If Chan says "you decide" or "Director picks", decide.
 3. **Direction** (above). Then the plan: story and payoff, look, sound world, and a beat-by-beat
    scene list on the song's grid with framing, interactions, transitions and sound cues. Resolve
    gaps yourself; don't wait for approval unless asked. Now `examples/` may be opened for craft.
-4. **Build** one HTML film on `engine/core.js` (`references/technique.md`, `engine/README.md`).
-5. **Stills QA:** one frame per beat as a contact sheet (`engine/snap.mjs --beat`), plus transitions
-   at ±0.1 s and full-size looks at text-heavy frames. `engine/pure.mjs` must pass.
-6. **Draft:** `engine/render.mjs --draft` with the mix, then `engine/verify.py` for holds, pops and
+4. **Build** one HTML film (`references/technique.md`).
+5. **Stills QA:** one frame per beat as a contact sheet, plus transitions at ±0.1 s and full-size
+   looks at text-heavy frames. Run the purity test (random `t`, fresh page vs sequenced).
+6. **Draft:** 540p, 30 fps, 1 subframe, with the mix. Check motion energy for holds, pops and
    strobes. Show it to Chan if he is around: this is the cheapest moment to change direction.
-7. **Final render** (`engine/render.mjs`; after a fix, re-running it re-renders only changed chunks),
-   then `engine/verify.py` on the MP4.
+7. **Final render**, then verify the MP4 itself.
 8. **Ledger:** append this film to `~/.config/product-launch-motion/films.json`.
 9. **Report:** link, concept, the two directions that lost, scene list, real vs invented,
    DECISIONs, caveats.

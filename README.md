@@ -83,7 +83,6 @@ Every film gets the same taste and the same quality bar, but its own look, motio
 |---|---|
 | [`SKILL.md`](SKILL.md) | Taste, craft and the process Claude follows |
 | [`references/direction.md`](references/direction.md) | How each film gets its own direction: taste translated, dials, structure, three directions, the film ledger, "looks AI" tells |
-| [`engine/`](engine/) | The shared code: springs, camera, odometer, render (draft, final, re-render only what changed), beat grid, audio palettes and mixer, motion and loudness checks |
 | [`examples/cheerful/`](examples/cheerful/) | The prompts and review notes behind the Cheerful films, verbatim. One past answer, not a template |
 | [`references/technique.md`](references/technique.md) | Springs, camera, cursor, odometer, audio and render code patterns |
 | [`legacy/`](legacy/) | The v1 skill: voiceover-led films with GSAP + HyperFrames, 34 traps |
