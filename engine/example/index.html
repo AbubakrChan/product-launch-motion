@@ -1,0 +1,21 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>engine example</title>
+<style>
+html, body { margin: 0; background: #101010; overflow: hidden; }
+#stage { position: relative; width: 1920px; height: 1080px; overflow: hidden; background: #101010; color: #F2EFE8;
+  font-family: Georgia, 'Times New Roman', serif; -webkit-font-smoothing: antialiased; }
+#world, #hud { position: absolute; left: 0; top: 0; }
+#world { width: 0; height: 0; transform-origin: 0 0; }
+#hud { width: 1920px; height: 1080px; }
+.a { position: absolute; left: 0; top: 0; white-space: nowrap; }
+</style>
+</head>
+<body>
+<div id="stage"><div id="world"></div><div id="hud"></div></div>
+<script src="../core.js"></script>
+<script src="film.js"></script>
+</body>
+</html>
