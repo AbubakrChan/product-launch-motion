@@ -26,7 +26,8 @@ the way Cheerful did it is only one of them.
 - **Cause and effect.** Nothing changes by itself; something visibly makes each change happen.
 - **Physical, expensive motion.** Closed-form springs with at most a tiny overshoot. Never bouncy easing.
 - **Never dead.** Every moment is alive, but rhythm alternates: dense bars, breathing holds, one hit.
-- **Music-first.** The soundtrack is chosen before choreography, and the film is cut to its arc.
+- **Sound-first.** The soundtrack (a song, a score, or pure sound design) is chosen before
+  choreography, and the film is cut to its arc and its grid.
 - **Attention to detail is the product.** Micro-interactions, settles, press states, a ripple, a lag.
 - **Real and original.** Real, sourced numbers; invented micro-story. Never lift the product's
   site copy, UI or images wholesale. Customer proof has rhythm (one at a time, on the beat), never a
@@ -44,12 +45,14 @@ Read `references/direction.md` and work it before any code. In short:
 
 1. **Derive** from the product: its claim and the feeling under it, its category's visual cliché
    (meet it or break it, on purpose), where the film will play, and the brand's own material.
-2. **Check the ledger** (`~/.config/product-launch-motion/films.json`, seeded from
-   `examples/films.json`). Your direction should differ from the last three films on most dials and
-   structural axes. Matching is allowed when you say so and give the reason.
-3. **Write three directions** that differ on every axis, each with a signature move taken from the
-   product's core verb and its own sound world. Keep one; say why the others lost.
-4. **Pick moves that fit the product.** A cursor fits a product with a UI. A service, a hardware
+2. **Write three directions** from the product, not from past films. They differ on every axis,
+   each with a signature move taken from the product's core verb and its own sound world.
+3. **Then check the ledger** (`~/.config/product-launch-motion/films.json`; on first use copy
+   `references/ledger-seed.json` there). A direction that matches one of the last three films on most
+   dials and structural axes needs a stated reason, or a rethink. It is a check, not a generator:
+   don't design by negating past films.
+4. **Keep one**; say why the others lost.
+5. **Pick moves that fit the product.** A cursor fits a product with a UI. A service, a hardware
    product or an API needs another engine of cause and effect.
 
 ## Craft
@@ -70,7 +73,8 @@ Read `references/direction.md` and work it before any code. In short:
 6. **Music.** A licensed track or original score with a build, a drop and an ending (or a
    sound-design-led film with no song, if that is the direction). Analyse it with numpy, start on a
    downbeat, land the drop on the product's big moment. Every sound is placed by its own measured
-   peak on the kick-peak grid. Pick genre and tempo from the direction; ~120 BPM is not a rule.
+   peak on the grid: the song's kick-peak grid, or a tempo you set when there is no song. Pick genre
+   and tempo from the direction; ~120 BPM is not a rule.
 7. **Truth.** Every big number is real and sourced. Say which content is real and which invented.
    Licensed media only, checked per item. Logos and likenesses need permission; say so.
 8. **Loops:** if the piece loops, the last frame is the first frame, cursor speed included.

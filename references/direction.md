@@ -72,7 +72,7 @@ film. Choose these too:
 | Opening | empty ground that fills (default) · start full and subtract · start mid-action |
 | Climax | one hero element swallowing the frame is one option, not the option |
 | Ending | quiet wordmark lockup is the default; end loud, mid-motion, on the product in use, or on the absent problem |
-| Human presence | most code-built films have none; a hand, a face or a real photo is a bigger difference than any grade |
+| Human presence | most code-built films have none; a hand, a face or a real photo is a bigger difference than any grade. Sources: free-licence stock checked per item, the client's own photos with permission, or a hand or silhouette drawn in code |
 
 ## 4 · Three directions, keep one
 
@@ -96,7 +96,7 @@ film runs.
 ## 5 · The ledger
 
 `~/.config/product-launch-motion/films.json` survives skill updates. If it does not exist, copy
-`examples/films.json` there. Append one entry per finished film:
+`references/ledger-seed.json` there (it holds the Cheerful films). Append one entry per finished film:
 
 ```json
 { "film": "Brand: title", "date": "YYYY-MM-DD",
@@ -107,7 +107,7 @@ film runs.
   "signature": "...", "song": "title, genre, BPM", "sfx": "...", "spring": "...", "moves": ["..."] }
 ```
 
-Before committing a direction, compare it with the last three entries. If most dials and structural
+Write the three directions first, from the product. Then compare them with the last three entries. If most dials and structural
 axes match one of them, say so in a `DECISION:` line with the reason, or choose again. This is a nudge,
 not a gate: a move Chan loves can come back on purpose.
 
