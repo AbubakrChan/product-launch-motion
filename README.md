@@ -6,7 +6,7 @@
 npx skills add AbubakrChan/product-launch-motion
 ```
 
-[![The launch film: a typed brief, a search wall of creators, a personal email, an inbox on autopilot, a 432,014,696 views odometer and the wordmark](examples/film-preview.webp)](https://github.com/AbubakrChan/product-launch-motion/releases/download/v2.0.0/launch-film-1080p60.mp4)
+[![The launch film: a typed brief, a search wall of creators, a personal email, an inbox on autopilot, a 432,014,696 views odometer, customer logos on the beat and the wordmark](examples/film-preview.webp)](https://github.com/AbubakrChan/product-launch-motion/releases/download/v2.0.0/launch-film-1080p60.mp4)
 
 **No Claude Code? Get the film made for you: a polished launch video in 30 minutes, for $10 → [launchreel.89-167-9-64.sslip.io](https://launchreel.89-167-9-64.sslip.io/?ref=readme)**
 
@@ -33,7 +33,7 @@ films.** The original v1 (190 ⭐, thank you) is kept in [`legacy/`](legacy/).
 > **[Download the film (1080p, 60 fps, with sound)](https://github.com/AbubakrChan/product-launch-motion/releases/download/v2.0.0/launch-film-1080p60.mp4)**
 > to watch it as intended.
 
-27 s, made for [cheerful.ai](https://www.cheerful.ai). No After Effects, no stock templates,
+30 s, made for [cheerful.ai](https://www.cheerful.ai). No After Effects, no stock templates,
 no AI video model: every frame is HTML computed from time. Bonus: the same film with a
 [WebGL glass pass](https://github.com/AbubakrChan/product-launch-motion/releases/download/v2.0.0/launch-film-glass-1080p60.mp4)
 (refractive 3D shapes floating through every scene).
