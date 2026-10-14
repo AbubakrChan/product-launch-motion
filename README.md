@@ -8,8 +8,6 @@ npx skills add AbubakrChan/product-launch-motion
 
 [![The launch film: a typed brief, a search wall of creators, a personal email, an inbox on autopilot, a 432,014,696 views odometer, customer logos on the beat and the wordmark](examples/film-preview.webp)](https://github.com/AbubakrChan/product-launch-motion/releases/download/v2.0.0/launch-film-1080p60.mp4)
 
-By [Muhammad Abubakr](https://x.com/Muhamma77800831). New films and updates land on X first.
-
 **No Claude Code? Get the film made for you: a polished launch video in 30 minutes, for $10 → [launchreel.89-167-9-64.sslip.io](https://launchreel.89-167-9-64.sslip.io/?ref=readme)**
 
 Then, in Claude Code:
