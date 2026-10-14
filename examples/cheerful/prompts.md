@@ -1,7 +1,12 @@
-# Chan's prompts, verbatim and in order
+# Cheerful: the prompts behind one past film
 
-These produced the Cheerful launch films (Sept 2026). Treat them as the spec: every later message
-adds to or overrides the earlier ones; nothing earlier is dropped unless a later one reverses it.
+These prompts, verbatim and in order, produced the Cheerful launch films (Sept 2026). They are
+history, not the spec for your film. Read them for Chan's taste and his review notes (what he
+liked, what he rejected and why). Do not reuse their structure or beats: the brief below asks for
+"one shape" and "UI states" because that was the right direction for Cheerful, a UI product.
+The taste they encode is in SKILL.md; the ways to reach it are in `references/direction.md`.
+
+Within that film's history, every later message adds to or overrides the earlier ones.
 
 ---
 
