@@ -9,7 +9,8 @@ This is how Chan wants launch films made. It is the distilled direction from eve
 that produced "The Spark" (v1) and the real-data cut (v2) for Cheerful.
 The prompts themselves, verbatim and in order, are in `references/prompts.md` — read them before
 starting; they are the spec. The code patterns are in `references/technique.md`.
-A complete working film to copy from lives in `~/code/cheerful-motion/launch2/`.
+Prior films demonstrate the technique; compose this product's own story from its customer's
+problem, current brand assets and actual behavior. Preserve the one-shape continuity throughout.
 
 ## The stance: you are the director
 
@@ -22,6 +23,9 @@ A complete working film to copy from lives in `~/code/cheerful-motion/launch2/`.
   Apple, Arc). Something happens on every beat; there is no dead time.
 - **Attention to detail is the product.** Micro-interactions (button press, knob stretch, name pill
   lag, click ripple, odometer settle, sticker tilt) are what make it read as expensive.
+- **Make it easy to follow.** One clear takeaway per scene, short prompts and answers, and enough
+  settled time to read the result. Keep the beat alive through secondary motion and sound while
+  the main idea holds; simplify the content or add beats rather than rushing the viewer.
 
 ## Non-negotiable motion rules
 
@@ -82,14 +86,20 @@ A complete working film to copy from lives in `~/code/cheerful-motion/launch2/`.
    the product story and payoff, brand treatment, soundtrack and musical arc, then a beat-by-beat
    scene plan covering framing, key interactions, transitions and sound cues. Show the plan, resolve
    gaps as the director, and only then implement it. Do not wait for approval unless requested.
+   Give each scene a clear takeaway and reading window, and carry a recognizable customer example
+   through the demo. Simplify real product behavior for film without inventing actions or outcomes.
 3. **Build** one HTML file where every style is computed from time inside `seek(t)` — no CSS
    transitions, no timers, no state between frames.
 4. **Render one frame per beat before the full render**, contact-sheet it, and fix anything off the
-   grid, cramped, empty, hard to read or overlapping. Then check transitions at ±0.1 s.
+   grid, cramped, empty, hard to read or overlapping. Then check transitions at ±0.1 s. Review a
+   low-resolution moving draft at normal speed before the full render: verify readable holds,
+   cursor actions and continuous morphs. Still frames alone cannot prove the timing works.
 5. **Full render** with Playwright subframes → ffmpeg tmix motion blur → 60 fps H.264 + mix.
-6. **Verify the MP4 itself** (1-per-second storyboard, frame-difference scan for seams/glitches),
-   serve it over the tailnet, and report: link, concept, scene list, real-vs-invented data,
-   DECISIONs, caveats (audio is unheard — say so; logo/likeness permissions).
+6. **Verify the MP4 itself** with a 1-per-second storyboard and a frame-difference scan for seams
+   and glitches. Review its pacing and transitions at normal speed, check for flicker, and verify audio cue sync
+   against the picture. Listen when playback is available; distinguish listening from measurements.
+   Serve it over the tailnet, and report: link, concept, scene list, real-vs-invented data,
+   DECISIONs, caveats (whether audio was heard or only measured; logo/likeness permissions).
 
 ## Gotchas that cost hours
 
