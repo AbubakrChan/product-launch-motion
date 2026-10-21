@@ -54,6 +54,21 @@ click and drag, and the last frame is the first frame.
 
 </td></tr></table>
 
+<table><tr>
+<td width="45%"><a href="https://github.com/AbubakrChan/product-launch-motion/releases/download/v2.0.0/hoopoe-club-1080p60.mp4"><img src="examples/hoopoe-preview.webp" alt="Hoopoe Club launch film, in Arabic and right to left: a book card's progress slider is dragged to the last page, the share button bursts into a post composer, and community cursors like, repost and reply"></a></td>
+<td>
+
+**[▶ Hoopoe Club](https://github.com/AbubakrChan/product-launch-motion/releases/download/v2.0.0/hoopoe-club-1080p60.mp4)**
+(43 s, 1080p, 60 fps, with sound)
+
+Made from one URL, [hoopoe.club](https://hoopoe.club), an Arabic social reading club. The
+whole film is right to left in the brand's own font. One shape tells the story without a cut:
+a question → the book you're finishing → "share it with readers" → the post → the community
+that answers → next month's poll → the trending shelf → real numbers from the site → the logo.
+The cursor is the grey chevron from Hoopoe's logo, and in the last shot it docks into it.
+
+</td></tr></table>
+
 ---
 
 ## What makes it look expensive
