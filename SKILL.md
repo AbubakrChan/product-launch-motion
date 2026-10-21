@@ -52,9 +52,40 @@ problem, current brand assets and actual behavior. Preserve the one-shape contin
    Aim for ~120 BPM, analyse the song with numpy for the beat grid, start on a
    downbeat, cut the song window so the drop lands on the product's big moment. Something happens on
    every beat; typing rides 32nds on a snare build; slams accelerate beats → 8ths → 16ths.
-8. **Every UI sound is synthesized and placed by its measured peak** on the kick-peak grid.
+8. **Every UI sound is synthesized and placed by its measured peak** on the kick-peak grid, and the
+   sound is designed like a studio did it (next section), not a click track laid over a song.
 9. **Loops:** when the piece loops, the last frame is the first frame — cursor position and speed
    included — or the loop stutters.
+
+## Sound: a studio, not a click track
+
+Sound is half of what makes a film feel expensive. Chan's reference is the Hoopoe Club film: it
+opens on sound design alone, then the music comes in. A film that is busy and loud from frame one
+gets boring fast.
+
+- **Open on sound design, then let the music in.** Until the first real payoff (4–8 s), keep the
+  music sparse: the song's quiet intro, or the bed low-passed and quiet. Each UI sound is heard on
+  its own. The music grows into the drop, and the drop is the first loud moment. Target: the intro
+  is at least 12 dB quieter than the section after the drop. (Measured: Hoopoe +12.3 dB, warm intro,
+  16 onsets in 7.5 s. Cheerful v2 +8 dB with a bright, hiss-heavy intro, 28 onsets. Hoopoe sounds
+  far more premium.)
+- **A signature palette for each film.** Design 4–6 sound families from the product itself: a
+  reading app gets paper, page turns and a soft wood knock; a dev tool gets keys and glass ticks.
+  Tune every tonal sound to the song's key and run them all through one short shared room, so they
+  sound recorded in one place. Never a generic UI click kit, and never the same palette two films
+  in a row.
+- **Layer the important hits.** A hero action is three layers: a transient (2–10 ms), a tonal body
+  in key (40–150 ms) and an air tail (room or noise, 200–600 ms). Small actions get the transient
+  only. Sub thumps go only on the drop, the big reveal and the logo.
+- **Sound follows the picture.** Pan by the element's x position (at most ±0.6). Pitch or
+  brightness follows the value or speed: odometers and poll bars rise in pitch, the drag hiss
+  follows the cursor's speed. Each multiplayer cursor gets its own pitch, so the viewer hears
+  different people.
+- **Make room in the mix.** Duck the music 2–4 dB for about 150 ms under each hero sound, and cut
+  the music below 120 Hz under sub hits. Keep the bed warm: a hiss-heavy bed buries UI sounds.
+- **The ending breathes.** Let the song's real ending play out. The logo gets one signature sound
+  (the brand's sting), and the last 1–2 s ring out on the room tail, never a hard stop.
+- **Silence is a cue.** About 0.3 s of near-silence before the drop or the logo makes the hit land.
 
 ## Look
 
@@ -83,8 +114,9 @@ problem, current brand assets and actual behavior. Preserve the one-shape contin
    should become, palette (B/W, one accent, or the brand system), and a royalty-free ~120 BPM song.
    Offer "Director's cut / Director picks" options — he usually picks those.
 2. **Direct first, implement second.** Finalize a concise creative plan before writing animation code:
-   the product story and payoff, brand treatment, soundtrack and musical arc, then a beat-by-beat
-   scene plan covering framing, key interactions, transitions and sound cues. Show the plan, resolve
+   the product story and payoff, brand treatment, soundtrack and musical arc, the sound palette
+   (the 4–6 families and what each one is made of), then a beat-by-beat scene plan covering
+   framing, key interactions, transitions and sound cues. Show the plan, resolve
    gaps as the director, and only then implement it. Do not wait for approval unless requested.
    Give each scene a clear takeaway and reading window, and carry a recognizable customer example
    through the demo. Simplify real product behavior for film without inventing actions or outcomes.
