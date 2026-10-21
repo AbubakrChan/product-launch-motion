@@ -82,6 +82,9 @@ log10(v) crosses p; gradient text continuous across slots via background-size/po
 
 ## Sound design (the studio layer)
 
+A toolbox, not a checklist: pick what serves this film.
+
+
 - **Stereo SFX bus.** `put(sound, cue, gain, pan)` uses constant-power pan
   (`L = cos((p+1)π/4)`, `R = sin((p+1)π/4)`), with `pan = clamp((x/W − 0.5)·1.2, −0.6, 0.6)` from
   the element's screen x at the cue. Export x with each cue from `M.cues`.
@@ -102,9 +105,11 @@ log10(v) crosses p; gradient text continuous across slots via background-size/po
 - **Ducking.** Build an envelope from the hero cues: −3 dB, 10 ms attack, 150 ms release. Multiply
   it into the song before the sum. Under sub hits, also high-pass the song at 120 Hz for 300 ms.
 
-QA (numbers to report, measured on the MP4): loudness in 0.5 s windows over the first 14 s,
-intro (0 to drop) vs post-drop RMS (aim for at least +12 dB), the intro's spectral centroid (warm
-is roughly 200–800 Hz), and the ending tail. Say whether the mix was heard or only measured.
+- **Openings.** A quiet, sound-led opening that grows into the drop is one strong option (Hoopoe:
+  opening 12 dB quieter than the drop). Starting on the drop or on a silence also works.
+
+QA: measure loudness in 0.5 s windows on the MP4 to check that the dynamics match the plan. Say
+whether the mix was heard or only measured.
 
 ## Render
 
