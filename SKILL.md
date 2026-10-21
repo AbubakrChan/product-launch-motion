@@ -52,20 +52,11 @@ problem, current brand assets and actual behavior. Preserve the one-shape contin
    Aim for ~120 BPM, analyse the song with numpy for the beat grid, start on a
    downbeat, cut the song window so the drop lands on the product's big moment. Something happens on
    every beat; typing rides 32nds on a snare build; slams accelerate beats → 8ths → 16ths.
-8. **Every UI sound is synthesized and placed by its measured peak** on the kick-peak grid, and the
-   sound is designed like a studio did it (next section), not a click track laid over a song.
+8. **Every UI sound is synthesized and placed by its measured peak** on the kick-peak grid.
+   Treat sound design as seriously as the visuals: original, layered sound effects that make the
+   film feel rich and alive (the Hoopoe Club film is one example). Be creative with it.
 9. **Loops:** when the piece loops, the last frame is the first frame — cursor position and speed
    included — or the loop stutters.
-
-## Sound: a studio, not a click track
-
-Sound design is a creative tool, as free as the visuals. Be the sound designer: invent this film's
-own sounds and do something cool with them. The Hoopoe Club film is one example of rich sound
-design, not a template: it opens on sound effects alone, then the music comes in. Another film
-might start on the drop, use a silence, or let one signature sound carry the whole piece.
-What matters: the sounds are original, made from the product itself, tuned to the song and mixed
-so each one is felt. A generic click kit over a loud loop is the failure. The toolbox is in
-`references/technique.md` (Sound design).
 
 ## Look
 
@@ -94,9 +85,8 @@ so each one is felt. A generic click kit over a loud loop is the failure. The to
    should become, palette (B/W, one accent, or the brand system), and a royalty-free ~120 BPM song.
    Offer "Director's cut / Director picks" options — he usually picks those.
 2. **Direct first, implement second.** Finalize a concise creative plan before writing animation code:
-   the product story and payoff, brand treatment, soundtrack and musical arc, the sound idea
-   (what makes this film's sound its own), then a beat-by-beat scene plan covering
-   framing, key interactions, transitions and sound cues. Show the plan, resolve
+   the product story and payoff, brand treatment, soundtrack and musical arc, then a beat-by-beat
+   scene plan covering framing, key interactions, transitions and sound cues. Show the plan, resolve
    gaps as the director, and only then implement it. Do not wait for approval unless requested.
    Give each scene a clear takeaway and reading window, and carry a recognizable customer example
    through the demo. Simplify real product behavior for film without inventing actions or outcomes.

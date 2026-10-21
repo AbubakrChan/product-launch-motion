@@ -80,37 +80,6 @@ log10(v) crosses p; gradient text continuous across slots via background-size/po
 - Mix: song·0.5 + sfx·0.62, one static gain to 0.93 peak (no limiter — keeps loops seamless).
   Measure with `ffmpeg -af ebur128=peak=true` (≈ −15 LUFS, < −0.5 dBTP).
 
-## Sound design (the studio layer)
-
-A toolbox, not a checklist: pick what serves this film.
-
-
-- **Stereo SFX bus.** `put(sound, cue, gain, pan)` uses constant-power pan
-  (`L = cos((p+1)π/4)`, `R = sin((p+1)π/4)`), with `pan = clamp((x/W − 0.5)·1.2, −0.6, 0.6)` from
-  the element's screen x at the cue. Export x with each cue from `M.cues`.
-- **Shared room.** Convolve the whole SFX bus with one synthetic impulse response: decaying
-  noise, 0.25–0.5 s, low-passed near 6 kHz, 8–15% wet. One room for every sound is what makes them
-  sound recorded together. Keep transients dry, so send only the bodies and tails.
-- **Layered hits.** `hit = click(2–10 ms) + tone(key, 40–150 ms, soft attack) + air(room or band
-  noise, 200–600 ms)`. Place the hit by the click's peak. Hero actions get all three layers; small
-  actions get the click only.
-- **Family timbre.** Each family is one recipe with small random variation, seeded per cue so
-  renders are repeatable: ±3% pitch, ±1.5 dB, slightly different decay. Identical repeats sound
-  like a machine.
-- **Value-driven pitch.** Odometer ticks, poll bars and progress drags step up the key's
-  pentatonic as the value rises. Each multiplayer cursor gets a fixed scale degree.
-- **Intro bed.** If the song has no quiet intro, low-pass the bed (about 400 Hz up to 8 kHz) and
-  ramp its gain from 0.25 to 1.0 over the bars before the drop. Both are curves of film time, so
-  renders stay deterministic.
-- **Ducking.** Build an envelope from the hero cues: −3 dB, 10 ms attack, 150 ms release. Multiply
-  it into the song before the sum. Under sub hits, also high-pass the song at 120 Hz for 300 ms.
-
-- **Openings.** A quiet, sound-led opening that grows into the drop is one strong option (Hoopoe:
-  opening 12 dB quieter than the drop). Starting on the drop or on a silence also works.
-
-QA: measure loudness in 0.5 s windows on the MP4 to check that the dynamics match the plan. Say
-whether the mix was heard or only measured.
-
 ## Render
 
 - Playwright Chromium headless, 1920×1080 (or square), 4 subframes per frame centred on the frame
